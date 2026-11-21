@@ -704,7 +704,7 @@ body.public #main { background: var(--desk); }
 
 /* ---------- welcome page ---------- */
 .land { min-height: 100%; overflow-x: hidden; }
-.land-top, .hero, .pillars, .steps, .closing, .land-foot { max-width: 1180px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+.land-top, .hero, .pillars, .teaser, .steps, .closing, .land-foot { max-width: 1180px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
 .land-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: calc(env(safe-area-inset-top) + 16px); padding-bottom: 8px; }
 .land-nav { display: flex; align-items: center; gap: 18px; }
 .land-link { color: var(--ink-2); text-decoration: none; font-weight: 500; }
@@ -789,7 +789,7 @@ body.public #main { background: var(--desk); }
 }
 @media (min-width: 960px) {
   .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr); padding-top: 54px; padding-bottom: 104px; gap: 56px; padding-left: 32px; padding-right: 32px; }
-  .land-top, .pillars, .steps, .closing, .land-foot { padding-left: 32px; padding-right: 32px; }
+  .land-top, .pillars, .teaser, .steps, .closing, .land-foot { padding-left: 32px; padding-right: 32px; }
 }
 
 .land-h { font-family: var(--display); font-weight: 800; font-size: clamp(29px, 3.6vw, 42px); line-height: 1.08; margin: 0 0 28px; letter-spacing: -0.012em; }
@@ -968,6 +968,57 @@ a.btn { text-decoration: none; }
   .land-nav { gap: 10px; }
 }
 
+/* chat: sending / sent / seen by, under your latest message */
+.msg .msg-st { grid-column: 2; justify-self: start; display: inline-flex; align-items: center; gap: 5px; margin-top: 3px; padding: 2px 0; border: 0; background: none; font: inherit; font-size: 12.5px; color: var(--ink-3); cursor: pointer; text-align: left; }
+.msg div.msg-st { cursor: default; }
+.msg .msg-st .ico { width: 14px; height: 14px; flex: none; }
+.msg .msg-st.seen { color: var(--ok); font-weight: 600; }
+.msg button.msg-st:hover span { text-decoration: underline; }
+
+/* ink-ring sprint timer */
+.clock-row { display: flex; align-items: center; gap: 18px; margin-top: 10px; }
+.ink-ring { flex: none; display: block; }
+.ink-ring circle { fill: none; stroke-width: 7; }
+.ink-ring .track { stroke: var(--line); }
+.ink-ring .ink { stroke: var(--red); stroke-linecap: round; transition: stroke-dashoffset .9s linear; }
+.ink-ring.waiting .track { stroke-dasharray: 3 9; stroke-linecap: round; }
+.ink-ring.small circle { stroke-width: 9; }
+@media (prefers-reduced-motion: reduce) { .ink-ring .ink { transition: none; } }
+@media (max-width: 560px) { .clock-row { gap: 12px; } .clock-row .ink-ring { width: 72px; height: 72px; } }
+.check-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 15px; cursor: pointer; }
+.check-row input { width: 18px; height: 18px; accent-color: var(--red); }
+
+/* text size */
+.page { font-size: calc(1.19rem * var(--page-scale, 1)); }
+.pad textarea { font-size: calc(1.19rem * var(--page-scale, 1)); }
+.fs-sample { font-family: var(--display); font-size: calc(1.19rem * var(--page-scale, 1)); line-height: 1.7; margin: 16px 0 0; padding: 14px 16px; background: var(--card-2); border-radius: 6px; }
+.ed-tools .aa { font-family: var(--display); font-weight: 800; font-size: 17px; width: auto; padding: 0 8px; }
+
+/* circle header: members on phones get the room back for the chat */
+@media (max-width: 560px) {
+  .cv-head.is-member .cv-top p { display: none; }
+  .cv-head.is-member .cv-top .ringmark { width: 40px !important; height: 40px !important; font-size: 40px !important; }
+  .cv-head.is-member .cv-top h1 { font-size: 23px; padding-top: 6px; }
+  .cv-head.is-member .cv-meta { margin-top: 6px; }
+  .cv-head.is-member .crumb { margin-bottom: 2px; }
+}
+
+/* teaser on the welcome page */
+.teaser { display: grid; gap: 26px; align-items: center; padding-top: 64px; padding-bottom: 72px; }
+.teaser + .steps { border-top: 1px solid var(--line); }
+.pillars + .teaser { border-top: 1px solid var(--line); }
+.teaser-copy p { color: var(--ink-2); font-size: 17.5px; line-height: 1.6; max-width: 46ch; margin: 0; }
+.teaser-frame { justify-self: center; width: min(100%, 420px); }
+.teaser-video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; border-radius: 14px; background: var(--card-2); box-shadow: 0 30px 60px -40px rgba(var(--shadow), .8); }
+@media (min-width: 860px) { .teaser { grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 56px; } }
+
+@media (max-width: 560px) { .land-lang { max-width: 104px; padding: 6px 4px; } }
+
+/* notifications offer above the chat composer */
+.notify-offer { display: flex; align-items: center; gap: 10px; padding: 8px 12px; margin: 0 0 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); font-size: 14.5px; }
+.notify-offer > .ico { color: var(--red); flex: none; }
+.notify-offer .ibtn { width: 32px; height: 32px; }
+
 </style>
 </head>
 <body>
@@ -1053,6 +1104,7 @@ const ICONS = {
   redo: '<path d="M15 6.5l4.5 4.5-4.5 4.5"/><path d="M19 11H9.5a5 5 0 0 0 0 10H12"/>',
   minus: '<path d="M6 12h12"/>',
   fit: '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
+  bell: '<path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/>',
   timer: '<circle cx="12" cy="13" r="7.5"/><path d="M12 9v4l2.6 2.6M9.5 2.8h5"/>',
   download: '<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>',
   copy: '<rect x="8.5" y="8.5" width="11" height="11" rx="1.5"/><path d="M15.5 8.5v-3a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3"/>',
@@ -1078,6 +1130,7 @@ const ICONS = {
   mail: '<rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="M4 6.5l8 6.5 8-6.5"/>',
   settings: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>',
+  font: '<path d="M3.5 19 8.5 6h1l5 13M5.3 14.5h7.4"/><path d="M15.5 19l3-8 3 8M16.4 16.8h4.2"/>',
   list: '<path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1" ${F}/><circle cx="4" cy="12" r="1" ${F}/><circle cx="4" cy="18" r="1" ${F}/>',
 };
 ICONS.list = ICONS.list.replace(/\$\{F\}/g, F);
@@ -1386,7 +1439,7 @@ function onWriteError(e) {
   toast(msg, { kind: 'error' });
 }
 const NET = { slow: new Set() };
-function watch(target, onSnap, label = 'data', onErr) {
+function watch(target, onSnap, label = 'data', onErr, opts) {
   let settled = false;
   const timer = setTimeout(() => { if (!settled) { NET.slow.add(label); emitChange('net'); } }, 10000);
   const settle = () => { settled = true; clearTimeout(timer); if (NET.slow.delete(label)) emitChange('net'); };
@@ -1400,7 +1453,7 @@ function watch(target, onSnap, label = 'data', onErr) {
       console.warn('Inkcircle listener ended', label, err);
       if (onErr) onErr(err);
       else if (err && err.code === 'quota_exceeded') toast(fmt("Inkcircle reached today's free reading limit. It resets at {0}.", quotaReset()), { kind: 'error' });
-    });
+    }, opts);
   } catch (e) { settle(); console.warn('Inkcircle could not listen', label, e); }
   return () => { clearTimeout(timer); if (NET.slow.delete(label)) emitChange('net'); try { unsub(); } catch (e) { /* closed */ } };
 }
@@ -1436,7 +1489,7 @@ function initialsAvatar(name, color) {
 }
 const okPhoto = u => typeof u === 'string' && (/^https:\/\/[^\s"'<>]+$/.test(u) || DATA_IMG_RE.test(u)) ? u : '';
 const People = {
-  cache: new Map(), queue: new Set(), inflight: new Set(), timer: null,
+  cache: new Map(), queue: new Set(), inflight: new Set(), tries: new Map(), timer: null,
   get(id) {
     if (!id) return { name: 'Someone', avatarUrl: initialsAvatar('', '#8892A6'), color: '#8892A6' };
     const color = colorFor(id);
@@ -1471,7 +1524,13 @@ const People = {
     await Promise.all(ids.map(async id => {
       const w = await dget('writers/' + id);
       if (w) this.remember(id, w);
-      else this.cache.set(id, { name: 'A writer', avatarUrl: initialsAvatar('', '#8892A6'), color: '#8892A6', at: Date.now() });
+      else {
+        this.cache.set(id, { name: 'A writer', avatarUrl: initialsAvatar('', '#8892A6'), color: '#8892A6', at: Date.now() });
+        // No profile yet, usually a writer who signed up seconds ago: look again shortly, a few times.
+        const n = (this.tries.get(id) || 0) + 1;
+        this.tries.set(id, n);
+        if (n <= 3) setTimeout(() => this.request(id), 6000 * n);
+      }
     }));
     ids.forEach(id => this.inflight.delete(id));
     emitChange('people');
@@ -1523,7 +1582,7 @@ function sprintOf(c) {
   const s = c && c.sprint;
   if (!s || typeof s.id !== 'string' || !s.at || !s.min) return null;
   const at = Number(s.at), end = at + Number(s.min) * 60000, now = Date.now();
-  return { id: s.id, at, min: Number(s.min), by: s.by, prompt: str(s.prompt, 400), end, upcoming: now < at, startsIn: Math.max(0, at - now), running: now >= at && now < end, left: Math.max(0, end - now) };
+  return { id: s.id, at, min: Number(s.min), by: s.by, prompt: str(s.prompt, 400), rep: Number(s.rep) || 0, base: Number(s.base) || at, end, upcoming: now < at, startsIn: Math.max(0, at - now), running: now >= at && now < end, left: Math.max(0, end - now) };
 }
 // The last line of a circle's chat, worded for the reader.
 function lastText(l) {
@@ -1536,15 +1595,68 @@ function lastText(l) {
   if (l.k === 'share') return fmt('Shared {0}', str(l.text, 80));
   return str(l.text, 140);
 }
+// The ink ring: an open circle that closes as the sprint runs. data-ring-a/b = start and end times.
+function inkRing(a, b, size = 96, cls = '') {
+  const r = 42, C = 2 * Math.PI * r;
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 100 100');
+  svg.setAttribute('width', String(size));
+  svg.setAttribute('height', String(size));
+  svg.setAttribute('class', 'ink-ring ' + cls);
+  svg.setAttribute('aria-hidden', 'true');
+  svg.dataset.ringA = String(a);
+  svg.dataset.ringB = String(b);
+  svg.innerHTML = `<circle class="track" cx="50" cy="50" r="${r}"/><circle class="ink" cx="50" cy="50" r="${r}" stroke-dasharray="${C.toFixed(2)}" stroke-dashoffset="${C.toFixed(2)}" transform="rotate(-84 50 50)"/>`;
+  paintRing(svg);
+  return svg;
+}
+function paintRing(svg) {
+  const a = Number(svg.dataset.ringA), b = Number(svg.dataset.ringB);
+  const f = b > a ? Math.min(1, Math.max(0, (Date.now() - a) / (b - a))) : 0;
+  const ink = svg.querySelector('.ink');
+  const C = 2 * Math.PI * 42;
+  // a small gap stays open until the very end, like the mark
+  if (ink) ink.setAttribute('stroke-dashoffset', (C * (1 - f * (f < 1 ? 0.97 : 1))).toFixed(2));
+}
+const paintRings = root => { for (const s of root.querySelectorAll('svg[data-ring-a]')) paintRing(s); };
+// Calendar links for a scheduled sprint.
+function calStamp(ts) { return new Date(ts).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z'); }
+function googleCalLink(title, start, end, details, weekly) {
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(title) + '&dates=' + calStamp(start) + '/' + calStamp(end)
+    + '&details=' + encodeURIComponent(details) + (weekly ? '&recur=' + encodeURIComponent('RRULE:FREQ=WEEKLY') : '');
+}
+function icsFile(title, start, end, details, url, weekly, uid) {
+  const esc = s => String(s).replace(/[\\;,]/g, m => '\\' + m).replace(/\n/g, '\\n');
+  return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Inkcircle//Sprint//EN', 'BEGIN:VEVENT', 'UID:' + uid + '@inkcircle', 'DTSTAMP:' + calStamp(Date.now()),
+    'DTSTART:' + calStamp(start), 'DTEND:' + calStamp(end), 'SUMMARY:' + esc(title), 'DESCRIPTION:' + esc(details), url ? 'URL:' + url : null,
+    weekly ? 'RRULE:FREQ=WEEKLY' : null, 'BEGIN:VALARM', 'TRIGGER:-PT15M', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(title), 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].filter(Boolean).join('\r\n');
+}
+// Weekly sprints schedule their next week by themselves, a few hours after one ends, from any member's open app.
+const ROLL_AFTER = 3 * 3600000;
+// The current sprint is the one at `base`; the next one is a whole week (or more) after it.
+const nextWeekly = sp => { const step = sp.rep * 86400000; let t = sp.base + step; while (t <= Date.now()) t += step; return t; };
+function rollSprints() {
+  if (!P.db || !signedIn()) return;
+  for (const c of S.circles.all()) {
+    const sp = sprintOf(c);
+    if (!sp || !sp.rep || memberState(meId(), c) !== 'member' || Date.now() < sp.end + ROLL_AFTER) continue;
+    const next = nextWeekly(sp);
+    const id = 'w' + next.toString(36);
+    if (id === sp.id) continue;
+    const prompt = '';
+    dset(`circles/${c.id}/sprints/${id}`, { at: next, min: sp.min, by: meId(), prompt, results: {} }, true);
+    dupdate('circles/' + c.id, { sprint: { id, at: next, base: next, rep: sp.rep, min: sp.min, by: sp.by || meId(), prompt }, updated: Date.now() }, true).then(done => { if (done) pushSchedule(c.id); });
+  }
+}
 function presenceWhat(pres) {
-  if (!pres || !pres.v) return 'Here now';
+  if (!pres || !pres.v) return T('Here now');
   const v = pres.v, x = pres.x;
-  if (v === 'chapter' || v === 'project') { const p = S.projects.get(x); return p && canSee(p) ? fmt('Writing in {0}', str(p.title, 80)) : 'Writing'; }
-  if (v === 'board') { const b = S.boards.get(x); return b && canSee(b) ? fmt('Brainstorming on {0}', str(b.title, 80)) : 'Brainstorming'; }
-  if (v === 'draw' || v === 'sketch' || v === 'sketches') return 'Sketching';
-  if (v === 'pad') return 'In a writing sprint';
-  if (v === 'circle') { const c = S.circles.get(x); return c ? fmt('In {0}', str(c.name, 80)) : 'In a circle'; }
-  return 'Here now';
+  if (v === 'chapter' || v === 'project') { const p = S.projects.get(x); return p && canSee(p) ? fmt('Writing in {0}', str(p.title, 80)) : T('Writing'); }
+  if (v === 'board') { const b = S.boards.get(x); return b && canSee(b) ? fmt('Brainstorming on {0}', str(b.title, 80)) : T('Brainstorming'); }
+  if (v === 'draw' || v === 'sketch' || v === 'sketches') return T('Sketching');
+  if (v === 'pad') return T('In a writing sprint');
+  if (v === 'circle') { const c = S.circles.get(x); return c ? fmt('In {0}', str(c.name, 80)) : T('In a circle'); }
+  return T('Here now');
 }
 function unreadIn(c) {
   if (!c || !c.last || !c.last.at || c.last.by === meId() || memberState(meId(), c) !== 'member') return false;
@@ -1737,6 +1849,3663 @@ function T(s) {
   tCache.set(s, out);
   return out;
 }
+
+/* Marathi and Hindi. Generated by i18n/build_tr.py from i18n/tr_*.txt; edit those files, not this one. */
+Object.assign(TR, {
+"Today": [
+"आज",
+"आज"
+],
+"Yesterday": [
+"काल",
+"कल"
+],
+"Novel": [
+"कादंबरी",
+"उपन्यास"
+],
+"Short story": [
+"लघुकथा",
+"लघुकथा"
+],
+"Poetry": [
+"कविता",
+"कविता"
+],
+"Screenplay": [
+"पटकथा",
+"पटकथा"
+],
+"Comic": [
+"कॉमिक",
+"कॉमिक"
+],
+"Picture book": [
+"चित्रपुस्तक",
+"चित्र-पुस्तक"
+],
+"Nonfiction": [
+"ललितेतर",
+"कथेतर"
+],
+"Other": [
+"इतर",
+"अन्य"
+],
+"Idea": [
+"कल्पना",
+"विचार"
+],
+"Character": [
+"पात्र",
+"पात्र"
+],
+"Place": [
+"ठिकाण",
+"जगह"
+],
+"Plot beat": [
+"कथानकाचा टप्पा",
+"कथानक का मोड़"
+],
+"Question": [
+"प्रश्न",
+"सवाल"
+],
+"Note": [
+"टीप",
+"नोट"
+],
+"Fantasy": [
+"फँटसी",
+"फ़ैंटेसी"
+],
+"Sci-fi": [
+"विज्ञानकथा",
+"विज्ञान-कथा"
+],
+"Romance": [
+"प्रेमकथा",
+"प्रेम-कथा"
+],
+"Mystery": [
+"रहस्यकथा",
+"रहस्य"
+],
+"Thriller": [
+"थरारकथा",
+"थ्रिलर"
+],
+"Literary": [
+"साहित्यिक",
+"साहित्यिक"
+],
+"Horror": [
+"भयकथा",
+"हॉरर"
+],
+"Screenwriting": [
+"पटकथालेखन",
+"पटकथा-लेखन"
+],
+"Comics": [
+"कॉमिक्स",
+"कॉमिक्स"
+],
+"Kids & YA": [
+"मुलं आणि किशोर",
+"बच्चे और किशोर"
+],
+"Memoir": [
+"आत्मकथन",
+"संस्मरण"
+],
+"Humor": [
+"विनोदी",
+"हास्य"
+],
+"Hindi & regional": [
+"हिंदी आणि प्रादेशिक",
+"हिंदी और क्षेत्रीय"
+],
+"All genres": [
+"सर्व प्रकार",
+"सभी विधाएँ"
+],
+"Sprints": [
+"स्प्रिंट",
+"स्प्रिंट"
+],
+"Feedback swaps": [
+"अभिप्राय देवाणघेवाण",
+"फ़ीडबैक की अदला-बदली"
+],
+"Only you and co-authors": [
+"फक्त तुम्ही आणि सहलेखक",
+"सिर्फ़ आप और सह-लेखक"
+],
+"Nobody else can open it.": [
+"दुसरं कोणीही उघडू शकत नाही.",
+"कोई और इसे खोल नहीं सकता।"
+],
+"Your circle": [
+"तुमचं सर्कल",
+"आपका सर्कल"
+],
+"Members of one circle can read and leave notes.": [
+"एका सर्कलचे सदस्य वाचू शकतात आणि टिपा देऊ शकतात.",
+"एक सर्कल के सदस्य पढ़ सकते हैं और नोट छोड़ सकते हैं।"
+],
+"Everyone on Inkcircle": [
+"Inkcircle वरील सगळे",
+"Inkcircle पर सभी"
+],
+"Any writer here can read and leave notes.": [
+"इथला कोणताही लेखक वाचू शकतो आणि टिपा देऊ शकतो.",
+"यहाँ का कोई भी लेखक पढ़ सकता है और नोट छोड़ सकता है।"
+],
+"You're offline. Changes are kept on this device and sync when you're back.": [
+"तुम्ही ऑफलाइन आहात. बदल या डिव्हाइसवर ठेवले आहेत आणि तुम्ही परत आल्यावर सिंक होतील.",
+"आप ऑफ़लाइन हैं। बदलाव इस डिवाइस पर रखे हैं और वापस आने पर सिंक होंगे।"
+],
+"That change wasn't allowed. You may not have access to this anymore.": [
+"हा बदल करता आला नाही. कदाचित आता तुम्हाला याचा ॲक्सेस नाही.",
+"यह बदलाव नहीं हो सका। शायद अब आपके पास इसकी पहुँच नहीं है।"
+],
+"Inkcircle reached today's free database limit. It resets at {0}.": [
+"Inkcircle ने आजची मोफत डेटाबेस मर्यादा गाठली. ती {0} ला पुन्हा सुरू होईल.",
+"Inkcircle आज की मुफ़्त डेटाबेस सीमा तक पहुँच गया। यह {0} बजे फिर शुरू होगी।"
+],
+"Too many changes at once. Wait a moment and try again.": [
+"एकाच वेळी खूप बदल. थोडं थांबा आणि पुन्हा प्रयत्न करा.",
+"एक साथ बहुत सारे बदलाव। थोड़ा रुकें और फिर कोशिश करें।"
+],
+"You're offline. Changes sync when you're back.": [
+"तुम्ही ऑफलाइन आहात. परत आल्यावर बदल सिंक होतील.",
+"आप ऑफ़लाइन हैं। वापस आने पर बदलाव सिंक होंगे।"
+],
+"That couldn't be saved. If it's a long chapter, split it into two.": [
+"हे सेव्ह झालं नाही. प्रकरण मोठं असेल तर त्याचे दोन भाग करा.",
+"यह सेव नहीं हो सका। अगर अध्याय लंबा है, तो उसे दो हिस्सों में बाँटें।"
+],
+"That item no longer exists.": [
+"ही गोष्ट आता अस्तित्वात नाही.",
+"यह चीज़ अब मौजूद नहीं है।"
+],
+"Couldn't save. Check your connection and try again.": [
+"सेव्ह झालं नाही. कनेक्शन तपासा आणि पुन्हा प्रयत्न करा.",
+"सेव नहीं हुआ। कनेक्शन जाँचें और फिर कोशिश करें।"
+],
+"Inkcircle reached today's free reading limit. It resets at {0}.": [
+"Inkcircle ने आजची मोफत वाचन मर्यादा गाठली. ती {0} ला पुन्हा सुरू होईल.",
+"Inkcircle आज की मुफ़्त पढ़ने की सीमा तक पहुँच गया। यह {0} बजे फिर शुरू होगी।"
+],
+"You": [
+"तुम्ही",
+"आप"
+],
+"A writer": [
+"एक लेखक",
+"एक लेखक"
+],
+"Scheduled a {0}-minute sprint for {1}.": [
+"{1} साठी {0} मिनिटांचा स्प्रिंट ठरवला.",
+"{1} के लिए {0} मिनट का स्प्रिंट तय किया।"
+],
+"Started a {0}-minute sprint. Join from the Sprint tab.": [
+"{0} मिनिटांचा स्प्रिंट सुरू केला. स्प्रिंट टॅबमधून सामील व्हा.",
+"{0} मिनट का स्प्रिंट शुरू किया। स्प्रिंट टैब से जुड़ें।"
+],
+"Shared {0}": [
+"{0} शेअर केलं",
+"{0} साझा किया"
+],
+"Here now": [
+"आत्ता इथे",
+"अभी यहाँ"
+],
+"Writing in {0}": [
+"{0} मध्ये लिहीत आहे",
+"{0} में लिख रहे हैं"
+],
+"Writing": [
+"लिहीत आहे",
+"लिख रहे हैं"
+],
+"Brainstorming on {0}": [
+"{0} वर विचारमंथन करत आहे",
+"{0} पर विचार-मंथन कर रहे हैं"
+],
+"Brainstorming": [
+"विचारमंथन करत आहे",
+"विचार-मंथन कर रहे हैं"
+],
+"Sketching": [
+"स्केच काढत आहे",
+"स्केच बना रहे हैं"
+],
+"In a writing sprint": [
+"लेखन स्प्रिंटमध्ये",
+"लेखन स्प्रिंट में"
+],
+"In {0}": [
+"{0} मध्ये",
+"{0} में"
+],
+"In a circle": [
+"एका सर्कलमध्ये",
+"एक सर्कल में"
+],
+"Muse is off for this visit.": [
+"या भेटीसाठी Muse बंद आहे.",
+"इस बार Muse बंद है।"
+],
+"Muse isn't available on this account.": [
+"या खात्यावर Muse उपलब्ध नाही.",
+"इस खाते पर Muse उपलब्ध नहीं है।"
+],
+"Muse needs a short break. Try again in a minute.": [
+"Muse ला थोडी विश्रांती हवी आहे. एका मिनिटाने पुन्हा प्रयत्न करा.",
+"Muse को थोड़ा आराम चाहिए। एक मिनट बाद फिर कोशिश करें।"
+],
+"Muse can't help with that one. Try asking a different way.": [
+"Muse यात मदत करू शकत नाही. वेगळ्या प्रकारे विचारून पाहा.",
+"Muse इसमें मदद नहीं कर सकता। किसी और तरह से पूछकर देखें।"
+],
+"Sign in to Claude again to use Muse.": [
+"Muse वापरण्यासाठी Claude मध्ये पुन्हा साइन इन करा.",
+"Muse इस्तेमाल करने के लिए Claude में फिर से साइन इन करें।"
+],
+"Muse's answer came back jumbled. Try again.": [
+"Muse चं उत्तर गोंधळलेलं आलं. पुन्हा प्रयत्न करा.",
+"Muse का जवाब गड़बड़ आया। फिर कोशिश करें।"
+],
+"That passage is too long for Muse. Select a shorter part and try again.": [
+"हा उतारा Muse साठी खूप मोठा आहे. छोटा भाग निवडा आणि पुन्हा प्रयत्न करा.",
+"यह अंश Muse के लिए बहुत लंबा है। छोटा हिस्सा चुनें और फिर कोशिश करें।"
+],
+"Muse couldn't read that image.": [
+"Muse ला ते चित्र वाचता आलं नाही.",
+"Muse वह चित्र नहीं पढ़ सका।"
+],
+"Muse came back empty. Try asking differently.": [
+"Muse कडून काहीच आलं नाही. वेगळ्या प्रकारे विचारा.",
+"Muse से कुछ नहीं आया। अलग तरह से पूछें।"
+],
+"Muse couldn't answer just now. Try again.": [
+"Muse आत्ता उत्तर देऊ शकलं नाही. पुन्हा प्रयत्न करा.",
+"Muse अभी जवाब नहीं दे सका। फिर कोशिश करें।"
+],
+"This web address isn't allowed to sign in yet. In the Firebase console, add it under Authentication, Settings, Authorized domains.": [
+"हा वेब पत्ता अजून साइन इनसाठी परवानगी असलेला नाही. Firebase console मध्ये Authentication, Settings, Authorized domains खाली तो जोडा.",
+"इस वेब पते से अभी साइन इन की अनुमति नहीं है। Firebase console में Authentication, Settings, Authorized domains में इसे जोड़ें।"
+],
+"This sign-in method isn't switched on yet. Turn it on in the Firebase console under Authentication, Sign-in method.": [
+"ही साइन इन पद्धत अजून सुरू केलेली नाही. Firebase console मध्ये Authentication, Sign-in method खाली ती सुरू करा.",
+"यह साइन-इन तरीका अभी चालू नहीं है। Firebase console में Authentication, Sign-in method में इसे चालू करें।"
+],
+"That email address doesn't look right.": [
+"हा ईमेल पत्ता बरोबर वाटत नाही.",
+"यह ईमेल पता सही नहीं लगता।"
+],
+"That email and password don't match. Check them, or reset your password.": [
+"हा ईमेल आणि पासवर्ड जुळत नाहीत. ते तपासा, किंवा पासवर्ड रीसेट करा.",
+"यह ईमेल और पासवर्ड मेल नहीं खाते। इन्हें जाँचें या पासवर्ड रीसेट करें।"
+],
+"That password doesn't match. Try again, or reset your password.": [
+"पासवर्ड जुळत नाही. पुन्हा प्रयत्न करा, किंवा पासवर्ड रीसेट करा.",
+"पासवर्ड मेल नहीं खाता। फिर कोशिश करें या पासवर्ड रीसेट करें।"
+],
+"There's no account with that email yet. Create one instead.": [
+"या ईमेलचं खातं अजून नाही. नवीन खातं तयार करा.",
+"इस ईमेल का कोई खाता अभी नहीं है। नया खाता बनाएँ।"
+],
+"There is already an account with that email. Sign in instead.": [
+"या ईमेलचं खातं आधीच आहे. त्याऐवजी साइन इन करा.",
+"इस ईमेल का खाता पहले से है। इसकी जगह साइन इन करें।"
+],
+"Use a password with at least 6 characters.": [
+"किमान 6 अक्षरांचा पासवर्ड वापरा.",
+"कम से कम 6 अक्षरों का पासवर्ड रखें।"
+],
+"Enter your password.": [
+"तुमचा पासवर्ड लिहा.",
+"अपना पासवर्ड डालें।"
+],
+"Couldn't reach the sign-in service. Check your connection and try again.": [
+"साइन इन सेवेपर्यंत पोहोचता आलं नाही. कनेक्शन तपासा आणि पुन्हा प्रयत्न करा.",
+"साइन-इन सेवा तक नहीं पहुँच सके। कनेक्शन जाँचें और फिर कोशिश करें।"
+],
+"Too many attempts. Wait a few minutes and try again.": [
+"खूप प्रयत्न झाले. काही मिनिटं थांबा आणि पुन्हा प्रयत्न करा.",
+"बहुत सारी कोशिशें हो गईं। कुछ मिनट रुककर फिर कोशिश करें।"
+],
+"Inkcircle has sent all of today's emails. Try again tomorrow, or continue with Google.": [
+"Inkcircle ने आजचे सगळे ईमेल पाठवले आहेत. उद्या पुन्हा प्रयत्न करा, किंवा Google ने पुढे जा.",
+"Inkcircle आज के सारे ईमेल भेज चुका है। कल फिर कोशिश करें, या Google से आगे बढ़ें।"
+],
+"This account has been switched off.": [
+"हे खातं बंद केलं आहे.",
+"यह खाता बंद कर दिया गया है।"
+],
+"Your browser blocked the sign-in window. Allow pop-ups for this site and try again.": [
+"तुमच्या ब्राउझरने साइन इन विंडो अडवली. या साइटसाठी पॉप-अप्सना परवानगी द्या आणि पुन्हा प्रयत्न करा.",
+"आपके ब्राउज़र ने साइन-इन विंडो रोक दी। इस साइट के लिए पॉप-अप की अनुमति दें और फिर कोशिश करें।"
+],
+"Sign-in didn't work. Try again.": [
+"साइन इन झालं नाही. पुन्हा प्रयत्न करा.",
+"साइन इन नहीं हुआ। फिर कोशिश करें।"
+],
+"Writer": [
+"लेखक",
+"लेखक"
+],
+"Close": [
+"बंद करा",
+"बंद करें"
+],
+"Delete": [
+"हटवा",
+"हटाएँ"
+],
+"Cancel": [
+"रद्द करा",
+"रद्द करें"
+],
+"Ink {0}": [
+"शाई {0}",
+"स्याही {0}"
+],
+"Circle": [
+"सर्कल",
+"सर्कल"
+],
+"Join or start a circle first.": [
+"आधी एखाद्या सर्कलमध्ये सामील व्हा किंवा नवं सुरू करा.",
+"पहले किसी सर्कल से जुड़ें या नया शुरू करें।"
+],
+"Loading": [
+"लोड होत आहे",
+"लोड हो रहा है"
+],
+"Opening…": [
+"उघडत आहे…",
+"खुल रहा है…"
+],
+"Copied.": [
+"कॉपी झालं.",
+"कॉपी हो गया।"
+],
+"Couldn't copy here. Select the text and copy it yourself.": [
+"इथे कॉपी करता आलं नाही. मजकूर निवडून स्वतः कॉपी करा.",
+"यहाँ कॉपी नहीं हो सका। टेक्स्ट चुनकर ख़ुद कॉपी करें।"
+],
+"Saved {0}.": [
+"{0} सेव्ह झालं.",
+"{0} सेव हो गया।"
+],
+"Downloading {0}.": [
+"{0} डाउनलोड होत आहे.",
+"{0} डाउनलोड हो रहा है।"
+],
+"Downloads aren't available here, so the text was copied instead.": [
+"इथे डाउनलोड होत नाही, म्हणून मजकूर कॉपी केला आहे.",
+"यहाँ डाउनलोड नहीं होता, इसलिए टेक्स्ट कॉपी कर दिया गया है।"
+],
+"Downloads aren't available here.": [
+"इथे डाउनलोड होत नाही.",
+"यहाँ डाउनलोड नहीं होता।"
+],
+"Small": [
+"लहान",
+"छोटा"
+],
+"Medium": [
+"मध्यम",
+"मध्यम"
+],
+"Large": [
+"मोठा",
+"बड़ा"
+],
+"Extra large": [
+"खूप मोठा",
+"बहुत बड़ा"
+],
+"Text size": [
+"अक्षरांचा आकार",
+"अक्षरों का आकार"
+],
+"For writing and reading on this device.": [
+"या डिव्हाइसवर लिहिण्यासाठी आणि वाचण्यासाठी.",
+"इस डिवाइस पर लिखने और पढ़ने के लिए।"
+],
+"Done": [
+"झालं",
+"हो गया"
+],
+"On Inkcircle since {0}": [
+"{0} पासून Inkcircle वर",
+"{0} से Inkcircle पर"
+],
+"The name other writers see": [
+"इतर लेखकांना दिसणारं नाव",
+"दूसरे लेखकों को दिखने वाला नाम"
+],
+"What do you write? What are you working on right now?": [
+"तुम्ही काय लिहिता? सध्या कशावर काम करत आहात?",
+"आप क्या लिखते हैं? अभी किस पर काम कर रहे हैं?"
+],
+"Pen name": [
+"टोपणनाव",
+"उपनाम"
+],
+"Use your real name or a pen name.": [
+"तुमचं खरं नाव किंवा टोपणनाव वापरा.",
+"अपना असली नाम या उपनाम रखें।"
+],
+"About you": [
+"तुमच्याबद्दल",
+"आपके बारे में"
+],
+"Other writers see this on your profile.": [
+"इतर लेखकांना हे तुमच्या प्रोफाइलवर दिसतं.",
+"दूसरे लेखक इसे आपकी प्रोफ़ाइल पर देखते हैं।"
+],
+"What you write": [
+"तुम्ही काय लिहिता",
+"आप क्या लिखते हैं"
+],
+"This is the demo profile.": [
+"ही डेमो प्रोफाइल आहे.",
+"यह डेमो प्रोफ़ाइल है।"
+],
+"No bio yet.": [
+"अजून परिचय नाही.",
+"अभी कोई परिचय नहीं।"
+],
+"Circles": [
+"सर्कल",
+"सर्कल"
+],
+"Save profile": [
+"प्रोफाइल सेव्ह करा",
+"प्रोफ़ाइल सेव करें"
+],
+"Add the name other writers will see.": [
+"इतर लेखकांना दिसेल ते नाव लिहा.",
+"वह नाम लिखें जो दूसरे लेखकों को दिखेगा।"
+],
+"Profile saved.": [
+"प्रोफाइल सेव्ह झाली.",
+"प्रोफ़ाइल सेव हो गई।"
+],
+"Report": [
+"तक्रार करा",
+"शिकायत करें"
+],
+"Unblock": [
+"ब्लॉक काढा",
+"अनब्लॉक करें"
+],
+"Block": [
+"ब्लॉक करा",
+"ब्लॉक करें"
+],
+"Your profile": [
+"तुमची प्रोफाइल",
+"आपकी प्रोफ़ाइल"
+],
+"Match my device": [
+"डिव्हाइसप्रमाणे",
+"डिवाइस के अनुसार"
+],
+"Light": [
+"उजळ",
+"हल्का"
+],
+"Dark": [
+"गडद",
+"गहरा"
+],
+"Appearance": [
+"रूप",
+"रूप-रंग"
+],
+"Language": [
+"भाषा",
+"भाषा"
+],
+"Pen name, bio and what you write": [
+"टोपणनाव, परिचय आणि तुम्ही काय लिहिता",
+"उपनाम, परिचय और आप क्या लिखते हैं"
+],
+"Install Inkcircle": [
+"Inkcircle इन्स्टॉल करा",
+"Inkcircle इंस्टॉल करें"
+],
+"Put it on your home screen like an app": [
+"ॲपसारखं होम स्क्रीनवर ठेवा",
+"ऐप की तरह होम स्क्रीन पर रखें"
+],
+"Blocked writers": [
+"ब्लॉक केलेले लेखक",
+"ब्लॉक किए गए लेखक"
+],
+"Export my writing": [
+"माझं लेखन एक्सपोर्ट करा",
+"मेरा लेखन एक्सपोर्ट करें"
+],
+"Every project you write in, as one Markdown file": [
+"तुम्ही लिहिता ते सगळे प्रोजेक्ट, एका Markdown फाइलमध्ये",
+"आपके सभी प्रोजेक्ट, एक Markdown फ़ाइल में"
+],
+"About Inkcircle": [
+"Inkcircle बद्दल",
+"Inkcircle के बारे में"
+],
+"What it is and how it works": [
+"हे काय आहे आणि कसं चालतं",
+"यह क्या है और कैसे काम करता है"
+],
+"Privacy and terms": [
+"गोपनीयता आणि अटी",
+"गोपनीयता और शर्तें"
+],
+"Who can see your writing, and what we keep": [
+"तुमचं लेखन कोण पाहू शकतं, आणि आम्ही काय ठेवतो",
+"आपका लेखन कौन देख सकता है, और हम क्या रखते हैं"
+],
+"Sign out": [
+"साइन आउट करा",
+"साइन आउट करें"
+],
+"Leave the demo": [
+"डेमोमधून बाहेर पडा",
+"डेमो से बाहर निकलें"
+],
+"Back to the sign-in page": [
+"साइन इन पानावर परत",
+"साइन-इन पेज पर वापस"
+],
+"Reset the demo": [
+"डेमो पुन्हा सुरू करा",
+"डेमो फिर से शुरू करें"
+],
+"Start over with the example content": [
+"उदाहरणाच्या मजकुरासह नव्याने सुरुवात करा",
+"उदाहरण वाली सामग्री के साथ नए सिरे से शुरू करें"
+],
+"Reset the demo?": [
+"डेमो पुन्हा सुरू करायचा?",
+"डेमो फिर से शुरू करें?"
+],
+"Everything you added in the demo is removed from this browser.": [
+"डेमोमध्ये तुम्ही जोडलेलं सगळं या ब्राउझरमधून काढून टाकलं जाईल.",
+"डेमो में आपने जो कुछ जोड़ा है, वह सब इस ब्राउज़र से हटा दिया जाएगा।"
+],
+"Reset demo": [
+"डेमो रीसेट करा",
+"डेमो रीसेट करें"
+],
+"Settings": [
+"सेटिंग्ज",
+"सेटिंग्स"
+],
+"You blocked {0}.": [
+"तुम्ही {0} ना ब्लॉक केलं.",
+"आपने {0} को ब्लॉक किया।"
+],
+"You unblocked {0}.": [
+"तुम्ही {0} ना अनब्लॉक केलं.",
+"आपने {0} को अनब्लॉक किया।"
+],
+"Block {0}?": [
+"{0} ना ब्लॉक करायचं?",
+"{0} को ब्लॉक करें?"
+],
+"You won't see their messages, notes or cheers, and they won't show up as here now. They are not told.": [
+"तुम्हाला त्यांचे मेसेज, टिपा किंवा प्रोत्साहन दिसणार नाहीत, आणि ते 'आत्ता इथे' मध्ये दिसणार नाहीत. त्यांना याबद्दल कळवलं जात नाही.",
+"आपको उनके मैसेज, नोट या हौसला-अफ़ज़ाई नहीं दिखेंगे, और वे 'अभी यहाँ' में नहीं दिखेंगे। उन्हें इसकी ख़बर नहीं दी जाती।"
+],
+"They can still read anything you have shared with a circle you are both in. To stop that, leave the circle or ask its host to remove them.": [
+"तुम्ही दोघं असलेल्या सर्कलमध्ये तुम्ही शेअर केलेलं ते अजूनही वाचू शकतात. ते थांबवायचं असेल तर सर्कल सोडा किंवा होस्टला त्यांना काढायला सांगा.",
+"आप दोनों जिस सर्कल में हैं, वहाँ आपका साझा किया हुआ वे अब भी पढ़ सकते हैं। इसे रोकने के लिए सर्कल छोड़ें या होस्ट से उन्हें हटाने को कहें।"
+],
+"You have not blocked anyone.": [
+"तुम्ही कोणालाही ब्लॉक केलेलं नाही.",
+"आपने किसी को ब्लॉक नहीं किया है।"
+],
+"Harassment or bullying": [
+"छळ किंवा दादागिरी",
+"उत्पीड़न या धौंस"
+],
+"Spam": [
+"स्पॅम",
+"स्पैम"
+],
+"Inappropriate content": [
+"अयोग्य मजकूर",
+"अनुचित सामग्री"
+],
+"Copied work": [
+"चोरलेलं लेखन",
+"चुराया हुआ लेखन"
+],
+"Something else": [
+"आणखी काहीतरी",
+"कुछ और"
+],
+"Anything that helps us understand (optional)": [
+"समजायला मदत होईल असं काहीही (ऐच्छिक)",
+"कुछ भी जो समझने में मदद करे (वैकल्पिक)"
+],
+"Thank you. Your report was sent to the people who run Inkcircle.": [
+"धन्यवाद. तुमची तक्रार Inkcircle चालवणाऱ्यांना पाठवली आहे.",
+"धन्यवाद। आपकी शिकायत Inkcircle चलाने वालों को भेज दी गई है।"
+],
+"Block writer": [
+"लेखकाला ब्लॉक करा",
+"लेखक को ब्लॉक करें"
+],
+"This message is sent with your report. The writer is not told who reported it.": [
+"हा मेसेज तुमच्या तक्रारीसोबत पाठवला जातो. तक्रार कोणी केली हे लेखकाला सांगितलं जात नाही.",
+"यह मैसेज आपकी शिकायत के साथ भेजा जाता है। लेखक को नहीं बताया जाता कि शिकायत किसने की।"
+],
+"The writer is not told who reported them.": [
+"तक्रार कोणी केली हे लेखकाला सांगितलं जात नाही.",
+"लेखक को नहीं बताया जाता कि शिकायत किसने की।"
+],
+"What is wrong?": [
+"काय चुकीचं आहे?",
+"क्या ग़लत है?"
+],
+"Details": [
+"तपशील",
+"विवरण"
+],
+"Report this message": [
+"या मेसेजची तक्रार करा",
+"इस मैसेज की शिकायत करें"
+],
+"Report {0}": [
+"{0} ची तक्रार करा",
+"{0} की शिकायत करें"
+],
+"Send report": [
+"तक्रार पाठवा",
+"शिकायत भेजें"
+],
+"Tap the Share button in Safari.": [
+"Safari मधलं Share बटण दाबा.",
+"Safari में Share बटन दबाएँ।"
+],
+"Choose \"Add to Home Screen\".": [
+"\"Add to Home Screen\" निवडा.",
+"\"Add to Home Screen\" चुनें।"
+],
+"Tap Add. Inkcircle now opens like an app.": [
+"Add दाबा. आता Inkcircle ॲपसारखं उघडेल.",
+"Add दबाएँ। अब Inkcircle ऐप की तरह खुलेगा।"
+],
+"You don't have any projects to export yet.": [
+"एक्सपोर्ट करण्यासाठी तुमचे अजून कोणतेही प्रोजेक्ट नाहीत.",
+"एक्सपोर्ट करने के लिए आपके पास अभी कोई प्रोजेक्ट नहीं है।"
+],
+"Gathering your projects…": [
+"तुमचे प्रोजेक्ट गोळा करत आहे…",
+"आपके प्रोजेक्ट इकट्ठा हो रहे हैं…"
+],
+"Desk": [
+"डेस्क",
+"डेस्क"
+],
+"Write": [
+"लिहा",
+"लिखें"
+],
+"Brainstorm": [
+"विचारमंथन",
+"विचार-मंथन"
+],
+"Illustrate": [
+"चित्र",
+"चित्र"
+],
+"Inkcircle: go to your desk": [
+"Inkcircle: तुमच्या डेस्कवर जा",
+"Inkcircle: अपने डेस्क पर जाएँ"
+],
+"Sections": [
+"विभाग",
+"विभाग"
+],
+"Create": [
+"नवीन तयार करा",
+"नया बनाएँ"
+],
+"You're trying the demo. Everything stays in this browser.": [
+"तुम्ही डेमो वापरून पाहत आहात. सगळं या ब्राउझरमध्येच राहतं.",
+"आप डेमो आज़मा रहे हैं। सब कुछ इसी ब्राउज़र में रहता है।"
+],
+"Preview: everything you add stays in this browser.": [
+"प्रीव्ह्यू: तुम्ही जोडलेलं सगळं या ब्राउझरमध्येच राहतं.",
+"प्रीव्यू: आप जो भी जोड़ते हैं, वह इसी ब्राउज़र में रहता है।"
+],
+"Sign up": [
+"खातं तयार करा",
+"साइन अप करें"
+],
+"You're offline. Your changes are saved on this device and sync when you're back.": [
+"तुम्ही ऑफलाइन आहात. तुमचे बदल या डिव्हाइसवर सेव्ह आहेत आणि परत आल्यावर सिंक होतील.",
+"आप ऑफ़लाइन हैं। आपके बदलाव इस डिवाइस पर सेव हैं और वापस आने पर सिंक होंगे।"
+],
+"Reconnecting. Recent changes may take a moment to show.": [
+"पुन्हा जोडत आहे. अलीकडचे बदल दिसायला थोडा वेळ लागू शकतो.",
+"फिर से जुड़ रहा है। हाल के बदलाव दिखने में थोड़ा समय लग सकता है।"
+],
+"Sprint": [
+"स्प्रिंट",
+"स्प्रिंट"
+],
+"Your circles": [
+"तुमची सर्कल्स",
+"आपके सर्कल"
+],
+"Sprint running": [
+"स्प्रिंट सुरू आहे",
+"स्प्रिंट चल रहा है"
+],
+"New messages": [
+"नवीन मेसेज",
+"नए मैसेज"
+],
+"Find a circle": [
+"सर्कल शोधा",
+"सर्कल खोजें"
+],
+"Profile and settings": [
+"प्रोफाइल आणि सेटिंग्ज",
+"प्रोफ़ाइल और सेटिंग्स"
+],
+"This page didn't open properly. Go back to your desk and try again.": [
+"हे पान नीट उघडलं नाही. तुमच्या डेस्कवर परत जा आणि पुन्हा प्रयत्न करा.",
+"यह पेज ठीक से नहीं खुला। अपने डेस्क पर लौटें और फिर कोशिश करें।"
+],
+"Go to your desk": [
+"तुमच्या डेस्कवर जा",
+"अपने डेस्क पर जाएँ"
+],
+"Open the demo desk": [
+"डेमो डेस्क उघडा",
+"डेमो डेस्क खोलें"
+],
+"Continue with Google": [
+"Google ने पुढे जा",
+"Google से आगे बढ़ें"
+],
+"Sign in with email": [
+"ईमेलने साइन इन करा",
+"ईमेल से साइन इन करें"
+],
+"Open Inkcircle": [
+"Inkcircle उघडा",
+"Inkcircle खोलें"
+],
+"Free while Inkcircle is in beta. Want a look first? ": [
+"Inkcircle बीटामध्ये असेपर्यंत मोफत. आधी पाहायचं आहे? ",
+"Inkcircle बीटा में रहने तक मुफ़्त। पहले देखना चाहते हैं?"
+],
+"Try the demo": [
+"डेमो वापरून पाहा",
+"डेमो आज़माएँ"
+],
+". It runs in your browser and saves nothing to our servers.": [
+". तो तुमच्या ब्राउझरमध्ये चालतो आणि आमच्या सर्व्हरवर काहीही सेव्ह करत नाही.",
+"। यह आपके ब्राउज़र में चलता है और हमारे सर्वर पर कुछ भी सेव नहीं करता।"
+],
+"This preview keeps everything in your browser.": [
+"हा प्रीव्ह्यू सगळं तुमच्या ब्राउझरमध्येच ठेवतो.",
+"यह प्रीव्यू सब कुछ आपके ब्राउज़र में ही रखता है।"
+],
+"Free while Inkcircle is in beta.": [
+"Inkcircle बीटामध्ये असेपर्यंत मोफत.",
+"Inkcircle बीटा में रहने तक मुफ़्त।"
+],
+"Open the demo": [
+"डेमो उघडा",
+"डेमो खोलें"
+],
+"Your desk": [
+"तुमचा डेस्क",
+"आपका डेस्क"
+],
+"Sign in": [
+"साइन इन करा",
+"साइन इन करें"
+],
+"Chapter 2, 1,240 words": [
+"प्रकरण 2, 1,240 शब्द",
+"अध्याय 2, 1,240 शब्द"
+],
+"Saved": [
+"सेव्ह झालं",
+"सेव हो गया"
+],
+"Who is drawing the new roads?": [
+"नवे रस्ते कोण काढतंय?",
+"नई सड़कें कौन बना रहा है?"
+],
+"Sprint in Founding Circle": [
+"Founding Circle मध्ये स्प्रिंट",
+"Founding Circle में स्प्रिंट"
+],
+"Chapters that save as you type. Leave notes on a line, export anytime, and share a manuscript with a co-author without stepping on each other's words.": [
+"तुम्ही टाइप करताच सेव्ह होणारी प्रकरणं. एखाद्या ओळीवर टीप द्या, कधीही एक्सपोर्ट करा, आणि एकमेकांच्या शब्दांवर पाय न देता सहलेखकासोबत हस्तलिखित शेअर करा.",
+"टाइप करते ही सेव होने वाले अध्याय। किसी पंक्ति पर नोट छोड़ें, कभी भी एक्सपोर्ट करें, और सह-लेखक के साथ पांडुलिपि साझा करें, बिना एक-दूसरे के शब्दों पर चढ़े।"
+],
+"Lay out characters, places and plot beats on index cards. Connect them, vote on them, and see your circle's cursors move as they work.": [
+"पात्रं, ठिकाणं आणि कथानकाचे टप्पे इंडेक्स कार्डांवर मांडा. त्यांना जोडा, त्यांवर मत द्या, आणि तुमच्या सर्कलचे कर्सर काम करताना फिरताना पाहा.",
+"पात्र, जगहें और कथानक के मोड़ इंडेक्स कार्ड पर सजाएँ। उन्हें जोड़ें, उन पर वोट करें, और अपने सर्कल के कर्सर काम करते हुए चलते देखें।"
+],
+"A sketchbook for character studies, maps and covers. Draw with a finger or a stylus, then place a sketch right inside a chapter.": [
+"पात्रांचे अभ्यास, नकाशे आणि मुखपृष्ठांसाठी एक स्केचबुक. बोटाने किंवा स्टायलसने काढा, आणि स्केच थेट प्रकरणात ठेवा.",
+"पात्रों के अध्ययन, नक़्शों और कवर के लिए एक स्केचबुक। उँगली या स्टायलस से बनाएँ, फिर स्केच सीधे अध्याय में रखें।"
+],
+"Small writing groups with a chat, a shared shelf of work, and timed sprints where everyone writes at the same time.": [
+"चॅट, कामाचं सामायिक कपाट आणि सगळे एकाच वेळी लिहितात असे वेळ-बद्ध स्प्रिंट असलेले छोटे लेखन गट.",
+"छोटे लेखन समूह, जिनमें चैट, काम की साझा अलमारी और समयबद्ध स्प्रिंट हैं जहाँ सब एक साथ लिखते हैं।"
+],
+"Use your Google account, or any email address with a password.": [
+"तुमचं Google खातं, किंवा पासवर्डसह कोणताही ईमेल पत्ता वापरा.",
+"अपना Google खाता, या पासवर्ड के साथ कोई भी ईमेल पता इस्तेमाल करें।"
+],
+"Find your circle": [
+"तुमचं सर्कल शोधा",
+"अपना सर्कल खोजें"
+],
+"Join one, or start a circle for your genre, your city or your schedule.": [
+"एखाद्यात सामील व्हा, किंवा तुमच्या प्रकारासाठी, शहरासाठी किंवा वेळापत्रकासाठी सर्कल सुरू करा.",
+"किसी से जुड़ें, या अपनी विधा, अपने शहर या अपने समय के हिसाब से सर्कल शुरू करें।"
+],
+"Sprint together": [
+"एकत्र स्प्रिंट करा",
+"साथ में स्प्रिंट करें"
+],
+"Pick 15 minutes and write. Word counts show up live; your words stay private.": [
+"15 मिनिटं निवडा आणि लिहा. शब्दसंख्या लगेच दिसते; तुमचे शब्द खासगी राहतात.",
+"15 मिनट चुनें और लिखें। शब्द-गिनती तुरंत दिखती है; आपके शब्द निजी रहते हैं।"
+],
+"How it works": [
+"हे कसं चालतं",
+"यह कैसे काम करता है"
+],
+"Your writing desk, shared with your circle.": [
+"तुमचं लेखनाचं टेबल, तुमच्या सर्कलसोबत.",
+"आपकी लेखन की मेज़, आपके सर्कल के साथ।"
+],
+"Inkcircle is a home for writers. Draft your chapters, sketch characters and maps, plan your plot on index cards, and write in timed sprints with a small group that keeps you going.": [
+"Inkcircle हे लेखकांचं घर आहे. तुमची प्रकरणं लिहा, पात्रं आणि नकाशे काढा, इंडेक्स कार्डांवर कथानक आखा, आणि तुम्हाला पुढे नेणाऱ्या छोट्या गटासोबत वेळ-बद्ध स्प्रिंटमध्ये लिहा.",
+"Inkcircle लेखकों का घर है। अपने अध्याय लिखें, पात्र और नक़्शे बनाएँ, इंडेक्स कार्ड पर कथानक की योजना बनाएँ, और एक छोटे समूह के साथ समयबद्ध स्प्रिंट में लिखें जो आपको आगे बढ़ाता रहे।"
+],
+"You've been invited to a writing circle. Sign in and it opens right away.": [
+"तुम्हाला एका लेखन सर्कलचं आमंत्रण आहे. साइन इन करा आणि ते लगेच उघडेल.",
+"आपको एक लेखन सर्कल में बुलाया गया है। साइन इन करें और यह तुरंत खुल जाएगा।"
+],
+"What you can do here": [
+"इथे तुम्ही काय करू शकता",
+"यहाँ आप क्या कर सकते हैं"
+],
+"How a circle works": [
+"सर्कल कसं चालतं",
+"सर्कल कैसे काम करता है"
+],
+"Most drafts stall in the middle.": [
+"बहुतेक मसुदे मध्यातच अडकतात.",
+"ज़्यादातर मसौदे बीच में ही अटक जाते हैं।"
+],
+"A sprint gets you through it. Pick a time, and everyone in your circle writes until the clock runs out. Afterwards you see how far the group got together, and you keep going tomorrow.": [
+"स्प्रिंट तुम्हाला त्यातून पार करतो. वेळ ठरवा, आणि घड्याळ संपेपर्यंत तुमच्या सर्कलमधले सगळे लिहितात. नंतर गट मिळून किती पुढे गेला ते दिसतं, आणि उद्या तुम्ही पुढे लिहिता.",
+"स्प्रिंट आपको उससे पार कराता है। समय चुनें, और घड़ी ख़त्म होने तक आपके सर्कल के सभी लोग लिखते हैं। बाद में दिखता है कि समूह मिलकर कितना आगे बढ़ा, और कल आप फिर आगे बढ़ते हैं।"
+],
+"Pull up a chair.": [
+"या, बसा.",
+"आइए, बैठिए।"
+],
+"Inkcircle is in early beta and free to use. Your writing stays yours, and you can export it at any time.": [
+"Inkcircle सुरुवातीच्या बीटामध्ये आहे आणि वापरायला मोफत आहे. तुमचं लेखन तुमचंच राहतं, आणि तुम्ही ते कधीही एक्सपोर्ट करू शकता.",
+"Inkcircle शुरुआती बीटा में है और इस्तेमाल के लिए मुफ़्त है। आपका लेखन आपका ही रहता है, और आप उसे कभी भी एक्सपोर्ट कर सकते हैं।"
+],
+"A 30-second tour of Inkcircle": [
+"Inkcircle ची 30 सेकंदांची ओळख",
+"Inkcircle की 30 सेकंड की झलक"
+],
+"See it in 30 seconds": [
+"30 सेकंदांत पाहा",
+"30 सेकंड में देखें"
+],
+"A circle plots a story on index cards, drafts a chapter, sketches a map and finishes with a sprint, all in one place.": [
+"एक सर्कल इंडेक्स कार्डांवर कथा आखतं, प्रकरण लिहितं, नकाशा काढतं आणि स्प्रिंटने शेवट करतं, सगळं एकाच ठिकाणी.",
+"एक सर्कल इंडेक्स कार्ड पर कहानी की योजना बनाता है, अध्याय लिखता है, नक़्शा बनाता है और स्प्रिंट से ख़त्म करता है, सब एक ही जगह।"
+],
+"Back": [
+"मागे",
+"वापस"
+],
+"Inkcircle is a small beta run by an individual, not a company. This page says in plain words what happens to your writing and your details.": [
+"Inkcircle हा एका व्यक्तीने चालवलेला छोटा बीटा आहे, कंपनी नाही. तुमच्या लेखनाचं आणि माहितीचं काय होतं, ते हे पान साध्या शब्दांत सांगतं.",
+"Inkcircle एक व्यक्ति द्वारा चलाया जा रहा छोटा बीटा है, कोई कंपनी नहीं। आपके लेखन और जानकारी के साथ क्या होता है, यह पेज सीधे शब्दों में बताता है।"
+],
+"Your writing is yours": [
+"तुमचं लेखन तुमचंच आहे",
+"आपका लेखन आपका है"
+],
+"You own everything you write, draw and post here. Inkcircle claims no rights over it and will never publish, sell or use it for advertising.": [
+"इथे तुम्ही लिहिता, काढता आणि पोस्ट करता त्या सगळ्याचे मालक तुम्ही आहात. Inkcircle त्यावर कोणताही हक्क सांगत नाही आणि ते कधीही प्रकाशित करणार नाही, विकणार नाही किंवा जाहिरातीसाठी वापरणार नाही.",
+"यहाँ आप जो कुछ लिखते, बनाते और पोस्ट करते हैं, उसके मालिक आप हैं। Inkcircle उस पर कोई अधिकार नहीं जताता और उसे कभी प्रकाशित नहीं करेगा, बेचेगा नहीं, न ही विज्ञापन के लिए इस्तेमाल करेगा।"
+],
+"You can export every project as a file from Settings at any time.": [
+"सेटिंग्जमधून तुम्ही प्रत्येक प्रोजेक्ट कधीही फाइल म्हणून एक्सपोर्ट करू शकता.",
+"सेटिंग्स से आप हर प्रोजेक्ट को कभी भी फ़ाइल के रूप में एक्सपोर्ट कर सकते हैं।"
+],
+"Who can see your work": [
+"तुमचं काम कोण पाहू शकतं",
+"आपका काम कौन देख सकता है"
+],
+"Every project, board and sketch has one of three settings, and you choose it.": [
+"प्रत्येक प्रोजेक्ट, बोर्ड आणि स्केचसाठी तीनपैकी एक सेटिंग असते, आणि ती तुम्ही निवडता.",
+"हर प्रोजेक्ट, बोर्ड और स्केच की तीन में से एक सेटिंग होती है, और उसे आप चुनते हैं।"
+],
+"Only you and co-authors: nobody else can open it.": [
+"फक्त तुम्ही आणि सहलेखक: दुसरं कोणीही ते उघडू शकत नाही.",
+"सिर्फ़ आप और सह-लेखक: कोई और इसे नहीं खोल सकता।"
+],
+"Your circle: members of one circle can read it and leave notes.": [
+"तुमचं सर्कल: एका सर्कलचे सदस्य ते वाचू शकतात आणि टिपा देऊ शकतात.",
+"आपका सर्कल: एक सर्कल के सदस्य इसे पढ़ सकते हैं और नोट छोड़ सकते हैं।"
+],
+"Everyone on Inkcircle: any signed-in writer can read it.": [
+"Inkcircle वरील सगळे: साइन इन केलेला कोणताही लेखक ते वाचू शकतो.",
+"Inkcircle पर सभी: साइन इन किया हुआ कोई भी लेखक इसे पढ़ सकता है।"
+],
+"Sprint pages are private. Other writers only see your word count.": [
+"स्प्रिंटची पानं खासगी असतात. इतर लेखकांना फक्त तुमची शब्दसंख्या दिसते.",
+"स्प्रिंट के पन्ने निजी होते हैं। दूसरे लेखकों को सिर्फ़ आपकी शब्द-गिनती दिखती है।"
+],
+"Circle chats are visible to the members of that circle. Chats in circles that anyone can join are visible to every signed-in writer.": [
+"सर्कलचं चॅट त्या सर्कलच्या सदस्यांना दिसतं. कोणीही सामील होऊ शकतं अशा सर्कलचं चॅट साइन इन केलेल्या प्रत्येक लेखकाला दिसतं.",
+"सर्कल की चैट उस सर्कल के सदस्यों को दिखती है। जिन सर्कलों में कोई भी जुड़ सकता है, उनकी चैट हर साइन-इन लेखक को दिखती है।"
+],
+"In a circle, members can see who has read their messages.": [
+"सर्कलमध्ये, आपले मेसेज कोणी वाचले हे सदस्यांना दिसतं.",
+"सर्कल में, सदस्य देख सकते हैं कि उनके मैसेज किसने पढ़े।"
+],
+"What we keep": [
+"आम्ही काय ठेवतो",
+"हम क्या रखते हैं"
+],
+"Your name, profile photo and email address, from the Google account or email you sign in with. Other writers see your name and photo, never your email address.": [
+"तुम्ही ज्या Google खात्याने किंवा ईमेलने साइन इन करता, त्यातलं तुमचं नाव, प्रोफाइल फोटो आणि ईमेल पत्ता. इतर लेखकांना तुमचं नाव आणि फोटो दिसतो, ईमेल पत्ता कधीच नाही.",
+"आप जिस Google खाते या ईमेल से साइन इन करते हैं, उससे आपका नाम, प्रोफ़ाइल फ़ोटो और ईमेल पता। दूसरे लेखकों को आपका नाम और फ़ोटो दिखता है, ईमेल पता कभी नहीं।"
+],
+"What you create: projects, boards, sketches, messages, notes, and your daily word counts.": [
+"तुम्ही जे तयार करता ते: प्रोजेक्ट, बोर्ड, स्केच, मेसेज, टिपा आणि तुमची रोजची शब्दसंख्या.",
+"आप जो बनाते हैं: प्रोजेक्ट, बोर्ड, स्केच, मैसेज, नोट और आपकी रोज़ की शब्द-गिनती।"
+],
+"Inkcircle has no advertising and no tracking for advertisers.": [
+"Inkcircle मध्ये जाहिराती नाहीत आणि जाहिरातदारांसाठी कोणताही मागोवा घेतला जात नाही.",
+"Inkcircle में कोई विज्ञापन नहीं है और विज्ञापनदाताओं के लिए कोई ट्रैकिंग नहीं होती।"
+],
+"Where it is kept": [
+"ते कुठे ठेवलं जातं",
+"यह कहाँ रखा जाता है"
+],
+"Sign-in and storage are provided by Google Firebase. Your work is stored on Google Cloud servers. The person who runs Inkcircle can access the database to keep the service working and to act on reports.": [
+"साइन इन आणि साठवण Google Firebase कडून होते. तुमचं काम Google Cloud च्या सर्व्हरवर साठवलं जातं. सेवा चालू ठेवण्यासाठी आणि तक्रारींवर कारवाई करण्यासाठी Inkcircle चालवणारी व्यक्ती डेटाबेस पाहू शकते.",
+"साइन-इन और स्टोरेज Google Firebase देता है। आपका काम Google Cloud के सर्वर पर रखा जाता है। सेवा चालू रखने और शिकायतों पर कार्रवाई के लिए Inkcircle चलाने वाला व्यक्ति डेटाबेस देख सकता है।"
+],
+"Be a good circle member": [
+"चांगले सर्कल सदस्य व्हा",
+"एक अच्छे सर्कल सदस्य बनें"
+],
+"Post only work that is yours to share. No harassment, hate, threats or spam.": [
+"फक्त तुम्हाला शेअर करण्याचा हक्क असलेलं लेखनच पोस्ट करा. छळ, द्वेष, धमक्या किंवा स्पॅम नको.",
+"सिर्फ़ वही लेखन पोस्ट करें जिसे साझा करने का हक़ आपको है। उत्पीड़न, नफ़रत, धमकी या स्पैम नहीं।"
+],
+"You can report a message or a writer, and block a writer, from their profile or from any message. Reports go to the person who runs Inkcircle. Accounts that break these rules can be removed.": [
+"तुम्ही एखाद्या मेसेजची किंवा लेखकाची तक्रार करू शकता, आणि त्यांच्या प्रोफाइलमधून किंवा कोणत्याही मेसेजमधून लेखकाला ब्लॉक करू शकता. तक्रारी Inkcircle चालवणाऱ्या व्यक्तीकडे जातात. हे नियम मोडणारी खाती काढली जाऊ शकतात.",
+"आप किसी मैसेज या लेखक की शिकायत कर सकते हैं, और उनकी प्रोफ़ाइल या किसी भी मैसेज से लेखक को ब्लॉक कर सकते हैं। शिकायतें Inkcircle चलाने वाले व्यक्ति के पास जाती हैं। ये नियम तोड़ने वाले खाते हटाए जा सकते हैं।"
+],
+"It is a beta": [
+"हा बीटा आहे",
+"यह बीटा है"
+],
+"Inkcircle is free while it is in beta and comes with no guarantees. Things can break, and the service can change or stop. Export the work you care about regularly.": [
+"बीटामध्ये असेपर्यंत Inkcircle मोफत आहे आणि त्याची कोणतीही हमी नाही. गोष्टी बिघडू शकतात, आणि सेवा बदलू किंवा थांबू शकते. तुम्हाला महत्त्वाचं वाटणारं काम नियमितपणे एक्सपोर्ट करा.",
+"बीटा में रहने तक Inkcircle मुफ़्त है और इसकी कोई गारंटी नहीं है। चीज़ें बिगड़ सकती हैं, और सेवा बदल या बंद हो सकती है। जो काम आपके लिए अहम है, उसे नियमित रूप से एक्सपोर्ट करें।"
+],
+"Leaving": [
+"बाहेर पडणं",
+"छोड़ना"
+],
+"You can delete your own projects, boards and sketches at any time. To have your whole account and its data removed, write to {0}.": [
+"तुम्ही तुमचे प्रोजेक्ट, बोर्ड आणि स्केच कधीही हटवू शकता. तुमचं संपूर्ण खातं आणि त्याचा डेटा काढून टाकायचा असल्यास {0} वर लिहा.",
+"आप अपने प्रोजेक्ट, बोर्ड और स्केच कभी भी हटा सकते हैं। अपना पूरा खाता और उसका डेटा हटवाने के लिए {0} पर लिखें।"
+],
+"You can delete your own projects, boards and sketches at any time. To have your whole account and its data removed, ask the person who invited you.": [
+"तुम्ही तुमचे प्रोजेक्ट, बोर्ड आणि स्केच कधीही हटवू शकता. तुमचं संपूर्ण खातं आणि त्याचा डेटा काढून टाकायचा असल्यास, ज्यांनी तुम्हाला आमंत्रित केलं त्यांना सांगा.",
+"आप अपने प्रोजेक्ट, बोर्ड और स्केच कभी भी हटा सकते हैं। अपना पूरा खाता और उसका डेटा हटवाने के लिए, जिन्होंने आपको बुलाया उनसे कहें।"
+],
+"Changes": [
+"बदल",
+"बदलाव"
+],
+"If this page changes in a way that matters, it will be announced in the app before it takes effect.": [
+"या पानात महत्त्वाचा बदल झाला, तर तो लागू होण्याआधी ॲपमध्ये जाहीर केला जाईल.",
+"अगर इस पेज में कोई अहम बदलाव होता है, तो लागू होने से पहले ऐप में उसकी घोषणा की जाएगी।"
+],
+"This browser blocks local storage, so the demo can't run here.": [
+"हा ब्राउझर लोकल स्टोरेज अडवतो, त्यामुळे डेमो इथे चालू शकत नाही.",
+"यह ब्राउज़र लोकल स्टोरेज रोकता है, इसलिए डेमो यहाँ नहीं चल सकता।"
+],
+"Sign in to Inkcircle": [
+"Inkcircle मध्ये साइन इन करा",
+"Inkcircle में साइन इन करें"
+],
+"New here? Signing in creates your account.": [
+"नवीन आहात? साइन इन केल्यावर तुमचं खातं तयार होतं.",
+"नए हैं? साइन इन करते ही आपका खाता बन जाता है।"
+],
+"Inkcircle only uses your name, photo and email address to set up your profile.": [
+"Inkcircle तुमचं नाव, फोटो आणि ईमेल पत्ता फक्त तुमची प्रोफाइल तयार करण्यासाठी वापरतं.",
+"Inkcircle आपका नाम, फ़ोटो और ईमेल पता सिर्फ़ आपकी प्रोफ़ाइल बनाने के लिए इस्तेमाल करता है।"
+],
+"I have an account": [
+"माझं खातं आहे",
+"मेरा खाता है"
+],
+"I'm new here": [
+"मी नवीन आहे",
+"मैं नया हूँ"
+],
+"Forgot your password?": [
+"पासवर्ड विसरलात?",
+"पासवर्ड भूल गए?"
+],
+"At least 6 characters": [
+"किमान 6 अक्षरं",
+"कम से कम 6 अक्षर"
+],
+"Your password": [
+"तुमचा पासवर्ड",
+"आपका पासवर्ड"
+],
+"You will pick your pen name next.": [
+"पुढच्या पायरीत तुम्ही तुमचं टोपणनाव निवडाल.",
+"अगले क़दम में आप अपना उपनाम चुनेंगे।"
+],
+"Create account": [
+"खातं तयार करा",
+"खाता बनाएँ"
+],
+"If there is an account for ": [
+"या पत्त्यासाठी खातं असेल: ",
+"अगर इस पते का खाता है:"
+],
+", you'll get an email with a link to choose a new password.": [
+", तर नवीन पासवर्ड निवडण्याची लिंक असलेला ईमेल तुम्हाला येईल.",
+", तो आपको नया पासवर्ड चुनने के लिंक वाला ईमेल मिलेगा।"
+],
+"Can't find it? Check your spam folder.": [
+"सापडत नाही? स्पॅम फोल्डर तपासा.",
+"नहीं मिल रहा? स्पैम फ़ोल्डर देखें।"
+],
+"Back to sign in": [
+"साइन इनवर परत",
+"साइन इन पर वापस"
+],
+"Email address": [
+"ईमेल पत्ता",
+"ईमेल पता"
+],
+"Password": [
+"पासवर्ड",
+"पासवर्ड"
+],
+"New here? Create an account with any email address.": [
+"नवीन आहात? कोणत्याही ईमेल पत्त्याने खातं तयार करा.",
+"नए हैं? किसी भी ईमेल पते से खाता बनाएँ।"
+],
+"A friend": [
+"एक मित्र",
+"कोई दोस्त"
+],
+"A writing group": [
+"एक लेखन गट",
+"कोई लेखन समूह"
+],
+"College or club": [
+"कॉलेज किंवा क्लब",
+"कॉलेज या क्लब"
+],
+"Somewhere else": [
+"दुसरीकडून",
+"कहीं और से"
+],
+"Welcome to Inkcircle": [
+"Inkcircle मध्ये स्वागत",
+"Inkcircle में स्वागत है"
+],
+"Adding the example story to your desk…": [
+"उदाहरणाची कथा तुमच्या डेस्कवर जोडत आहे…",
+"उदाहरण वाली कहानी आपके डेस्क पर जोड़ी जा रही है…"
+],
+"Your name or pen name": [
+"तुमचं नाव किंवा टोपणनाव",
+"आपका नाम या उपनाम"
+],
+"Set up your profile so other writers know who they are writing with.": [
+"तुमची प्रोफाइल तयार करा, म्हणजे इतर लेखकांना कळेल की ते कोणासोबत लिहीत आहेत.",
+"अपनी प्रोफ़ाइल बनाएँ ताकि दूसरे लेखक जानें कि वे किसके साथ लिख रहे हैं।"
+],
+"What should writers call you?": [
+"लेखकांनी तुम्हाला काय म्हणावं?",
+"लेखक आपको किस नाम से बुलाएँ?"
+],
+"What do you write?": [
+"तुम्ही काय लिहिता?",
+"आप क्या लिखते हैं?"
+],
+"Pick a few. You can change this later.": [
+"काही निवडा. हे नंतर बदलता येईल.",
+"कुछ चुनें। इसे बाद में बदल सकते हैं।"
+],
+"How did you find Inkcircle?": [
+"तुम्हाला Inkcircle कुठे सापडलं?",
+"आपको Inkcircle कहाँ मिला?"
+],
+"Optional. Only the person who runs Inkcircle sees this.": [
+"ऐच्छिक. हे फक्त Inkcircle चालवणाऱ्या व्यक्तीला दिसतं.",
+"वैकल्पिक। यह सिर्फ़ Inkcircle चलाने वाले व्यक्ति को दिखता है।"
+],
+"Continue": [
+"पुढे चला",
+"आगे बढ़ें"
+],
+"Invited": [
+"आमंत्रित",
+"आमंत्रित"
+],
+"Joined": [
+"सामील",
+"जुड़ गए"
+],
+"Requested": [
+"विनंती पाठवली",
+"अनुरोध भेजा"
+],
+"Ask to join": [
+"सामील होण्याची विनंती करा",
+"जुड़ने का अनुरोध करें"
+],
+"Join": [
+"सामील व्हा",
+"जुड़ें"
+],
+"Circles are small groups that write together. Join one now, or start your own.": [
+"सर्कल म्हणजे एकत्र लिहिणारे छोटे गट. आत्ता एखाद्यात सामील व्हा, किंवा स्वतःचं सुरू करा.",
+"सर्कल साथ लिखने वाले छोटे समूह हैं। अभी किसी से जुड़ें, या अपना शुरू करें।"
+],
+"Be the first": [
+"पहिले व्हा",
+"पहले बनें"
+],
+"There are no circles yet. Start the Founding Circle so the writers you invite have somewhere to meet.": [
+"अजून एकही सर्कल नाही. Founding Circle सुरू करा, म्हणजे तुम्ही बोलावलेल्या लेखकांना भेटायला जागा मिळेल.",
+"अभी कोई सर्कल नहीं है। Founding Circle शुरू करें ताकि आपके बुलाए लेखकों को मिलने की जगह मिले।"
+],
+"Start the Founding Circle": [
+"Founding Circle सुरू करा",
+"Founding Circle शुरू करें"
+],
+"The first writers on Inkcircle. Introduce yourself, share what you are working on, and sprint together.": [
+"Inkcircle वरचे पहिले लेखक. तुमची ओळख करून द्या, तुम्ही कशावर काम करताय ते शेअर करा, आणि एकत्र स्प्रिंट करा.",
+"Inkcircle के पहले लेखक। अपना परिचय दें, बताएँ कि आप किस पर काम कर रहे हैं, और साथ में स्प्रिंट करें।"
+],
+"The first writers on Inkcircle.": [
+"Inkcircle वरचे पहिले लेखक.",
+"Inkcircle के पहले लेखक।"
+],
+"The Founding Circle is open.": [
+"Founding Circle सुरू झालं आहे.",
+"Founding Circle खुल गया है।"
+],
+"Want your own? ": [
+"स्वतःचं हवं आहे? ",
+"अपना चाहिए?"
+],
+"Start a circle": [
+"सर्कल सुरू करा",
+"सर्कल शुरू करें"
+],
+" after you finish.": [
+" हे पूर्ण झाल्यावर.",
+" यह पूरा होने के बाद।"
+],
+"How would you like to start?": [
+"तुम्हाला कशी सुरुवात करायला आवडेल?",
+"आप कैसे शुरू करना चाहेंगे?"
+],
+"Start my own project": [
+"माझा स्वतःचा प्रोजेक्ट सुरू करा",
+"अपना प्रोजेक्ट शुरू करें"
+],
+"A novel, stories, poems, a script, a comic.": [
+"कादंबरी, कथा, कविता, पटकथा, कॉमिक.",
+"उपन्यास, कहानियाँ, कविताएँ, पटकथा, कॉमिक।"
+],
+"Explore an example story": [
+"उदाहरणाची कथा पाहा",
+"एक उदाहरण कहानी देखें"
+],
+"A short story with chapters, notes and a brainstorm board, added privately to your desk.": [
+"प्रकरणं, टिपा आणि विचारमंथन बोर्ड असलेली एक लघुकथा, तुमच्या डेस्कवर खासगीत जोडलेली.",
+"अध्यायों, नोट और विचार-मंथन बोर्ड वाली एक लघुकथा, आपके डेस्क पर निजी रूप से जोड़ी गई।"
+],
+"Look around first": [
+"आधी फिरून पाहा",
+"पहले घूमकर देखें"
+],
+"Go to your desk.": [
+"तुमच्या डेस्कवर जा.",
+"अपने डेस्क पर जाएँ।"
+],
+"Poem": [
+"कविता",
+"कविता"
+],
+"Scene": [
+"प्रसंग",
+"दृश्य"
+],
+"Page": [
+"पान",
+"पन्ना"
+],
+"Spread": [
+"दुपानी पसरण",
+"दो-पन्ना"
+],
+"Chapter": [
+"प्रकरण",
+"अध्याय"
+],
+"Add poem": [
+"कविता जोडा",
+"कविता जोड़ें"
+],
+"Add scene": [
+"प्रसंग जोडा",
+"दृश्य जोड़ें"
+],
+"Add page": [
+"पान जोडा",
+"पन्ना जोड़ें"
+],
+"Add spread": [
+"दुपानी पसरण जोडा",
+"दो-पन्ना जोड़ें"
+],
+"Add chapter": [
+"प्रकरण जोडा",
+"अध्याय जोड़ें"
+],
+"Untitled": [
+"शीर्षक नाही",
+"बिना शीर्षक"
+],
+"Project": [
+"प्रोजेक्ट",
+"प्रोजेक्ट"
+],
+"Sprint, {0} left": [
+"स्प्रिंट, {0} बाकी",
+"स्प्रिंट, {0} बाक़ी"
+],
+"Sprint {0}": [
+"स्प्रिंट {0}",
+"स्प्रिंट {0}"
+],
+"By approval": [
+"मंजुरीने",
+"मंज़ूरी से"
+],
+"Request sent": [
+"विनंती पाठवली",
+"अनुरोध भेजा गया"
+],
+"No image": [
+"चित्र नाही",
+"कोई चित्र नहीं"
+],
+"Untitled sketch": [
+"शीर्षक नसलेलं स्केच",
+"बिना शीर्षक स्केच"
+],
+"Start something": [
+"काहीतरी सुरू करा",
+"कुछ शुरू करें"
+],
+"A manuscript with chapters: a novel, stories, poems, a script.": [
+"प्रकरणं असलेलं हस्तलिखित: कादंबरी, कथा, कविता, पटकथा.",
+"अध्यायों वाली पांडुलिपि: उपन्यास, कहानियाँ, कविताएँ, पटकथा।"
+],
+"Brainstorm board": [
+"विचारमंथन बोर्ड",
+"विचार-मंथन बोर्ड"
+],
+"Index cards for characters, places and plot.": [
+"पात्रं, ठिकाणं आणि कथानकासाठी इंडेक्स कार्ड.",
+"पात्रों, जगहों और कथानक के लिए इंडेक्स कार्ड।"
+],
+"Sketch": [
+"स्केच",
+"स्केच"
+],
+"Draw a character, a map or a scene.": [
+"पात्र, नकाशा किंवा प्रसंग काढा.",
+"कोई पात्र, नक़्शा या दृश्य बनाएँ।"
+],
+"A group to write, share and sprint with.": [
+"एकत्र लिहिण्यासाठी, शेअर करण्यासाठी आणि स्प्रिंटसाठी एक गट.",
+"साथ लिखने, साझा करने और स्प्रिंट के लिए एक समूह।"
+],
+"Working title": [
+"तात्पुरतं शीर्षक",
+"कामचलाऊ शीर्षक"
+],
+"In a sentence or two, what is it about?": [
+"एक-दोन वाक्यांत, हे कशाबद्दल आहे?",
+"एक-दो वाक्यों में, यह किस बारे में है?"
+],
+"Title": [
+"शीर्षक",
+"शीर्षक"
+],
+"What kind of project": [
+"प्रोजेक्टचा प्रकार",
+"प्रोजेक्ट का प्रकार"
+],
+"Logline": [
+"एका ओळीत कथा",
+"एक पंक्ति में कहानी"
+],
+"Optional. One or two sentences help co-authors and readers.": [
+"ऐच्छिक. एक-दोन वाक्यं सहलेखकांना आणि वाचकांना मदत करतात.",
+"वैकल्पिक। एक-दो वाक्य सह-लेखकों और पाठकों की मदद करते हैं।"
+],
+"Word goal": [
+"शब्दांचं उद्दिष्ट",
+"शब्दों का लक्ष्य"
+],
+"Who can see it": [
+"कोण पाहू शकतं",
+"कौन देख सकता है"
+],
+"Cover ink": [
+"मुखपृष्ठाची शाई",
+"कवर की स्याही"
+],
+"Give your project a working title.": [
+"तुमच्या प्रोजेक्टला तात्पुरतं शीर्षक द्या.",
+"अपने प्रोजेक्ट को कामचलाऊ शीर्षक दें।"
+],
+"New project": [
+"नवीन प्रोजेक्ट",
+"नया प्रोजेक्ट"
+],
+"Create and start writing": [
+"तयार करा आणि लिहायला सुरुवात करा",
+"बनाएँ और लिखना शुरू करें"
+],
+"Project saved.": [
+"प्रोजेक्ट सेव्ह झाला.",
+"प्रोजेक्ट सेव हो गया।"
+],
+"Delete this project?": [
+"हा प्रोजेक्ट हटवायचा?",
+"यह प्रोजेक्ट हटाएँ?"
+],
+"\"{0}\" and all of its chapters and notes will be deleted for everyone. This can't be undone.": [
+"\"{0}\" आणि त्यातली सगळी प्रकरणं आणि टिपा सगळ्यांसाठी हटवल्या जातील. हे परत आणता येणार नाही.",
+"\"{0}\" और इसके सभी अध्याय और नोट सबके लिए हटा दिए जाएँगे। इसे वापस नहीं लाया जा सकता।"
+],
+"Delete project": [
+"प्रोजेक्ट हटवा",
+"प्रोजेक्ट हटाएँ"
+],
+"Project deleted.": [
+"प्रोजेक्ट हटवला.",
+"प्रोजेक्ट हटा दिया गया।"
+],
+"Project settings": [
+"प्रोजेक्ट सेटिंग्ज",
+"प्रोजेक्ट सेटिंग्स"
+],
+"Save changes": [
+"बदल सेव्ह करा",
+"बदलाव सेव करें"
+],
+"By {0}": [
+"लेखक: {0}",
+"लेखक: {0}"
+],
+"Preparing your manuscript…": [
+"तुमचं हस्तलिखित तयार करत आहे…",
+"आपकी पांडुलिपि तैयार हो रही है…"
+],
+"In your circles": [
+"तुमच्या सर्कल्समध्ये",
+"आपके सर्कलों में"
+],
+"Add": [
+"जोडा",
+"जोड़ें"
+],
+" can now write in this project.": [
+" आता या प्रोजेक्टमध्ये लिहू शकतात.",
+" अब इस प्रोजेक्ट में लिख सकते हैं।"
+],
+"Co-authors can write and edit every chapter. You can add anyone who shares a circle with you.": [
+"सहलेखक प्रत्येक प्रकरण लिहू आणि संपादित करू शकतात. तुमच्यासोबत एखाद्या सर्कलमध्ये असलेल्या कोणालाही तुम्ही जोडू शकता.",
+"सह-लेखक हर अध्याय लिख और संपादित कर सकते हैं। आप किसी को भी जोड़ सकते हैं जो आपके साथ किसी सर्कल में है।"
+],
+"Co-authors come from your circles. Join or start a circle, invite a writer to it, then add them here.": [
+"सहलेखक तुमच्या सर्कल्समधून येतात. सर्कलमध्ये सामील व्हा किंवा सुरू करा, त्यात लेखकाला बोलवा, मग त्यांना इथे जोडा.",
+"सह-लेखक आपके सर्कलों से आते हैं। किसी सर्कल से जुड़ें या शुरू करें, उसमें लेखक को बुलाएँ, फिर उन्हें यहाँ जोड़ें।"
+],
+"Add a co-author": [
+"सहलेखक जोडा",
+"सह-लेखक जोड़ें"
+],
+"No words yet today": [
+"आज अजून एकही शब्द नाही",
+"आज अभी एक भी शब्द नहीं"
+],
+"{0} this week": [
+"या आठवड्यात {0}",
+"इस हफ़्ते {0}"
+],
+"Days in a row with words written": [
+"सलग शब्द लिहिलेले दिवस",
+"लगातार लिखे गए दिन"
+],
+"{0} days in a row": [
+"सलग {0} दिवस",
+"लगातार {0} दिन"
+],
+"Your first page is waiting.": [
+"तुमचं पहिलं पान वाट पाहत आहे.",
+"आपका पहला पन्ना इंतज़ार कर रहा है।"
+],
+"A novel, a poem cycle, a comic script, a picture book. Start it here, then bring your circle in.": [
+"कादंबरी, कवितांची मालिका, कॉमिकची पटकथा, चित्रपुस्तक. इथे सुरू करा, मग तुमच्या सर्कलला सोबत घ्या.",
+"उपन्यास, कविताओं का सिलसिला, कॉमिक की पटकथा, चित्र-पुस्तक। यहाँ शुरू करें, फिर अपने सर्कल को साथ लें।"
+],
+"Not sure where to begin? Add the example story and look around.": [
+"कुठून सुरुवात करावी कळत नाही? उदाहरणाची कथा जोडा आणि फिरून पाहा.",
+"समझ नहीं आ रहा कहाँ से शुरू करें? उदाहरण वाली कहानी जोड़ें और घूमकर देखें।"
+],
+"Add the example": [
+"उदाहरण जोडा",
+"उदाहरण जोड़ें"
+],
+"Start a project": [
+"प्रोजेक्ट सुरू करा",
+"प्रोजेक्ट शुरू करें"
+],
+"This page is still blank. Pick up the pen.": [
+"हे पान अजून कोरं आहे. लेखणी उचला.",
+"यह पन्ना अभी कोरा है। क़लम उठाइए।"
+],
+"Continue writing": [
+"लिहिणं सुरू ठेवा",
+"लिखना जारी रखें"
+],
+"Write your first 100 words": [
+"तुमचे पहिले 100 शब्द लिहा",
+"अपने पहले 100 शब्द लिखें"
+],
+"Join or start a circle": [
+"सर्कलमध्ये सामील व्हा किंवा सुरू करा",
+"किसी सर्कल से जुड़ें या शुरू करें"
+],
+"Write in a sprint": [
+"स्प्रिंटमध्ये लिहा",
+"स्प्रिंट में लिखें"
+],
+"Add a card to a brainstorm board": [
+"विचारमंथन बोर्डवर कार्ड जोडा",
+"विचार-मंथन बोर्ड पर कार्ड जोड़ें"
+],
+"Draw your first sketch": [
+"तुमचं पहिलं स्केच काढा",
+"अपना पहला स्केच बनाएँ"
+],
+"Getting started": [
+"सुरुवात",
+"शुरुआत"
+],
+"Hide this list": [
+"ही यादी लपवा",
+"यह सूची छिपाएँ"
+],
+"Good morning": [
+"सुप्रभात",
+"सुप्रभात"
+],
+"Good afternoon": [
+"नमस्कार",
+"नमस्कार"
+],
+"Good evening": [
+"शुभ संध्याकाळ",
+"शुभ संध्या"
+],
+"New": [
+"नवीन",
+"नया"
+],
+"Your projects": [
+"तुमचे प्रोजेक्ट",
+"आपके प्रोजेक्ट"
+],
+"See all": [
+"सगळे पाहा",
+"सभी देखें"
+],
+"All circles": [
+"सगळी सर्कल्स",
+"सभी सर्कल"
+],
+"Circles are small groups that write together. Find one that fits, or start your own.": [
+"सर्कल म्हणजे एकत्र लिहिणारे छोटे गट. तुम्हाला साजेसं शोधा, किंवा स्वतःचं सुरू करा.",
+"सर्कल साथ लिखने वाले छोटे समूह हैं। अपने लायक़ कोई खोजें, या अपना शुरू करें।"
+],
+"From your sketchbook": [
+"तुमच्या स्केचबुकमधून",
+"आपकी स्केचबुक से"
+],
+"Sketchbook": [
+"स्केचबुक",
+"स्केचबुक"
+],
+"Writing sprints": [
+"लेखन स्प्रिंट",
+"लेखन स्प्रिंट"
+],
+"Open": [
+"उघडा",
+"खोलें"
+],
+"Look": [
+"पाहा",
+"देखें"
+],
+"Nobody is sprinting right now. Start a timed sprint in a circle and everyone there writes with you.": [
+"आत्ता कोणीही स्प्रिंट करत नाही. सर्कलमध्ये वेळ-बद्ध स्प्रिंट सुरू करा, आणि तिथले सगळे तुमच्यासोबत लिहितील.",
+"अभी कोई स्प्रिंट नहीं कर रहा। किसी सर्कल में समयबद्ध स्प्रिंट शुरू करें, और वहाँ सब आपके साथ लिखेंगे।"
+],
+"Start a sprint": [
+"स्प्रिंट सुरू करा",
+"स्प्रिंट शुरू करें"
+],
+"Who's here shows up once live presence is connected.": [
+"लाइव्ह उपस्थिती जोडली गेल्यावर इथे कोण आहे ते दिसेल.",
+"लाइव मौजूदगी जुड़ने पर यहाँ दिखेगा कि कौन है।"
+],
+"Just you at the desk right now. Writers in your circles show up here when they open Inkcircle.": [
+"आत्ता डेस्कवर फक्त तुम्ही. तुमच्या सर्कल्समधले लेखक Inkcircle उघडतात तेव्हा इथे दिसतात.",
+"अभी डेस्क पर सिर्फ़ आप हैं। आपके सर्कलों के लेखक Inkcircle खोलते ही यहाँ दिखते हैं।"
+],
+"Boards": [
+"बोर्ड",
+"बोर्ड"
+],
+"Updated {0}": [
+"{0} अपडेट केलं",
+"{0} अपडेट किया"
+],
+"Yours": [
+"तुमचे",
+"आपके"
+],
+"From your circles": [
+"तुमच्या सर्कल्समधून",
+"आपके सर्कलों से"
+],
+"Open to everyone": [
+"सगळ्यांसाठी खुले",
+"सबके लिए खुले"
+],
+"Your manuscripts, and the ones your circles are sharing.": [
+"तुमची हस्तलिखितं, आणि तुमची सर्कल्स शेअर करत असलेली.",
+"आपकी पांडुलिपियाँ, और वे जो आपके सर्कल साझा कर रहे हैं।"
+],
+"No projects yet. Start one: a novel, a poem cycle, a comic, anything with pages.": [
+"अजून एकही प्रोजेक्ट नाही. एक सुरू करा: कादंबरी, कवितांची मालिका, कॉमिक, पानं असलेलं काहीही.",
+"अभी कोई प्रोजेक्ट नहीं। एक शुरू करें: उपन्यास, कविताओं का सिलसिला, कॉमिक, पन्नों वाला कुछ भी।"
+],
+"Add the example story": [
+"उदाहरणाची कथा जोडा",
+"उदाहरण वाली कहानी जोड़ें"
+],
+"When writers in your circles share projects with the circle, they show up here.": [
+"तुमच्या सर्कल्समधले लेखक सर्कलसोबत प्रोजेक्ट शेअर करतात, तेव्हा ते इथे दिसतात.",
+"जब आपके सर्कलों के लेखक सर्कल के साथ प्रोजेक्ट साझा करते हैं, तो वे यहाँ दिखते हैं।"
+],
+"Nothing is open to everyone yet. Projects set to \"Everyone on Inkcircle\" appear here.": [
+"अजून काहीही सगळ्यांसाठी खुलं नाही. \"Inkcircle वरील सगळे\" असलेले प्रोजेक्ट इथे दिसतात.",
+"अभी कुछ भी सबके लिए खुला नहीं है। \"Inkcircle पर सभी\" वाले प्रोजेक्ट यहाँ दिखते हैं।"
+],
+"This project isn't here, or it's private to its authors.": [
+"हा प्रोजेक्ट इथे नाही, किंवा तो फक्त त्याच्या लेखकांसाठी खासगी आहे.",
+"यह प्रोजेक्ट यहाँ नहीं है, या यह अपने लेखकों के लिए निजी है।"
+],
+"Back to Write": [
+"लेखनाकडे परत",
+"लिखने पर वापस"
+],
+"Example": [
+"उदाहरण",
+"उदाहरण"
+],
+"Read": [
+"वाचा",
+"पढ़ें"
+],
+"Export manuscript as Markdown": [
+"हस्तलिखित Markdown म्हणून एक्सपोर्ट करा",
+"पांडुलिपि को Markdown के रूप में एक्सपोर्ट करें"
+],
+"edited {0} by you": [
+"{0} तुम्ही संपादित केलं",
+"{0} आपने संपादित किया"
+],
+"{0} is writing here": [
+"{0} इथे लिहीत आहेत",
+"{0} यहाँ लिख रहे हैं"
+],
+"Readers who loved this part": [
+"हा भाग आवडलेले वाचक",
+"यह हिस्सा पसंद करने वाले पाठक"
+],
+"Options for {0}": [
+"{0} चे पर्याय",
+"{0} के विकल्प"
+],
+"Contents": [
+"अनुक्रमणिका",
+"विषय-सूची"
+],
+"No chapters yet.": [
+"अजून एकही प्रकरण नाही.",
+"अभी कोई अध्याय नहीं।"
+],
+"Add the first one": [
+"पहिलं जोडा",
+"पहला जोड़ें"
+],
+"Open notes": [
+"उघड्या टिपा",
+"खुले नोट"
+],
+"On {0}": [
+"{0} वर",
+"{0} पर"
+],
+"Authors": [
+"लेखक",
+"लेखक"
+],
+"Started this project": [
+"हा प्रोजेक्ट सुरू केला",
+"यह प्रोजेक्ट शुरू किया"
+],
+"Co-author": [
+"सहलेखक",
+"सह-लेखक"
+],
+"Remove": [
+"काढा",
+"हटाएँ"
+],
+"Remove co-author?": [
+"सहलेखकाला काढायचं?",
+"सह-लेखक को हटाएँ?"
+],
+" will no longer be able to edit this project.": [
+" आता हा प्रोजेक्ट संपादित करू शकणार नाहीत.",
+" अब यह प्रोजेक्ट संपादित नहीं कर पाएँगे।"
+],
+"Leave": [
+"सोडा",
+"छोड़ें"
+],
+"Leave this project?": [
+"हा प्रोजेक्ट सोडायचा?",
+"यह प्रोजेक्ट छोड़ें?"
+],
+"You won't be able to edit it anymore.": [
+"तुम्हाला तो पुढे संपादित करता येणार नाही.",
+"आप इसे आगे संपादित नहीं कर पाएँगे।"
+],
+"Leave project": [
+"प्रोजेक्ट सोडा",
+"प्रोजेक्ट छोड़ें"
+],
+"Shared with": [
+"यांच्यासोबत शेअर केलं:",
+"इनके साथ साझा किया:"
+],
+"Brainstorm boards": [
+"विचारमंथन बोर्ड",
+"विचार-मंथन बोर्ड"
+],
+"Lay out characters, places and plot on index cards.": [
+"पात्रं, ठिकाणं आणि कथानक इंडेक्स कार्डांवर मांडा.",
+"पात्र, जगहें और कथानक इंडेक्स कार्ड पर सजाएँ।"
+],
+"New board": [
+"नवीन बोर्ड",
+"नया बोर्ड"
+],
+"Sketches": [
+"स्केच",
+"स्केच"
+],
+"Characters, maps, covers, scenes.": [
+"पात्रं, नकाशे, मुखपृष्ठं, प्रसंग.",
+"पात्र, नक़्शे, कवर, दृश्य।"
+],
+"New sketch": [
+"नवीन स्केच",
+"नया स्केच"
+],
+"Rename": [
+"नाव बदला",
+"नाम बदलें"
+],
+"Move up": [
+"वर हलवा",
+"ऊपर ले जाएँ"
+],
+"Move down": [
+"खाली हलवा",
+"नीचे ले जाएँ"
+],
+"Delete this part?": [
+"हा भाग हटवायचा?",
+"यह हिस्सा हटाएँ?"
+],
+"\"{0}\" ({1}) will be deleted for everyone.": [
+"\"{0}\" ({1}) सगळ्यांसाठी हटवलं जाईल.",
+"\"{0}\" ({1}) सबके लिए हटा दिया जाएगा।"
+],
+"Deleted.": [
+"हटवलं.",
+"हटा दिया।"
+],
+"Save": [
+"सेव्ह करा",
+"सेव करें"
+],
+"Chapter title": [
+"प्रकरणाचं शीर्षक",
+"अध्याय का शीर्षक"
+],
+"Notes": [
+"टिपा",
+"नोट"
+],
+"Muse: ideas and feedback": [
+"Muse: कल्पना आणि अभिप्राय",
+"Muse: विचार और फ़ीडबैक"
+],
+"Back to the project": [
+"प्रोजेक्टकडे परत",
+"प्रोजेक्ट पर वापस"
+],
+"More": [
+"आणखी",
+"और"
+],
+"Formatting": [
+"स्वरूप",
+"फ़ॉर्मैटिंग"
+],
+"Bold": [
+"ठळक",
+"बोल्ड"
+],
+"Italic": [
+"तिरपं",
+"इटैलिक"
+],
+"Heading": [
+"शीर्षक",
+"शीर्षक"
+],
+"Quotation": [
+"अवतरण",
+"उद्धरण"
+],
+"Scene break": [
+"प्रसंग बदल",
+"दृश्य बदलाव"
+],
+"Insert a sketch": [
+"स्केच घाला",
+"स्केच डालें"
+],
+"Leave a note on the selected lines": [
+"निवडलेल्या ओळींवर टीप द्या",
+"चुनी हुई पंक्तियों पर नोट छोड़ें"
+],
+"Love this part, or the lines you selected": [
+"हा भाग, किंवा निवडलेल्या ओळी आवडल्या",
+"यह हिस्सा, या चुनी हुई पंक्तियाँ पसंद करें"
+],
+"Focus mode": [
+"एकाग्र मोड",
+"फ़ोकस मोड"
+],
+"Start writing. Inkcircle saves as you go.": [
+"लिहायला सुरुवात करा. Inkcircle आपोआप सेव्ह करतं.",
+"लिखना शुरू करें। Inkcircle साथ-साथ सेव करता है।"
+],
+"Chapter text": [
+"प्रकरणाचा मजकूर",
+"अध्याय का टेक्स्ट"
+],
+"Side panel": [
+"बाजूचं पॅनल",
+"साइड पैनल"
+],
+"This part isn't here, or you don't have access to it.": [
+"हा भाग इथे नाही, किंवा तुम्हाला त्याचा ॲक्सेस नाही.",
+"यह हिस्सा यहाँ नहीं है, या आपके पास इसकी पहुँच नहीं है।"
+],
+"Deleted": [
+"हटवलं",
+"हटा दिया गया"
+],
+"Reading": [
+"वाचत आहात",
+"पढ़ रहे हैं"
+],
+"Saving…": [
+"सेव्ह होत आहे…",
+"सेव हो रहा है…"
+],
+"Unsaved changes": [
+"सेव्ह न झालेले बदल",
+"बिना सेव किए बदलाव"
+],
+"Saved on this device": [
+"या डिव्हाइसवर सेव्ह झालं",
+"इस डिवाइस पर सेव हुआ"
+],
+"{0} is writing in this part right now. Read along and leave notes; you can edit as soon as they leave.": [
+"{0} आत्ता या भागात लिहीत आहेत. सोबत वाचा आणि टिपा द्या; ते गेल्यावर तुम्ही संपादित करू शकाल.",
+"{0} अभी इस हिस्से में लिख रहे हैं। साथ में पढ़ें और नोट छोड़ें; उनके जाते ही आप संपादित कर सकेंगे।"
+],
+"Someone": [
+"कोणीतरी",
+"कोई"
+],
+"Try again": [
+"पुन्हा प्रयत्न करा",
+"फिर कोशिश करें"
+],
+"You are reading. Only the authors can edit this. Select a line and leave a note to give feedback.": [
+"तुम्ही वाचत आहात. फक्त लेखक हे संपादित करू शकतात. अभिप्रायासाठी एखादी ओळ निवडा आणि टीप द्या.",
+"आप पढ़ रहे हैं। इसे सिर्फ़ लेखक संपादित कर सकते हैं। फ़ीडबैक के लिए कोई पंक्ति चुनें और नोट छोड़ें।"
+],
+"This is your copy of the example story. Change anything you like.": [
+"ही उदाहरणाच्या कथेची तुमची प्रत आहे. हवं ते बदला.",
+"यह उदाहरण वाली कहानी की आपकी प्रति है। जो चाहें बदलें।"
+],
+"Someone else started editing while you were away, so your last unsaved lines were not saved.": [
+"तुम्ही दूर असताना कोणीतरी संपादन सुरू केलं, त्यामुळे तुमच्या शेवटच्या सेव्ह न झालेल्या ओळी सेव्ह झाल्या नाहीत.",
+"आपकी ग़ैरमौजूदगी में किसी और ने संपादन शुरू कर दिया, इसलिए आपकी आख़िरी बिना-सेव पंक्तियाँ सेव नहीं हुईं।"
+],
+"Copy my lines": [
+"माझ्या ओळी कॉपी करा",
+"मेरी पंक्तियाँ कॉपी करें"
+],
+"Your unsaved lines are copied.": [
+"तुमच्या सेव्ह न झालेल्या ओळी कॉपी झाल्या.",
+"आपकी बिना-सेव पंक्तियाँ कॉपी हो गईं।"
+],
+"Dismiss": [
+"ठीक आहे",
+"ठीक है"
+],
+"Too long to save": [
+"सेव्ह करायला खूप मोठं",
+"सेव करने के लिए बहुत लंबा"
+],
+"This part is too long to save in one piece. Move some of it into a new chapter.": [
+"हा भाग एका तुकड्यात सेव्ह करायला खूप मोठा आहे. त्यातला काही भाग नवीन प्रकरणात हलवा.",
+"यह हिस्सा एक बार में सेव करने के लिए बहुत लंबा है। इसका कुछ भाग नए अध्याय में ले जाएँ।"
+],
+"Not saved": [
+"सेव्ह झालं नाही",
+"सेव नहीं हुआ"
+],
+"Previous": [
+"मागचं",
+"पिछला"
+],
+"Next": [
+"पुढचं",
+"अगला"
+],
+"Muse": [
+"Muse",
+"Muse"
+],
+"Close panel": [
+"पॅनल बंद करा",
+"पैनल बंद करें"
+],
+"The authors will see the line you loved.": [
+"तुम्हाला आवडलेली ओळ लेखकांना दिसेल.",
+"आपकी पसंद की पंक्ति लेखकों को दिखेगी।"
+],
+"The authors will see that you loved this part. Select a line first to love just that line.": [
+"तुम्हाला हा भाग आवडला हे लेखकांना दिसेल. फक्त एखादी ओळ आवडली असेल तर आधी ती निवडा.",
+"लेखकों को दिखेगा कि आपको यह हिस्सा पसंद आया। सिर्फ़ एक पंक्ति पसंद करनी हो तो पहले उसे चुनें।"
+],
+"{0} loved this part": [
+"{0} यांना हा भाग आवडला",
+"{0} को यह हिस्सा पसंद आया"
+],
+"{0} readers loved this part": [
+"{0} वाचकांना हा भाग आवडला",
+"{0} पाठकों को यह हिस्सा पसंद आया"
+],
+"Find this in the text": [
+"हे मजकुरात शोधा",
+"इसे टेक्स्ट में खोजें"
+],
+"Leave a note": [
+"टीप द्या",
+"नोट छोड़ें"
+],
+"No notes on this part yet. Select a line, then leave a note to start a conversation about it.": [
+"या भागावर अजून टिपा नाहीत. एखादी ओळ निवडा, मग त्यावर चर्चा सुरू करण्यासाठी टीप द्या.",
+"इस हिस्से पर अभी कोई नोट नहीं। कोई पंक्ति चुनें, फिर उस पर बात शुरू करने के लिए नोट छोड़ें।"
+],
+"Reopen": [
+"पुन्हा उघडा",
+"फिर से खोलें"
+],
+"Resolve": [
+"सोडवलं",
+"हल हुआ"
+],
+"Delete this note?": [
+"ही टीप हटवायची?",
+"यह नोट हटाएँ?"
+],
+"It will be removed for everyone.": [
+"ती सगळ्यांसाठी काढली जाईल.",
+"यह सबके लिए हटा दिया जाएगा।"
+],
+"Delete note": [
+"टीप हटवा",
+"नोट हटाएँ"
+],
+"That line isn't in the text anymore.": [
+"ती ओळ आता मजकुरात नाही.",
+"वह पंक्ति अब टेक्स्ट में नहीं है।"
+],
+"What do you notice about these lines?": [
+"या ओळींबद्दल तुम्हाला काय जाणवतं?",
+"इन पंक्तियों में आपको क्या लगता है?"
+],
+"Leave a note for the authors.": [
+"लेखकांसाठी टीप द्या.",
+"लेखकों के लिए नोट छोड़ें।"
+],
+"Note posted.": [
+"टीप पोस्ट झाली.",
+"नोट पोस्ट हो गया।"
+],
+"Tip: select a line first to pin your note to it.": [
+"टिप: तुमची टीप एखाद्या ओळीला जोडायची असेल तर आधी ती ओळ निवडा.",
+"सुझाव: नोट को किसी पंक्ति से जोड़ने के लिए पहले वह पंक्ति चुनें।"
+],
+"Your note": [
+"तुमची टीप",
+"आपका नोट"
+],
+"Post note": [
+"टीप पोस्ट करा",
+"नोट पोस्ट करें"
+],
+"Muse reads this part, or just the lines you select, and helps you think. It suggests; you write.": [
+"Muse हा भाग, किंवा फक्त तुम्ही निवडलेल्या ओळी वाचतं आणि विचार करायला मदत करतं. ते सुचवतं; लिहिता तुम्ही.",
+"Muse यह हिस्सा, या सिर्फ़ आपकी चुनी पंक्तियाँ पढ़ता है और सोचने में मदद करता है। वह सुझाता है; लिखते आप हैं।"
+],
+"Stop": [
+"थांबवा",
+"रोकें"
+],
+"Copy": [
+"कॉपी करा",
+"कॉपी करें"
+],
+"Keep as a note": [
+"टीप म्हणून ठेवा",
+"नोट के रूप में रखें"
+],
+"Saved to notes.": [
+"टिपांमध्ये सेव्ह झालं.",
+"नोट में सेव हो गया।"
+],
+"Ask about your draft": [
+"तुमच्या मसुद्याबद्दल विचारा",
+"अपने मसौदे के बारे में पूछें"
+],
+"Ask Muse a question": [
+"Muse ला प्रश्न विचारा",
+"Muse से सवाल पूछें"
+],
+"What could happen next?": [
+"पुढे काय घडू शकतं?",
+"आगे क्या हो सकता है?"
+],
+"Feedback on this passage": [
+"या उताऱ्यावर अभिप्राय",
+"इस अंश पर फ़ीडबैक"
+],
+"Names for this world": [
+"या जगासाठी नावं",
+"इस दुनिया के लिए नाम"
+],
+"I'm stuck": [
+"मी अडकलोय",
+"मैं अटक गया हूँ"
+],
+"Ask": [
+"विचारा",
+"पूछें"
+],
+"Muse uses your Claude account. Claude asks before the first answer.": [
+"Muse तुमचं Claude खातं वापरतं. पहिल्या उत्तराआधी Claude विचारतं.",
+"Muse आपका Claude खाता इस्तेमाल करता है। पहले जवाब से पहले Claude पूछता है।"
+],
+"Thinking…": [
+"विचार करत आहे…",
+"सोच रहा है…"
+],
+"(Muse was cut short. Ask for less at a time.)": [
+"(Muse चं उत्तर मधेच थांबलं. एकावेळी कमी विचारा.)",
+"(Muse का जवाब बीच में कट गया। एक बार में कम पूछें।)"
+],
+"Readers of this project need to be able to see the sketch too. Sketches linked to this project always work.": [
+"या प्रोजेक्टच्या वाचकांनाही स्केच दिसायला हवं. या प्रोजेक्टशी जोडलेली स्केच नेहमी दिसतात.",
+"इस प्रोजेक्ट के पाठकों को भी स्केच दिखना चाहिए। इस प्रोजेक्ट से जुड़े स्केच हमेशा दिखते हैं।"
+],
+"No sketches to insert yet. Draw one and it will be linked to this project.": [
+"घालण्यासाठी अजून स्केच नाहीत. एक काढा, ते या प्रोजेक्टशी जोडलं जाईल.",
+"डालने के लिए अभी कोई स्केच नहीं। एक बनाएँ, वह इस प्रोजेक्ट से जुड़ जाएगा।"
+],
+"Draw a sketch": [
+"स्केच काढा",
+"स्केच बनाएँ"
+],
+"Export this part as Markdown": [
+"हा भाग Markdown म्हणून एक्सपोर्ट करा",
+"यह हिस्सा Markdown के रूप में एक्सपोर्ट करें"
+],
+"Export the whole project": [
+"संपूर्ण प्रोजेक्ट एक्सपोर्ट करा",
+"पूरा प्रोजेक्ट एक्सपोर्ट करें"
+],
+"Copy the text of this part": [
+"या भागाचा मजकूर कॉपी करा",
+"इस हिस्से का टेक्स्ट कॉपी करें"
+],
+"Leave focus mode": [
+"एकाग्र मोडमधून बाहेर पडा",
+"फ़ोकस मोड से बाहर निकलें"
+],
+"Delete this part": [
+"हा भाग हटवा",
+"यह हिस्सा हटाएँ"
+],
+"\"{0}\" will be deleted for everyone.": [
+"\"{0}\" सगळ्यांसाठी हटवलं जाईल.",
+"\"{0}\" सबके लिए हटा दिया जाएगा।"
+],
+"This part": [
+"हा भाग",
+"यह हिस्सा"
+],
+"Focus mode is on. Open More to leave it.": [
+"एकाग्र मोड सुरू आहे. बाहेर पडण्यासाठी 'आणखी' उघडा.",
+"फ़ोकस मोड चालू है। बाहर निकलने के लिए 'और' खोलें।"
+],
+"Not linked to a project": [
+"कोणत्याही प्रोजेक्टशी जोडलेलं नाही",
+"किसी प्रोजेक्ट से नहीं जुड़ा"
+],
+"What are you figuring out?": [
+"तुम्ही काय शोधत आहात?",
+"आप क्या सुलझा रहे हैं?"
+],
+"Board title": [
+"बोर्डचं शीर्षक",
+"बोर्ड का शीर्षक"
+],
+"Co-authors of the project can use a linked board too.": [
+"प्रोजेक्टचे सहलेखकही जोडलेला बोर्ड वापरू शकतात.",
+"प्रोजेक्ट के सह-लेखक भी जुड़ा हुआ बोर्ड इस्तेमाल कर सकते हैं।"
+],
+"Give the board a title.": [
+"बोर्डला शीर्षक द्या.",
+"बोर्ड को शीर्षक दें।"
+],
+"New brainstorm board": [
+"नवीन विचारमंथन बोर्ड",
+"नया विचार-मंथन बोर्ड"
+],
+"Create board": [
+"बोर्ड तयार करा",
+"बोर्ड बनाएँ"
+],
+"Index cards for characters, places, plot beats and questions. Everyone on a board sees changes as they happen.": [
+"पात्रं, ठिकाणं, कथानकाचे टप्पे आणि प्रश्नांसाठी इंडेक्स कार्ड. बोर्डवरच्या सगळ्यांना बदल लगेच दिसतात.",
+"पात्रों, जगहों, कथानक के मोड़ों और सवालों के लिए इंडेक्स कार्ड। बोर्ड पर सबको बदलाव तुरंत दिखते हैं।"
+],
+"No boards yet. Start one for a project, or a loose one for ideas you keep circling.": [
+"अजून एकही बोर्ड नाही. प्रोजेक्टसाठी सुरू करा, किंवा मनात घोळणाऱ्या कल्पनांसाठी एक मोकळा बोर्ड.",
+"अभी कोई बोर्ड नहीं। किसी प्रोजेक्ट के लिए शुरू करें, या मन में घूमते विचारों के लिए एक खुला बोर्ड।"
+],
+"Boards that writers share with your circles show up here.": [
+"लेखक तुमच्या सर्कल्ससोबत शेअर करतात ते बोर्ड इथे दिसतात.",
+"लेखक आपके सर्कलों के साथ जो बोर्ड साझा करते हैं, वे यहाँ दिखते हैं।"
+],
+"No open boards yet. Boards set to \"Everyone on Inkcircle\" appear here.": [
+"अजून खुले बोर्ड नाहीत. \"Inkcircle वरील सगळे\" असलेले बोर्ड इथे दिसतात.",
+"अभी कोई खुला बोर्ड नहीं। \"Inkcircle पर सभी\" वाले बोर्ड यहाँ दिखते हैं।"
+],
+"Untitled board": [
+"शीर्षक नसलेला बोर्ड",
+"बिना शीर्षक बोर्ड"
+],
+"For {0}": [
+"{0} साठी",
+"{0} के लिए"
+],
+"Board": [
+"बोर्ड",
+"बोर्ड"
+],
+"Spark": [
+"स्फूर्ती",
+"प्रेरणा"
+],
+"Spark ideas with Muse": [
+"Muse सोबत कल्पना सुचवा",
+"Muse के साथ विचार जगाएँ"
+],
+"Add card": [
+"कार्ड जोडा",
+"कार्ड जोड़ें"
+],
+"Board options": [
+"बोर्डचे पर्याय",
+"बोर्ड के विकल्प"
+],
+"An empty table.": [
+"रिकामं टेबल.",
+"ख़ाली मेज़।"
+],
+"Add a card for a character, a place, a question. Drag cards around, and connect the ones that belong together.": [
+"पात्र, ठिकाण किंवा प्रश्नासाठी कार्ड जोडा. कार्डं ओढून हलवा, आणि एकमेकांशी संबंधित कार्डं जोडा.",
+"किसी पात्र, जगह या सवाल के लिए कार्ड जोड़ें। कार्ड खिसकाएँ, और जो साथ के हैं उन्हें जोड़ें।"
+],
+"Zoom in": [
+"जवळून पाहा",
+"ज़ूम इन"
+],
+"Zoom out": [
+"दुरून पाहा",
+"ज़ूम आउट"
+],
+"Fit all cards": [
+"सगळी कार्डं बसवा",
+"सभी कार्ड दिखाएँ"
+],
+"Card actions": [
+"कार्डच्या क्रिया",
+"कार्ड के विकल्प"
+],
+"This board isn't here, or it's private to the people working on it.": [
+"हा बोर्ड इथे नाही, किंवा त्यावर काम करणाऱ्यांसाठी तो खासगी आहे.",
+"यह बोर्ड यहाँ नहीं है, या इस पर काम करने वालों के लिए निजी है।"
+],
+"All boards": [
+"सगळे बोर्ड",
+"सभी बोर्ड"
+],
+"Board by you": [
+"तुमचा बोर्ड",
+"आपका बोर्ड"
+],
+"Board by {0}": [
+"{0} यांचा बोर्ड",
+"{0} का बोर्ड"
+],
+"Empty card. Double-tap to write.": [
+"रिकामं कार्ड. लिहिण्यासाठी दोनदा टॅप करा.",
+"ख़ाली कार्ड। लिखने के लिए दो बार टैप करें।"
+],
+"Empty card.": [
+"रिकामं कार्ड.",
+"ख़ाली कार्ड।"
+],
+"Edit text": [
+"मजकूर संपादित करा",
+"टेक्स्ट संपादित करें"
+],
+"Change kind": [
+"प्रकार बदला",
+"प्रकार बदलें"
+],
+"Connect to another card": [
+"दुसऱ्या कार्डशी जोडा",
+"दूसरे कार्ड से जोड़ें"
+],
+"Remove your vote": [
+"तुमचं मत काढा",
+"अपना वोट हटाएँ"
+],
+"Vote for this card": [
+"या कार्डला मत द्या",
+"इस कार्ड को वोट दें"
+],
+"Delete card": [
+"कार्ड हटवा",
+"कार्ड हटाएँ"
+],
+"Deselect": [
+"निवड काढा",
+"चुनाव हटाएँ"
+],
+"Card text": [
+"कार्डचा मजकूर",
+"कार्ड का टेक्स्ट"
+],
+"Write the idea…": [
+"कल्पना लिहा…",
+"विचार लिखें…"
+],
+"Kind of card": [
+"कार्डचा प्रकार",
+"कार्ड का प्रकार"
+],
+"What kind of card?": [
+"कोणत्या प्रकारचं कार्ड?",
+"किस तरह का कार्ड?"
+],
+"Card deleted.": [
+"कार्ड हटवलं.",
+"कार्ड हटा दिया।"
+],
+"Undo": [
+"परत आणा",
+"वापस लाएँ"
+],
+"Tap another card to connect it": [
+"जोडण्यासाठी दुसऱ्या कार्डवर टॅप करा",
+"जोड़ने के लिए दूसरे कार्ड पर टैप करें"
+],
+"Disconnected.": [
+"जोड काढला.",
+"जोड़ हटा दिया।"
+],
+"Fit all cards on screen": [
+"सगळी कार्डं स्क्रीनवर बसवा",
+"सभी कार्ड स्क्रीन पर दिखाएँ"
+],
+"Copy all cards as a list": [
+"सगळी कार्डं यादी म्हणून कॉपी करा",
+"सभी कार्ड सूची के रूप में कॉपी करें"
+],
+"Board settings": [
+"बोर्ड सेटिंग्ज",
+"बोर्ड सेटिंग्स"
+],
+"Delete board": [
+"बोर्ड हटवा",
+"बोर्ड हटाएँ"
+],
+"Delete this board?": [
+"हा बोर्ड हटवायचा?",
+"यह बोर्ड हटाएँ?"
+],
+"\"{0}\" and its {1} will be deleted for everyone.": [
+"\"{0}\" आणि त्यातली {1} सगळ्यांसाठी हटवली जातील.",
+"\"{0}\" और इसके {1} सबके लिए हटा दिए जाएँगे।"
+],
+"Board deleted.": [
+"बोर्ड हटवला.",
+"बोर्ड हटा दिया।"
+],
+"Board saved.": [
+"बोर्ड सेव्ह झाला.",
+"बोर्ड सेव हो गया।"
+],
+"More ideas like these": [
+"अशाच आणखी कल्पना",
+"ऐसे ही और विचार"
+],
+"Fresh ideas that build on the cards here.": [
+"इथल्या कार्डांवर आधारित नव्या कल्पना.",
+"यहाँ के कार्डों पर आधारित नए विचार।"
+],
+"What-if twists": [
+"'असं झालं तर?' वळणं",
+"'अगर ऐसा हो तो?' वाले मोड़"
+],
+"Surprises that would raise the stakes.": [
+"धोका वाढवणारी आश्चर्यं.",
+"दाँव बढ़ाने वाले चौंकाने वाले मोड़।"
+],
+"Characters who cause friction": [
+"संघर्ष निर्माण करणारी पात्रं",
+"टकराव पैदा करने वाले पात्र"
+],
+"People with a want and a flaw.": [
+"इच्छा आणि दोष असलेली माणसं.",
+"चाहत और कमज़ोरी वाले लोग।"
+],
+"Questions to answer": [
+"उत्तर द्यायचे प्रश्न",
+"जवाब देने वाले सवाल"
+],
+"What you need to decide next.": [
+"पुढे तुम्हाला काय ठरवायचं आहे.",
+"आगे आपको क्या तय करना है।"
+],
+"Add selected cards": [
+"निवडलेली कार्डं जोडा",
+"चुने हुए कार्ड जोड़ें"
+],
+"Muse is thinking. This can take up to a minute.": [
+"Muse विचार करत आहे. याला एक मिनिटापर्यंत वेळ लागू शकतो.",
+"Muse सोच रहा है। इसमें एक मिनट तक लग सकता है।"
+],
+"Tap a card to leave it out, then add the rest to the board.": [
+"वगळायचं असलेल्या कार्डवर टॅप करा, मग बाकीची बोर्डवर जोडा.",
+"जिस कार्ड को छोड़ना है उस पर टैप करें, फिर बाक़ी बोर्ड पर जोड़ें।"
+],
+"Muse came back empty. Try another kind of spark.": [
+"Muse कडून काहीच आलं नाही. दुसऱ्या प्रकारची स्फूर्ती वापरून पाहा.",
+"Muse से कुछ नहीं आया। दूसरी तरह की प्रेरणा आज़माएँ।"
+],
+"Muse reads the cards on this board and suggests new ones. Nothing is added until you choose.": [
+"Muse या बोर्डवरची कार्डं वाचतं आणि नवी सुचवतं. तुम्ही निवडेपर्यंत काहीही जोडलं जात नाही.",
+"Muse इस बोर्ड के कार्ड पढ़ता है और नए सुझाता है। आपके चुनने तक कुछ नहीं जुड़ता।"
+],
+"What is it?": [
+"हे काय आहे?",
+"यह क्या है?"
+],
+"Optional: a line about it.": [
+"ऐच्छिक: याबद्दल एक ओळ.",
+"वैकल्पिक: इसके बारे में एक पंक्ति।"
+],
+"Caption": [
+"मथळा",
+"कैप्शन"
+],
+"Linked sketches appear on the project page, and its co-authors can draw on them.": [
+"जोडलेली स्केच प्रोजेक्टच्या पानावर दिसतात, आणि त्याचे सहलेखक त्यावर काढू शकतात.",
+"जुड़े स्केच प्रोजेक्ट के पेज पर दिखते हैं, और उसके सह-लेखक उन पर बना सकते हैं।"
+],
+"Sketch characters, maps and scenes. Link them to a project, or put them right into a chapter.": [
+"पात्रं, नकाशे आणि प्रसंगांची स्केच काढा. त्यांना प्रोजेक्टशी जोडा, किंवा थेट प्रकरणात ठेवा.",
+"पात्रों, नक़्शों और दृश्यों के स्केच बनाएँ। उन्हें प्रोजेक्ट से जोड़ें, या सीधे अध्याय में रखें।"
+],
+"Your sketchbook is empty. Draw a character, a map, or the room where your story starts.": [
+"तुमचं स्केचबुक रिकामं आहे. एखादं पात्र, नकाशा, किंवा तुमची कथा सुरू होते ती खोली काढा.",
+"आपकी स्केचबुक ख़ाली है। कोई पात्र, नक़्शा, या वह कमरा बनाएँ जहाँ आपकी कहानी शुरू होती है।"
+],
+"Start a sketch": [
+"स्केच सुरू करा",
+"स्केच शुरू करें"
+],
+"Sketches that writers share with your circles show up here.": [
+"लेखक तुमच्या सर्कल्ससोबत शेअर करतात ती स्केच इथे दिसतात.",
+"लेखक आपके सर्कलों के साथ जो स्केच साझा करते हैं, वे यहाँ दिखते हैं।"
+],
+"No open sketches yet. Sketches set to \"Everyone on Inkcircle\" appear here.": [
+"अजून खुली स्केच नाहीत. \"Inkcircle वरील सगळे\" असलेली स्केच इथे दिसतात.",
+"अभी कोई खुला स्केच नहीं। \"Inkcircle पर सभी\" वाले स्केच यहाँ दिखते हैं।"
+],
+"This sketch isn't here, or it's private to the people who drew it.": [
+"हे स्केच इथे नाही, किंवा ते काढणाऱ्यांसाठी खासगी आहे.",
+"यह स्केच यहाँ नहीं है, या इसे बनाने वालों के लिए निजी है।"
+],
+"The image is missing.": [
+"चित्र सापडत नाही.",
+"चित्र ग़ायब है।"
+],
+"Drawn {0}": [
+"{0} काढलं",
+"{0} बनाया"
+],
+"Draw over it": [
+"त्यावर काढा",
+"इस पर बनाएँ"
+],
+"Download": [
+"डाउनलोड करा",
+"डाउनलोड करें"
+],
+"Sketch options": [
+"स्केचचे पर्याय",
+"स्केच के विकल्प"
+],
+"Story sparks": [
+"कथेची बीजं",
+"कहानी के बीज"
+],
+"Muse looks at the drawing and suggests stories it could start.": [
+"Muse चित्र पाहतं आणि त्यातून सुरू होऊ शकणाऱ्या कथा सुचवतं.",
+"Muse चित्र देखता है और उससे शुरू हो सकने वाली कहानियाँ सुझाता है।"
+],
+"Looking…": [
+"पाहत आहे…",
+"देख रहा है…"
+],
+"Find story sparks": [
+"कथेची बीजं शोधा",
+"कहानी के बीज खोजें"
+],
+"Couldn't prepare the image.": [
+"चित्र तयार करता आलं नाही.",
+"चित्र तैयार नहीं हो सका।"
+],
+"Couldn't read the image.": [
+"चित्र वाचता आलं नाही.",
+"चित्र पढ़ा नहीं जा सका।"
+],
+"Edit title, caption and sharing": [
+"शीर्षक, मथळा आणि शेअरिंग संपादित करा",
+"शीर्षक, कैप्शन और साझेदारी संपादित करें"
+],
+"Sketch details": [
+"स्केचचा तपशील",
+"स्केच का विवरण"
+],
+"Saved.": [
+"सेव्ह झालं.",
+"सेव हो गया।"
+],
+"Delete sketch": [
+"स्केच हटवा",
+"स्केच हटाएँ"
+],
+"Delete this sketch?": [
+"हे स्केच हटवायचं?",
+"यह स्केच हटाएँ?"
+],
+"It will be removed for everyone. Chapters that show it keep an empty space.": [
+"ते सगळ्यांसाठी काढलं जाईल. ते दाखवणाऱ्या प्रकरणांमध्ये रिकामी जागा राहील.",
+"यह सबके लिए हटा दिया जाएगा। जिन अध्यायों में यह दिखता है, वहाँ ख़ाली जगह रहेगी।"
+],
+"Sketch deleted.": [
+"स्केच हटवलं.",
+"स्केच हटा दिया।"
+],
+"Picked up your unsaved sketch.": [
+"तुमचं सेव्ह न झालेलं स्केच परत आणलं.",
+"आपका बिना-सेव स्केच वापस ले आए।"
+],
+"This sketch isn't here anymore.": [
+"हे स्केच आता इथे नाही.",
+"यह स्केच अब यहाँ नहीं है।"
+],
+"Picked up your unsaved changes.": [
+"तुमचे सेव्ह न झालेले बदल परत आणले.",
+"आपके बिना-सेव बदलाव वापस ले आए।"
+],
+"The sketch image couldn't be opened.": [
+"स्केचचं चित्र उघडता आलं नाही.",
+"स्केच का चित्र नहीं खुल सका।"
+],
+"Back to the sketch": [
+"स्केचकडे परत",
+"स्केच पर वापस"
+],
+"Pick a page shape. Draw with a finger, a stylus or a mouse.": [
+"पानाचा आकार निवडा. बोटाने, स्टायलसने किंवा माउसने काढा.",
+"पन्ने का आकार चुनें। उँगली, स्टायलस या माउस से बनाएँ।"
+],
+"Landscape": [
+"आडवं",
+"आड़ा"
+],
+"Portrait": [
+"उभं",
+"खड़ा"
+],
+"Square": [
+"चौरस",
+"चौकोर"
+],
+"Drawing canvas": [
+"चित्रफलक",
+"ड्रॉइंग कैनवस"
+],
+"Redo": [
+"पुन्हा करा",
+"फिर से करें"
+],
+"Drawing over the sketch": [
+"स्केचवर काढत आहे",
+"स्केच के ऊपर बना रहे हैं"
+],
+"Saved sketches go to your sketchbook": [
+"सेव्ह केलेली स्केच तुमच्या स्केचबुकमध्ये जातात",
+"सेव किए स्केच आपकी स्केचबुक में जाते हैं"
+],
+"Brush size": [
+"ब्रशचा आकार",
+"ब्रश का आकार"
+],
+"Custom colour": [
+"स्वतःचा रंग",
+"अपना रंग"
+],
+"Tools": [
+"साधनं",
+"औज़ार"
+],
+"Fine pen": [
+"बारीक पेन",
+"बारीक पेन"
+],
+"Ink brush": [
+"शाईचा ब्रश",
+"स्याही का ब्रश"
+],
+"Marker": [
+"मार्कर",
+"मार्कर"
+],
+"Eraser": [
+"खोडरबर",
+"रबड़"
+],
+"Size": [
+"आकार",
+"आकार"
+],
+"Colours": [
+"रंग",
+"रंग"
+],
+"Colour {0}": [
+"रंग {0}",
+"रंग {0}"
+],
+"Put a photo or image underneath": [
+"खाली फोटो किंवा चित्र ठेवा",
+"नीचे कोई फ़ोटो या चित्र रखें"
+],
+"Clear the page": [
+"पान पुसून टाका",
+"पन्ना साफ़ करें"
+],
+"Clear the page?": [
+"पान पुसायचं?",
+"पन्ना साफ़ करें?"
+],
+"Everything on this page goes, including any image underneath.": [
+"या पानावरचं सगळं जाईल, खालच्या चित्रासह.",
+"इस पन्ने का सब कुछ चला जाएगा, नीचे वाले चित्र समेत।"
+],
+"Clear page": [
+"पान पुसा",
+"पन्ना साफ़ करें"
+],
+"Choose an image file.": [
+"चित्राची फाइल निवडा.",
+"कोई चित्र फ़ाइल चुनें।"
+],
+"Image placed under your drawing.": [
+"चित्र तुमच्या रेखाटनाखाली ठेवलं.",
+"चित्र आपकी ड्रॉइंग के नीचे रख दिया।"
+],
+"That image couldn't be opened.": [
+"ते चित्र उघडता आलं नाही.",
+"वह चित्र नहीं खुल सका।"
+],
+"Nothing new to save.": [
+"सेव्ह करण्यासारखं नवीन काही नाही.",
+"सेव करने को कुछ नया नहीं है।"
+],
+"Draw something first.": [
+"आधी काहीतरी काढा.",
+"पहले कुछ बनाएँ।"
+],
+"Save sketch": [
+"स्केच सेव्ह करा",
+"स्केच सेव करें"
+],
+"Keep drawing": [
+"काढणं सुरू ठेवा",
+"बनाना जारी रखें"
+],
+"Save to sketchbook": [
+"स्केचबुकमध्ये सेव्ह करा",
+"स्केचबुक में सेव करें"
+],
+"This sketch couldn't be saved. Try again in a moment.": [
+"हे स्केच सेव्ह झालं नाही. थोड्या वेळाने पुन्हा प्रयत्न करा.",
+"यह स्केच सेव नहीं हो सका। थोड़ी देर बाद फिर कोशिश करें।"
+],
+"Saved to your sketchbook.": [
+"तुमच्या स्केचबुकमध्ये सेव्ह झालं.",
+"आपकी स्केचबुक में सेव हो गया।"
+],
+"For example, Tuesday Night Fantasy": [
+"उदा. मंगळवार रात्रीची फँटसी",
+"जैसे, मंगलवार रात की फ़ैंटेसी"
+],
+"Who is it for, and how do you work together?": [
+"हे कोणासाठी आहे, आणि तुम्ही एकत्र कसं काम करता?",
+"यह किसके लिए है, और आप साथ में कैसे काम करते हैं?"
+],
+"Anyone on Inkcircle": [
+"Inkcircle वरील कोणीही",
+"Inkcircle पर कोई भी"
+],
+"Writers join with one tap.": [
+"लेखक एका टॅपमध्ये सामील होतात.",
+"लेखक एक टैप में जुड़ जाते हैं।"
+],
+"Writers ask to join and the host lets them in.": [
+"लेखक सामील होण्याची विनंती करतात आणि होस्ट त्यांना आत घेतो.",
+"लेखक जुड़ने का अनुरोध करते हैं और होस्ट उन्हें अंदर लेता है।"
+],
+"Circle name": [
+"सर्कलचं नाव",
+"सर्कल का नाम"
+],
+"About": [
+"माहिती",
+"परिचय"
+],
+"What the circle writes": [
+"सर्कल काय लिहितं",
+"सर्कल क्या लिखता है"
+],
+"Who can join": [
+"कोण सामील होऊ शकतं",
+"कौन जुड़ सकता है"
+],
+"Circle ink": [
+"सर्कलची शाई",
+"सर्कल की स्याही"
+],
+"Request sent. The host will let you in.": [
+"विनंती पाठवली. होस्ट तुम्हाला आत घेईल.",
+"अनुरोध भेजा गया। होस्ट आपको अंदर ले लेंगे।"
+],
+"You joined {0}.": [
+"तुम्ही {0} मध्ये सामील झालात.",
+"आप {0} से जुड़ गए।"
+],
+"Cancel your request?": [
+"तुमची विनंती रद्द करायची?",
+"अपना अनुरोध रद्द करें?"
+],
+"You can ask to join again later.": [
+"तुम्ही नंतर पुन्हा विनंती करू शकता.",
+"आप बाद में फिर अनुरोध कर सकते हैं।"
+],
+"Cancel request": [
+"विनंती रद्द करा",
+"अनुरोध रद्द करें"
+],
+"Leave this circle?": [
+"हे सर्कल सोडायचं?",
+"यह सर्कल छोड़ें?"
+],
+"You can join again later.": [
+"तुम्ही नंतर पुन्हा सामील होऊ शकता.",
+"आप बाद में फिर जुड़ सकते हैं।"
+],
+"Leave circle": [
+"सर्कल सोडा",
+"सर्कल छोड़ें"
+],
+"Request cancelled.": [
+"विनंती रद्द केली.",
+"अनुरोध रद्द कर दिया।"
+],
+"You left {0}.": [
+"तुम्ही {0} सोडलं.",
+"आपने {0} छोड़ दिया।"
+],
+"Give your circle a name.": [
+"तुमच्या सर्कलला नाव द्या.",
+"अपने सर्कल को नाम दें।"
+],
+"{0} is open. Invite a few writers.": [
+"{0} सुरू झालं आहे. काही लेखकांना बोलवा.",
+"{0} खुल गया है। कुछ लेखकों को बुलाएँ।"
+],
+"Start circle": [
+"सर्कल सुरू करा",
+"सर्कल शुरू करें"
+],
+"Invite writers": [
+"लेखकांना बोलवा",
+"लेखकों को बुलाएँ"
+],
+"This is the demo, so it only lives in your browser. On the live site, every circle has a link you can send: writers open it, sign in with Google or their email, and land right here.": [
+"हा डेमो आहे, त्यामुळे तो फक्त तुमच्या ब्राउझरमध्ये आहे. खऱ्या साइटवर प्रत्येक सर्कलची एक लिंक असते जी तुम्ही पाठवू शकता: लेखक ती उघडतात, Google किंवा ईमेलने साइन इन करतात आणि थेट इथे पोहोचतात.",
+"यह डेमो है, इसलिए यह सिर्फ़ आपके ब्राउज़र में है। असली साइट पर हर सर्कल का एक लिंक होता है जिसे आप भेज सकते हैं: लेखक उसे खोलते हैं, Google या ईमेल से साइन इन करते हैं, और सीधे यहाँ पहुँचते हैं।"
+],
+"Come write with me in \"{0}\" on Inkcircle: {1}": [
+"Inkcircle वर \"{0}\" मध्ये माझ्यासोबत लिहायला या: {1}",
+"Inkcircle पर \"{0}\" में मेरे साथ लिखने आइए: {1}"
+],
+"Send this link. Writers sign in, their request reaches you, and you let them in from the Members tab.": [
+"ही लिंक पाठवा. लेखक साइन इन करतात, त्यांची विनंती तुमच्याकडे येते, आणि तुम्ही सदस्य टॅबमधून त्यांना आत घेता.",
+"यह लिंक भेजें। लेखक साइन इन करते हैं, उनका अनुरोध आप तक पहुँचता है, और आप सदस्य टैब से उन्हें अंदर लेते हैं।"
+],
+"Send this link. Writers sign in with Google or their email and they are in.": [
+"ही लिंक पाठवा. लेखक Google किंवा ईमेलने साइन इन करतात आणि ते आत येतात.",
+"यह लिंक भेजें। लेखक Google या ईमेल से साइन इन करते हैं और जुड़ जाते हैं।"
+],
+"Copy link": [
+"लिंक कॉपी करा",
+"लिंक कॉपी करें"
+],
+"Link copied.": [
+"लिंक कॉपी झाली.",
+"लिंक कॉपी हो गया।"
+],
+"Or send a note": [
+"किंवा एक संदेश पाठवा",
+"या एक संदेश भेजें"
+],
+"Copy the note": [
+"संदेश कॉपी करा",
+"संदेश कॉपी करें"
+],
+"Invite note copied.": [
+"आमंत्रणाचा संदेश कॉपी झाला.",
+"न्योते का संदेश कॉपी हो गया।"
+],
+"Small groups that write together: share drafts, trade notes, and run timed sprints.": [
+"एकत्र लिहिणारे छोटे गट: मसुदे शेअर करा, टिपांची देवाणघेवाण करा, आणि वेळ-बद्ध स्प्रिंट चालवा.",
+"साथ लिखने वाले छोटे समूह: मसौदे साझा करें, नोट का लेन-देन करें, और समयबद्ध स्प्रिंट चलाएँ।"
+],
+"You aren't in a circle yet. Join one below, or start one for your genre, your city or your schedule.": [
+"तुम्ही अजून कोणत्याही सर्कलमध्ये नाही. खालीलपैकी एकात सामील व्हा, किंवा तुमच्या प्रकारासाठी, शहरासाठी किंवा वेळापत्रकासाठी एक सुरू करा.",
+"आप अभी किसी सर्कल में नहीं हैं। नीचे किसी से जुड़ें, या अपनी विधा, शहर या समय के हिसाब से एक शुरू करें।"
+],
+"Discover": [
+"शोधा",
+"खोजें"
+],
+"You're in every circle here. Start a new one for a genre or a schedule.": [
+"तुम्ही इथल्या प्रत्येक सर्कलमध्ये आहात. एखाद्या प्रकारासाठी किंवा वेळापत्रकासाठी नवीन सुरू करा.",
+"आप यहाँ के हर सर्कल में हैं। किसी विधा या समय के लिए नया शुरू करें।"
+],
+"No circles yet. Start the first one.": [
+"अजून एकही सर्कल नाही. पहिलं सुरू करा.",
+"अभी कोई सर्कल नहीं। पहला शुरू करें।"
+],
+"Sending…": [
+"पाठवत आहे…",
+"भेजा जा रहा है…"
+],
+"Waiting for a connection. It sends when you're back online.": [
+"कनेक्शनची वाट पाहत आहे. तुम्ही ऑनलाइन आल्यावर पाठवलं जाईल.",
+"कनेक्शन का इंतज़ार है। ऑनलाइन आते ही भेज दिया जाएगा।"
+],
+"Sent": [
+"पाठवलं",
+"भेज दिया"
+],
+"Sent. No one else has joined this circle yet.": [
+"पाठवलं. या सर्कलमध्ये अजून दुसरं कोणीही सामील झालेलं नाही.",
+"भेज दिया। इस सर्कल में अभी कोई और नहीं जुड़ा है।"
+],
+"Seen by everyone": [
+"सगळ्यांनी पाहिलं",
+"सबने देख लिया"
+],
+"Seen by {0}": [
+"{0} यांनी पाहिलं",
+"{0} ने देखा"
+],
+"Seen by {0} and {1}": [
+"{0} आणि {1} यांनी पाहिलं",
+"{0} और {1} ने देखा"
+],
+"Seen by {0}, {1} and {2} more": [
+"{0}, {1} आणि आणखी {2} जणांनी पाहिलं",
+"{0}, {1} और {2} अन्य ने देखा"
+],
+"Who has seen this": [
+"हे कोणी पाहिलं",
+"इसे किसने देखा"
+],
+"Inkcircle does not send notifications yet. Members see new messages the next time they open the circle, so a nudge on WhatsApp helps.": [
+"Inkcircle अजून सूचना पाठवत नाही. सदस्य पुढच्या वेळी सर्कल उघडतील तेव्हा त्यांना नवे मेसेज दिसतात, म्हणून WhatsApp वर आठवण करून देणं उपयोगी ठरतं.",
+"Inkcircle अभी सूचनाएँ नहीं भेजता। सदस्यों को नए मैसेज अगली बार सर्कल खोलने पर दिखते हैं, इसलिए WhatsApp पर याद दिलाना काम आता है।"
+],
+"Your message was saved, and every member of the circle can read it. Who has seen it will show here once the latest Inkcircle rules are published.": [
+"तुमचा मेसेज सेव्ह झाला, आणि सर्कलचा प्रत्येक सदस्य तो वाचू शकतो. Inkcircle चे नवे नियम प्रकाशित झाल्यावर तो कोणी पाहिला हे इथे दिसेल.",
+"आपका मैसेज सेव हो गया, और सर्कल का हर सदस्य इसे पढ़ सकता है। Inkcircle के नए नियम प्रकाशित होने पर यहाँ दिखेगा कि इसे किसने देखा।"
+],
+"Your message was saved, but no one else has joined this circle yet. Invite writers and they will see the whole chat.": [
+"तुमचा मेसेज सेव्ह झाला, पण या सर्कलमध्ये अजून दुसरं कोणीही सामील झालेलं नाही. लेखकांना बोलवा, त्यांना पूर्ण चॅट दिसेल.",
+"आपका मैसेज सेव हो गया, पर इस सर्कल में अभी कोई और नहीं जुड़ा है। लेखकों को बुलाएँ, उन्हें पूरी चैट दिखेगी।"
+],
+"Seen": [
+"पाहिलं",
+"देखा"
+],
+"Last opened the chat {0}": [
+"{0} चॅट उघडलं",
+"{0} चैट खोली"
+],
+"Not seen yet": [
+"अजून पाहिलं नाही",
+"अभी नहीं देखा"
+],
+"Seen by": [
+"कोणी पाहिलं",
+"किसने देखा"
+],
+"This circle isn't here. It may have been closed.": [
+"हे सर्कल इथे नाही. कदाचित ते बंद केलं असेल.",
+"यह सर्कल यहाँ नहीं है। शायद इसे बंद कर दिया गया है।"
+],
+"Join circle": [
+"सर्कलमध्ये सामील व्हा",
+"सर्कल से जुड़ें"
+],
+"Invite": [
+"बोलवा",
+"बुलाएँ"
+],
+"Circle options": [
+"सर्कलचे पर्याय",
+"सर्कल के विकल्प"
+],
+"Chat": [
+"चॅट",
+"चैट"
+],
+"Shelf": [
+"कपाट",
+"अलमारी"
+],
+"Members": [
+"सदस्य",
+"सदस्य"
+],
+"Your request is waiting for the host. You will see the chat once you are in.": [
+"तुमची विनंती होस्टकडे प्रलंबित आहे. तुम्ही आत आल्यावर चॅट दिसेल.",
+"आपका अनुरोध होस्ट के पास है। अंदर आते ही आपको चैट दिखेगी।"
+],
+"This circle's chat is for members. Ask to join and the host can let you in.": [
+"या सर्कलचं चॅट सदस्यांसाठी आहे. सामील होण्याची विनंती करा, आणि होस्ट तुम्हाला आत घेऊ शकतो.",
+"इस सर्कल की चैट सदस्यों के लिए है। जुड़ने का अनुरोध करें, और होस्ट आपको अंदर ले सकते हैं।"
+],
+"Messages": [
+"मेसेज",
+"मैसेज"
+],
+"Message {0}": [
+"{0} ला मेसेज",
+"{0} को मैसेज"
+],
+"Message": [
+"मेसेज",
+"मैसेज"
+],
+"Share a project, board or sketch": [
+"प्रोजेक्ट, बोर्ड किंवा स्केच शेअर करा",
+"प्रोजेक्ट, बोर्ड या स्केच साझा करें"
+],
+"Send": [
+"पाठवा",
+"भेजें"
+],
+"Your request to join is waiting for the host.": [
+"तुमची सामील होण्याची विनंती होस्टकडे प्रलंबित आहे.",
+"आपका जुड़ने का अनुरोध होस्ट के पास है।"
+],
+"Join this circle to post, share work and sprint together.": [
+"पोस्ट करण्यासाठी, काम शेअर करण्यासाठी आणि एकत्र स्प्रिंट करण्यासाठी या सर्कलमध्ये सामील व्हा.",
+"पोस्ट करने, काम साझा करने और साथ स्प्रिंट करने के लिए इस सर्कल से जुड़ें।"
+],
+"The chat couldn't be opened. It may be for members only.": [
+"चॅट उघडता आलं नाही. ते कदाचित फक्त सदस्यांसाठी असेल.",
+"चैट नहीं खुल सकी। शायद यह सिर्फ़ सदस्यों के लिए है।"
+],
+"No messages yet. Say hello and tell the circle what you are writing.": [
+"अजून मेसेज नाहीत. नमस्कार म्हणा आणि तुम्ही काय लिहिताय ते सर्कलला सांगा.",
+"अभी कोई मैसेज नहीं। नमस्ते कहें और सर्कल को बताएँ कि आप क्या लिख रहे हैं।"
+],
+"Message options": [
+"मेसेजचे पर्याय",
+"मैसेज के विकल्प"
+],
+"Prompt: {0}": [
+"प्रॉम्प्ट: {0}",
+"प्रॉम्प्ट: {0}"
+],
+"Copy text": [
+"मजकूर कॉपी करा",
+"टेक्स्ट कॉपी करें"
+],
+"Block {0}": [
+"{0} ना ब्लॉक करा",
+"{0} को ब्लॉक करें"
+],
+"Delete message": [
+"मेसेज हटवा",
+"मैसेज हटाएँ"
+],
+"Message deleted.": [
+"मेसेज हटवला.",
+"मैसेज हटा दिया।"
+],
+"Add a line (optional)": [
+"एक ओळ जोडा (ऐच्छिक)",
+"एक पंक्ति जोड़ें (वैकल्पिक)"
+],
+"already shared here": [
+"इथे आधीच शेअर केलं आहे",
+"यहाँ पहले से साझा है"
+],
+"moves here from ": [
+"इथे हलवलं जाईल, यांच्याकडून: ",
+"यहाँ आ जाएगा, यहाँ से:"
+],
+"Sharing something private makes it readable by everyone in this circle.": [
+"खासगी काही शेअर केलं तर या सर्कलमधले सगळे ते वाचू शकतील.",
+"कुछ निजी साझा करने पर इस सर्कल में सब उसे पढ़ सकेंगे।"
+],
+"You have nothing to share yet. Start a project, a board or a sketch first.": [
+"शेअर करण्यासाठी तुमच्याकडे अजून काही नाही. आधी प्रोजेक्ट, बोर्ड किंवा स्केच सुरू करा.",
+"साझा करने के लिए अभी आपके पास कुछ नहीं है। पहले कोई प्रोजेक्ट, बोर्ड या स्केच शुरू करें।"
+],
+"Share with {0}": [
+"{0} सोबत शेअर करा",
+"{0} के साथ साझा करें"
+],
+"{0}-minute sprint started by you.": [
+"तुम्ही सुरू केलेला {0} मिनिटांचा स्प्रिंट.",
+"आपका शुरू किया {0} मिनट का स्प्रिंट।"
+],
+"{0}-minute sprint started by {1}.": [
+"{1} यांनी सुरू केलेला {0} मिनिटांचा स्प्रिंट.",
+"{1} का शुरू किया {0} मिनट का स्प्रिंट।"
+],
+"Write now": [
+"आता लिहा",
+"अभी लिखें"
+],
+"Cheer everyone on": [
+"सगळ्यांना प्रोत्साहन द्या",
+"सबका हौसला बढ़ाएँ"
+],
+"Tell the circle": [
+"सर्कलला सांगा",
+"सर्कल को बताएँ"
+],
+"We are sprinting in \"{0}\" on Inkcircle right now. {1} left. Join: {2}": [
+"आम्ही आत्ता Inkcircle वर \"{0}\" मध्ये स्प्रिंट करत आहोत. {1} बाकी. सामील व्हा: {2}",
+"हम अभी Inkcircle पर \"{0}\" में स्प्रिंट कर रहे हैं। {1} बाक़ी। जुड़ें: {2}"
+],
+"Writing now": [
+"आत्ता लिहीत आहेत",
+"अभी लिख रहे हैं"
+],
+"Finished": [
+"पूर्ण",
+"पूरा"
+],
+"Nobody has started typing yet. Be first.": [
+"अजून कोणीही टाइप करायला सुरुवात केलेली नाही. पहिले व्हा.",
+"अभी किसी ने टाइप करना शुरू नहीं किया। पहले बनें।"
+],
+"Join the circle to write in this sprint.": [
+"या स्प्रिंटमध्ये लिहिण्यासाठी सर्कलमध्ये सामील व्हा.",
+"इस स्प्रिंट में लिखने के लिए सर्कल से जुड़ें।"
+],
+"Sprint scheduled": [
+"स्प्रिंट ठरला आहे",
+"स्प्रिंट तय है"
+],
+"Repeats every week.": [
+"दर आठवड्याला पुन्हा होतो.",
+"हर हफ़्ते दोहराया जाता है।"
+],
+"Scheduled by you.": [
+"तुम्ही ठरवला.",
+"आपने तय किया।"
+],
+"Scheduled by {0}.": [
+"{0} यांनी ठरवला.",
+"{0} ने तय किया।"
+],
+"Start it now": [
+"आत्ताच सुरू करा",
+"अभी शुरू करें"
+],
+"Add to calendar": [
+"कॅलेंडरमध्ये जोडा",
+"कैलेंडर में जोड़ें"
+],
+"Writing sprint in \"{0}\" on Inkcircle, {1} ({2} minutes). Join: {3}": [
+"Inkcircle वर \"{0}\" मध्ये लेखन स्प्रिंट, {1} ({2} मिनिटं). सामील व्हा: {3}",
+"Inkcircle पर \"{0}\" में लेखन स्प्रिंट, {1} ({2} मिनट)। जुड़ें: {3}"
+],
+"Cancel sprint": [
+"स्प्रिंट रद्द करा",
+"स्प्रिंट रद्द करें"
+],
+"Keep this tab in mind: the timer starts by itself at that time, and \"Write now\" appears here.": [
+"हा टॅब लक्षात ठेवा: त्या वेळी टायमर आपोआप सुरू होईल, आणि इथे \"आता लिहा\" दिसेल.",
+"यह टैब याद रखें: उस समय टाइमर अपने आप शुरू होगा, और यहाँ \"अभी लिखें\" दिखेगा।"
+],
+"Last sprint: {0} together": [
+"मागचा स्प्रिंट: मिळून {0}",
+"पिछला स्प्रिंट: मिलकर {0}"
+],
+"Finished {0}.": [
+"{0} संपला.",
+"{0} ख़त्म हुआ।"
+],
+"Next one: {0}.": [
+"पुढचा: {0}.",
+"अगला: {0}।"
+],
+"Cheer {0}": [
+"{0} यांना प्रोत्साहन द्या",
+"{0} का हौसला बढ़ाएँ"
+],
+"Once the host lets you in, you can start and join sprints here.": [
+"होस्टने आत घेतल्यावर तुम्ही इथे स्प्रिंट सुरू करू शकता आणि त्यात सामील होऊ शकता.",
+"होस्ट के अंदर लेने के बाद आप यहाँ स्प्रिंट शुरू कर सकते हैं और उनमें जुड़ सकते हैं।"
+],
+"Join this circle to start sprints and write alongside everyone.": [
+"स्प्रिंट सुरू करण्यासाठी आणि सगळ्यांसोबत लिहिण्यासाठी या सर्कलमध्ये सामील व्हा.",
+"स्प्रिंट शुरू करने और सबके साथ लिखने के लिए इस सर्कल से जुड़ें।"
+],
+"Sprint in \"{0}\" on Inkcircle: 1 writer wrote {1} in {2} minutes.": [
+"Inkcircle वर \"{0}\" मधला स्प्रिंट: 1 लेखकाने {2} मिनिटांत {1} लिहिले.",
+"Inkcircle पर \"{0}\" का स्प्रिंट: 1 लेखक ने {2} मिनट में {1} लिखे।"
+],
+"Sprint in \"{0}\" on Inkcircle: {1} writers wrote {2} together in {3} minutes.": [
+"Inkcircle वर \"{0}\" मधला स्प्रिंट: {1} लेखकांनी {3} मिनिटांत मिळून {2} लिहिले.",
+"Inkcircle पर \"{0}\" का स्प्रिंट: {1} लेखकों ने {3} मिनट में मिलकर {2} लिखे।"
+],
+"Join: {0}": [
+"सामील व्हा: {0}",
+"जुड़ें: {0}"
+],
+"Share results": [
+"निकाल शेअर करा",
+"नतीजे साझा करें"
+],
+"Copy results": [
+"निकाल कॉपी करा",
+"नतीजे कॉपी करें"
+],
+"Results copied. Paste them anywhere.": [
+"निकाल कॉपी झाले. कुठेही पेस्ट करा.",
+"नतीजे कॉपी हो गए। कहीं भी पेस्ट करें।"
+],
+"Writing sprint: {0}": [
+"लेखन स्प्रिंट: {0}",
+"लेखन स्प्रिंट: {0}"
+],
+"Open Inkcircle a minute early and press Write now.": [
+"Inkcircle एक मिनिट आधी उघडा आणि \"आता लिहा\" दाबा.",
+"Inkcircle एक मिनट पहले खोलें और \"अभी लिखें\" दबाएँ।"
+],
+"Inkcircle cannot remind you yet, so let your calendar do it. The event repeats every week.": [
+"Inkcircle अजून आठवण करून देऊ शकत नाही, म्हणून हे काम तुमच्या कॅलेंडरला करू द्या. हा कार्यक्रम दर आठवड्याला पुन्हा होतो.",
+"Inkcircle अभी याद नहीं दिला सकता, इसलिए यह काम अपने कैलेंडर को करने दें। यह कार्यक्रम हर हफ़्ते दोहराया जाता है।"
+],
+"Inkcircle cannot remind you yet, so let your calendar do it.": [
+"Inkcircle अजून आठवण करून देऊ शकत नाही, म्हणून हे काम तुमच्या कॅलेंडरला करू द्या.",
+"Inkcircle अभी याद नहीं दिला सकता, इसलिए यह काम अपने कैलेंडर को करने दें।"
+],
+"Opens in a new tab": [
+"नव्या टॅबमध्ये उघडतं",
+"नए टैब में खुलता है"
+],
+"Apple, Outlook or another calendar": [
+"Apple, Outlook किंवा दुसरं कॅलेंडर",
+"Apple, Outlook या कोई और कैलेंडर"
+],
+"Downloads a calendar file with a reminder 15 minutes before": [
+"15 मिनिटं आधी आठवण असलेली कॅलेंडर फाइल डाउनलोड होते",
+"15 मिनट पहले याद दिलाने वाली कैलेंडर फ़ाइल डाउनलोड होती है"
+],
+"Optional: a prompt for everyone": [
+"ऐच्छिक: सगळ्यांसाठी एक प्रॉम्प्ट",
+"वैकल्पिक: सबके लिए एक प्रॉम्प्ट"
+],
+"Ask Muse for a prompt": [
+"Muse कडे प्रॉम्प्ट मागा",
+"Muse से प्रॉम्प्ट माँगें"
+],
+"Muse is thinking…": [
+"Muse विचार करत आहे…",
+"Muse सोच रहा है…"
+],
+"Sprint date and time": [
+"स्प्रिंटची तारीख आणि वेळ",
+"स्प्रिंट की तारीख़ और समय"
+],
+"In 30 minutes": [
+"30 मिनिटांनी",
+"30 मिनट में"
+],
+"Tonight, 9 PM": [
+"आज रात्री 9 वाजता",
+"आज रात 9 बजे"
+],
+"Tomorrow, 7 AM": [
+"उद्या सकाळी 7 वाजता",
+"कल सुबह 7 बजे"
+],
+"Repeat every week at this time": [
+"दर आठवड्याला याच वेळी पुन्हा",
+"हर हफ़्ते इसी समय दोहराएँ"
+],
+"Start the sprint": [
+"स्प्रिंट सुरू करा",
+"स्प्रिंट शुरू करें"
+],
+"Pick a time at least a minute from now.": [
+"आत्तापासून किमान एक मिनिट नंतरची वेळ निवडा.",
+"अभी से कम से कम एक मिनट बाद का समय चुनें।"
+],
+"Pick a time within the next two weeks.": [
+"पुढच्या दोन आठवड्यांतली वेळ निवडा.",
+"अगले दो हफ़्तों के अंदर का समय चुनें।"
+],
+"Now": [
+"आत्ता",
+"अभी"
+],
+"Later": [
+"नंतर",
+"बाद में"
+],
+"Schedule the sprint": [
+"स्प्रिंट ठरवा",
+"स्प्रिंट तय करें"
+],
+"Everyone in the circle sees the timer and writes at the same time. Word counts show up as you go; nobody sees your text.": [
+"सर्कलमधल्या सगळ्यांना टायमर दिसतो आणि सगळे एकाच वेळी लिहितात. शब्दसंख्या लिहिता लिहिता दिसते; तुमचा मजकूर कोणालाही दिसत नाही.",
+"सर्कल में सबको टाइमर दिखता है और सब एक साथ लिखते हैं। शब्द-गिनती लिखते-लिखते दिखती है; आपका टेक्स्ट कोई नहीं देखता।"
+],
+"When": [
+"कधी",
+"कब"
+],
+"How long": [
+"किती वेळ",
+"कितनी देर"
+],
+"Prompt": [
+"प्रॉम्प्ट",
+"प्रॉम्प्ट"
+],
+"A sprint is already running here.": [
+"इथे आधीच एक स्प्रिंट सुरू आहे.",
+"यहाँ पहले से एक स्प्रिंट चल रहा है।"
+],
+"A sprint is already scheduled here. Cancel it first.": [
+"इथे आधीच एक स्प्रिंट ठरला आहे. आधी तो रद्द करा.",
+"यहाँ पहले से एक स्प्रिंट तय है। पहले उसे रद्द करें।"
+],
+"Sprint scheduled for {0}.": [
+"स्प्रिंट {0} साठी ठरला.",
+"स्प्रिंट {0} के लिए तय हुआ।"
+],
+"Cancel this sprint?": [
+"हा स्प्रिंट रद्द करायचा?",
+"यह स्प्रिंट रद्द करें?"
+],
+"The circle will no longer see it on the Sprint tab, and it stops repeating every week.": [
+"सर्कलला तो स्प्रिंट टॅबवर दिसणार नाही, आणि दर आठवड्याला होणंही थांबेल.",
+"सर्कल को यह स्प्रिंट टैब पर नहीं दिखेगा, और हर हफ़्ते दोहराना भी बंद हो जाएगा।"
+],
+"The circle will no longer see it on the Sprint tab.": [
+"सर्कलला तो स्प्रिंट टॅबवर दिसणार नाही.",
+"सर्कल को यह स्प्रिंट टैब पर नहीं दिखेगा।"
+],
+"Sprint cancelled.": [
+"स्प्रिंट रद्द केला.",
+"स्प्रिंट रद्द कर दिया।"
+],
+"This circle's shelf is for members.": [
+"या सर्कलचं कपाट सदस्यांसाठी आहे.",
+"इस सर्कल की अलमारी सदस्यों के लिए है।"
+],
+"Share something": [
+"काहीतरी शेअर करा",
+"कुछ साझा करें"
+],
+"The work on this shelf is for circle members.": [
+"या कपाटातलं काम सर्कलच्या सदस्यांसाठी आहे.",
+"इस अलमारी का काम सर्कल के सदस्यों के लिए है।"
+],
+"Nothing on the shelf yet. When members share projects, boards or sketches with this circle, they collect here.": [
+"कपाटात अजून काही नाही. सदस्य या सर्कलसोबत प्रोजेक्ट, बोर्ड किंवा स्केच शेअर करतात, तेव्हा ते इथे जमा होतात.",
+"अलमारी में अभी कुछ नहीं। जब सदस्य इस सर्कल के साथ प्रोजेक्ट, बोर्ड या स्केच साझा करते हैं, तो वे यहाँ जमा होते हैं।"
+],
+"Projects": [
+"प्रोजेक्ट",
+"प्रोजेक्ट"
+],
+"Waiting to join": [
+"सामील होण्याच्या प्रतीक्षेत",
+"जुड़ने के इंतज़ार में"
+],
+"Asked to join": [
+"सामील होण्याची विनंती केली",
+"जुड़ने का अनुरोध किया"
+],
+"Decline": [
+"नाकारा",
+"मना करें"
+],
+"Let in": [
+"आत घ्या",
+"अंदर लें"
+],
+" is in.": [
+" आत आले.",
+" अंदर आ गए।"
+],
+"Host": [
+"होस्ट",
+"होस्ट"
+],
+"Member": [
+"सदस्य",
+"सदस्य"
+],
+"No members yet.": [
+"अजून सदस्य नाहीत.",
+"अभी कोई सदस्य नहीं।"
+],
+"Cancel my request": [
+"माझी विनंती रद्द करा",
+"मेरा अनुरोध रद्द करें"
+],
+"View profile": [
+"प्रोफाइल पाहा",
+"प्रोफ़ाइल देखें"
+],
+"Remove from the circle?": [
+"सर्कलमधून काढायचं?",
+"सर्कल से हटाएँ?"
+],
+" will lose access to the chat and anything shared only with this circle.": [
+" यांना चॅट आणि फक्त या सर्कलसोबत शेअर केलेल्या गोष्टी दिसणार नाहीत.",
+" चैट और सिर्फ़ इस सर्कल के साथ साझा की गई चीज़ें नहीं देख पाएँगे।"
+],
+"Remove from the circle": [
+"सर्कलमधून काढा",
+"सर्कल से हटाएँ"
+],
+"Copy link to this circle": [
+"या सर्कलची लिंक कॉपी करा",
+"इस सर्कल का लिंक कॉपी करें"
+],
+"Edit circle": [
+"सर्कल संपादित करा",
+"सर्कल संपादित करें"
+],
+"Close this circle": [
+"हे सर्कल बंद करा",
+"यह सर्कल बंद करें"
+],
+"Nothing to change here.": [
+"इथे बदलण्यासारखं काही नाही.",
+"यहाँ बदलने को कुछ नहीं है।"
+],
+"Circle saved.": [
+"सर्कल सेव्ह झालं.",
+"सर्कल सेव हो गया।"
+],
+"Close this circle?": [
+"हे सर्कल बंद करायचं?",
+"यह सर्कल बंद करें?"
+],
+"\"{0}\" and its chat will be deleted for everyone. Projects shared with it stay with their authors.": [
+"\"{0}\" आणि त्याचं चॅट सगळ्यांसाठी हटवलं जाईल. त्याच्यासोबत शेअर केलेले प्रोजेक्ट त्यांच्या लेखकांकडेच राहतात.",
+"\"{0}\" और इसकी चैट सबके लिए हटा दी जाएगी। इसके साथ साझा किए गए प्रोजेक्ट अपने लेखकों के पास रहते हैं।"
+],
+"Close circle": [
+"सर्कल बंद करा",
+"सर्कल बंद करें"
+],
+"Closing the circle…": [
+"सर्कल बंद करत आहे…",
+"सर्कल बंद हो रहा है…"
+],
+"Circle closed.": [
+"सर्कल बंद झालं.",
+"सर्कल बंद हो गया।"
+],
+"Cheer sent. Give it a moment before the next one.": [
+"प्रोत्साहन पाठवलं. पुढच्या वेळी थोडं थांबा.",
+"हौसला भेजा गया। अगली बार से पहले थोड़ा रुकें।"
+],
+"There's nobody else here to cheer on yet.": [
+"प्रोत्साहन द्यायला इथे अजून दुसरं कोणी नाही.",
+"हौसला बढ़ाने के लिए यहाँ अभी कोई और नहीं है।"
+],
+"You cheered {0} on.": [
+"तुम्ही {0} यांना प्रोत्साहन दिलं.",
+"आपने {0} का हौसला बढ़ाया।"
+],
+"You cheered everyone on.": [
+"तुम्ही सगळ्यांना प्रोत्साहन दिलं.",
+"आपने सबका हौसला बढ़ाया।"
+],
+"{0} cheered you on in {1}.": [
+"{0} यांनी {1} मध्ये तुम्हाला प्रोत्साहन दिलं.",
+"{0} ने {1} में आपका हौसला बढ़ाया।"
+],
+"{0} cheered everyone on in {1}.": [
+"{0} यांनी {1} मध्ये सगळ्यांना प्रोत्साहन दिलं.",
+"{0} ने {1} में सबका हौसला बढ़ाया।"
+],
+"This circle isn't here.": [
+"हे सर्कल इथे नाही.",
+"यह सर्कल यहाँ नहीं है।"
+],
+"The sprint starts {0}. This page opens by itself when it does.": [
+"स्प्रिंट {0} सुरू होईल. तेव्हा हे पान आपोआप उघडेल.",
+"स्प्रिंट {0} शुरू होगा। तब यह पेज अपने आप खुल जाएगा।"
+],
+"Back to the circle": [
+"सर्कलकडे परत",
+"सर्कल पर वापस"
+],
+"No sprint is running in this circle right now.": [
+"या सर्कलमध्ये आत्ता कोणताही स्प्रिंट सुरू नाही.",
+"इस सर्कल में अभी कोई स्प्रिंट नहीं चल रहा।"
+],
+"Start one": [
+"एक सुरू करा",
+"एक शुरू करें"
+],
+"Who is writing": [
+"कोण लिहीत आहे",
+"कौन लिख रहा है"
+],
+"Sprint page": [
+"स्प्रिंटचं पान",
+"स्प्रिंट का पन्ना"
+],
+"Write without stopping. Nobody sees your words, only the count.": [
+"न थांबता लिहा. तुमचे शब्द कोणी पाहत नाही, फक्त संख्या.",
+"बिना रुके लिखें। आपके शब्द कोई नहीं देखता, सिर्फ़ गिनती।"
+],
+"I'm done": [
+"माझं झालं",
+"मेरा हो गया"
+],
+"Time's up.": [
+"वेळ संपली.",
+"समय ख़त्म।"
+],
+"You wrote {0} in this sprint. They count toward your words today.": [
+"या स्प्रिंटमध्ये तुम्ही {0} लिहिले. ते तुमच्या आजच्या शब्दांत मोजले जातात.",
+"इस स्प्रिंट में आपने {0} लिखे। ये आपके आज के शब्दों में गिने जाते हैं।"
+],
+"Time's up": [
+"वेळ संपली",
+"समय ख़त्म"
+],
+"Sprint finished": [
+"स्प्रिंट संपला",
+"स्प्रिंट ख़त्म"
+],
+"Copy my text": [
+"माझा मजकूर कॉपी करा",
+"मेरा टेक्स्ट कॉपी करें"
+],
+"Save as a new chapter": [
+"नवीन प्रकरण म्हणून सेव्ह करा",
+"नए अध्याय के रूप में सेव करें"
+],
+"Start a project first, then you can move sprint pages into it.": [
+"आधी प्रोजेक्ट सुरू करा, मग स्प्रिंटची पानं त्यात हलवता येतील.",
+"पहले प्रोजेक्ट शुरू करें, फिर स्प्रिंट के पन्ने उसमें ले जा सकेंगे।"
+],
+"Saved to {0}.": [
+"{0} मध्ये सेव्ह झालं.",
+"{0} में सेव हो गया।"
+],
+"Which project?": [
+"कोणता प्रोजेक्ट?",
+"कौन-सा प्रोजेक्ट?"
+],
+"Opening Inkcircle…": [
+"Inkcircle उघडत आहे…",
+"Inkcircle खुल रहा है…"
+],
+"Inkcircle couldn't load.": [
+"Inkcircle लोड होऊ शकलं नाही.",
+"Inkcircle लोड नहीं हो सका।"
+],
+"Check your connection and reload the page. If it keeps happening, an ad blocker may be blocking the sign-in service.": [
+"कनेक्शन तपासा आणि पान पुन्हा लोड करा. असं वारंवार होत असेल, तर कदाचित ॲड ब्लॉकर साइन इन सेवा अडवत असेल.",
+"कनेक्शन जाँचें और पेज फिर से लोड करें। अगर ऐसा बार-बार हो, तो शायद कोई ऐड ब्लॉकर साइन-इन सेवा रोक रहा है।"
+],
+"Reload": [
+"पुन्हा लोड करा",
+"फिर से लोड करें"
+],
+"{0} here now": [
+"{0} आत्ता इथे",
+"{0} अभी यहाँ"
+],
+"just now": [
+"आत्ताच",
+"अभी-अभी"
+],
+"tomorrow, {0}": [
+"उद्या, {0}",
+"कल, {0}"
+],
+"edited {0}": [
+"{0} संपादित",
+"{0} संपादित"
+],
+"edited {0} by {1}": [
+"{0} {1} यांनी संपादित केलं",
+"{0} {1} ने संपादित किया"
+],
+"by you": [
+"तुमचा",
+"आपका"
+],
+"by {0}": [
+"{0} यांचा",
+"{0} का"
+],
+"updated {0}": [
+"{0} अपडेट केलं",
+"{0} अपडेट किया"
+],
+"reworked {0}": [
+"{0} पुन्हा काम केलं",
+"{0} दोबारा काम किया"
+],
+"not available": [
+"उपलब्ध नाही",
+"उपलब्ध नहीं"
+],
+"private": [
+"खासगी",
+"निजी"
+],
+"this part": [
+"हा भाग",
+"यह हिस्सा"
+],
+"{0} of {1} words": [
+"{1} पैकी {0} शब्द",
+"{1} में से {0} शब्द"
+],
+"of {0}": [
+"{0} पैकी",
+"{0} में से"
+],
+"of a {0}-word goal, across {1}": [
+"{0} शब्दांच्या उद्दिष्टापैकी, {1} मध्ये",
+"{0} शब्दों के लक्ष्य में से, {1} में"
+],
+"{0}: ideas": [
+"{0}: कल्पना",
+"{0}: विचार"
+],
+"{0} (you)": [
+"{0} (तुम्ही)",
+"{0} (आप)"
+],
+"{0}, {1}.": [
+"{0}, {1}.",
+"{0}, {1}।"
+],
+"{0} here": [
+"{0} इथे",
+"{0} यहाँ"
+],
+"words": [
+"शब्द",
+"शब्द"
+],
+"Notifications": [
+"सूचना",
+"सूचनाएँ"
+],
+"On": [
+"सुरू",
+"चालू"
+],
+"Off": [
+"बंद",
+"बंद"
+],
+"Blocked in this browser": [
+"या ब्राउझरमध्ये अडवलेल्या",
+"इस ब्राउज़र में रोकी गई हैं"
+],
+"Add Inkcircle to your Home Screen first": [
+"आधी Inkcircle होम स्क्रीनवर जोडा",
+"पहले Inkcircle को होम स्क्रीन पर जोड़ें"
+],
+"This browser can't show them": [
+"हा ब्राउझर त्या दाखवू शकत नाही",
+"यह ब्राउज़र इन्हें नहीं दिखा सकता"
+],
+"This browser can't show notifications.": [
+"हा ब्राउझर सूचना दाखवू शकत नाही.",
+"यह ब्राउज़र सूचनाएँ नहीं दिखा सकता।"
+],
+"Notifications are blocked for this site. Allow them in your browser settings, then try again.": [
+"या साइटसाठी सूचना अडवल्या आहेत. ब्राउझरच्या सेटिंग्जमध्ये परवानगी द्या आणि पुन्हा प्रयत्न करा.",
+"इस साइट के लिए सूचनाएँ रोकी गई हैं। ब्राउज़र की सेटिंग्स में अनुमति दें और फिर कोशिश करें।"
+],
+"Notifications stay off.": [
+"सूचना बंदच राहतील.",
+"सूचनाएँ बंद ही रहेंगी।"
+],
+"Notifications are on. You will hear about new messages and sprints while Inkcircle is open.": [
+"सूचना सुरू झाल्या. Inkcircle उघडं असताना नवे मेसेज आणि स्प्रिंटबद्दल तुम्हाला कळेल.",
+"सूचनाएँ चालू हैं। Inkcircle खुला रहने पर आपको नए मैसेज और स्प्रिंट की ख़बर मिलेगी।"
+],
+"Notifications are on": [
+"सूचना सुरू आहेत",
+"सूचनाएँ चालू हैं"
+],
+"This is how new messages will look.": [
+"नवे मेसेज असे दिसतील.",
+"नए मैसेज ऐसे दिखेंगे।"
+],
+"Notifications are off.": [
+"सूचना बंद केल्या.",
+"सूचनाएँ बंद हैं।"
+],
+"Sprint starting in {0}": [
+"{0} मध्ये स्प्रिंट सुरू होत आहे",
+"{0} में स्प्रिंट शुरू हो रहा है"
+],
+"{0} minutes, starting now. Tap to write.": [
+"{0} मिनिटं, आत्ता सुरू. लिहिण्यासाठी टॅप करा.",
+"{0} मिनट, अभी शुरू। लिखने के लिए टैप करें।"
+],
+"Get a notification when someone writes here?": [
+"इथे कोणी लिहिलं की सूचना हवी आहे?",
+"यहाँ कोई लिखे तो सूचना चाहिए?"
+],
+"Turn on": [
+"सुरू करा",
+"चालू करें"
+],
+"Not now": [
+"आत्ता नको",
+"अभी नहीं"
+],
+"On while Inkcircle is open": [
+"Inkcircle उघडं असताना सुरू",
+"Inkcircle खुला रहने पर चालू"
+],
+"Notifications are on, even when Inkcircle is closed.": [
+"सूचना सुरू झाल्या, Inkcircle बंद असतानाही.",
+"सूचनाएँ चालू हैं, Inkcircle बंद होने पर भी।"
+],
+"Notifications are on while Inkcircle is open. They couldn't be set up for when it's closed; try again later from Settings.": [
+"Inkcircle उघडं असताना सूचना सुरू आहेत. ते बंद असतानासाठी त्या सुरू करता आल्या नाहीत; नंतर सेटिंग्जमधून पुन्हा प्रयत्न करा.",
+"Inkcircle खुला रहने पर सूचनाएँ चालू हैं। बंद होने पर के लिए इन्हें चालू नहीं किया जा सका; बाद में सेटिंग्स से फिर कोशिश करें।"
+]
+});
+Object.assign(NOUNS, {"word": {"mr": ["शब्द", "शब्द"], "hi": ["शब्द", "शब्द"]}, "member": {"mr": ["सदस्य", "सदस्य"], "hi": ["सदस्य", "सदस्य"]}, "writer": {"mr": ["लेखक", "लेखक"], "hi": ["लेखक", "लेखक"]}, "card": {"mr": ["कार्ड", "कार्डं"], "hi": ["कार्ड", "कार्ड"]}, "part": {"mr": ["भाग", "भाग"], "hi": ["हिस्सा", "हिस्से"]}});
 
 /* =====================================================================
    Backends. Every view talks to P.db / P.live / P.auth through the same
@@ -1951,7 +5720,7 @@ async function seedDemo() {
     [lena, now - 3600000 * 5, 'Novel draft at 41k words. Sprints keep me honest.'],
     [maya, spAt, 'Started a 15-minute sprint. Join from the Sprint tab.\nPrompt: ' + prompt],
   ];
-  for (let i = 0; i < msgs.length; i++) await dset('circles/founders/messages/m' + i, { text: msgs[i][2], by: msgs[i][0], at: msgs[i][1], kind: i === 3 ? 'sprint' : 'text' }, true);
+  for (let i = 0; i < msgs.length; i++) await dset('circles/founders/messages/m' + i, Object.assign({ text: msgs[i][2], by: msgs[i][0], at: msgs[i][1], kind: i === 3 ? 'sprint' : 'text' }, i === 3 ? { min: 15, when: spAt, prompt } : {}), true);
   await dset('circles/monsoon', { name: 'Monsoon Poets', about: 'Poets writing about rain, cities and memory. A new prompt every Sunday.', tags: ['Poetry', 'Hindi & regional'], open: true, color: 6, owner: arjun, members: { [arjun]: 'member', [lena]: 'member' }, created: now - 86400000 * 12, updated: now - 86400000 * 2, last: { text: 'Sunday prompt: the smell of the first rain.', by: arjun, at: now - 86400000 * 2 } }, true);
   await dset('circles/monsoon/messages/m0', { text: 'Sunday prompt: the smell of the first rain.', by: arjun, at: now - 86400000 * 2, kind: 'text' }, true);
   await dset('circles/nightowls', { name: 'Night Owls', about: 'Novelists who write late. Sprints at 10 PM IST, every weeknight.', tags: ['Literary', 'Sprints'], open: false, color: 4, owner: lena, members: { [lena]: 'member' }, created: now - 86400000 * 8, updated: now - 86400000 }, true);
@@ -2076,7 +5845,9 @@ function FirestoreDB(Fs, fs) {
       orderBy: (f, dir) => query(path, cons.concat([Fs.orderBy(f, dir || 'asc')])),
       limit: n => query(path, cons.concat([Fs.limit(n)])),
       get: () => wrap(async () => snapQuery(await Fs.getDocs(build()))),
-      onSnapshot: (next, err) => Fs.onSnapshot(build(), s => next(snapQuery(s)), e => err && err(mapFbError(e))),
+      onSnapshot: (next, err, opts) => (opts && opts.meta
+        ? Fs.onSnapshot(build(), { includeMetadataChanges: true }, s => next(snapQuery(s)), e => err && err(mapFbError(e)))
+        : Fs.onSnapshot(build(), s => next(snapQuery(s)), e => err && err(mapFbError(e)))),
     };
   }
   function colRef(path) { return Object.assign(query(path, []), { path, doc: id => docRef(path + '/' + (id || newId())) }); }
@@ -2195,6 +5966,7 @@ async function startFirebase(cfg, onUser) {
       catch (e) { authError(e); return false; }
     },
     async signOut() { try { if (P.live && P.live.stop) P.live.stop(); await Au.signOut(auth); } catch (e) { /* ignore */ } },
+    async token() { try { return auth.currentUser ? await auth.currentUser.getIdToken() : ''; } catch (e) { return ''; } },
   };
   Au.getRedirectResult(auth).catch(authError);
   Au.onAuthStateChanged(auth, user => {
@@ -2363,12 +6135,12 @@ function avatarStack(ids, max = 5, size = 28) {
 function personBtn(id, what, size = 36) {
   const p = People.get(id);
   return h('button', { class: 'person', type: 'button', onClick: () => openProfile(id) }, avatar(id, size, isOnline(id)),
-    h('span', { style: { minWidth: '0' } }, h('span', { class: 'nm', text: p.name + (p.isMe ? ' (you)' : '') }), what ? h('span', { class: 'what', text: what }) : null));
+    h('span', { style: { minWidth: '0' } }, h('span', { class: 'nm', raw: p.isMe ? fmt('{0} (you)', p.name) : p.name }), what ? h('span', { class: 'what', text: what }) : null));
 }
 function ringMark(c, size = 44) {
   const el = h('span', { class: 'ringmark', style: { width: size + 'px', height: size + 'px', color: ink(c && c.color), fontSize: size + 'px' } });
   el.innerHTML = `<svg viewBox="0 0 40 40" aria-hidden="true"><path d="${ENSO}" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>`;
-  el.appendChild(h('b', { text: (str(c && c.name, 40).trim().charAt(0) || '?').toUpperCase() }));
+  el.appendChild(h('b', { raw: (str(c && c.name, 40).trim().charAt(0) || '?').toUpperCase() }));
   return el;
 }
 function visPill(item) {
@@ -2430,6 +6202,18 @@ function themePref() { try { return localStorage.getItem('ink-theme') || 'system
 function applyTheme(t = themePref()) {
   const root = document.documentElement;
   if (t === 'light' || t === 'dark') root.setAttribute('data-theme', t); else root.removeAttribute('data-theme');
+  root.style.setProperty('--page-scale', String(TEXT_SIZES[textSizePref()] || 1));
+}
+// Reading and writing text size, per device.
+const TEXT_SIZES = { s: 0.9, m: 1, l: 1.14, xl: 1.3 };
+function textSizePref() { try { const v = localStorage.getItem('ink-fs'); return TEXT_SIZES[v] ? v : 'm'; } catch (e) { return 'm'; } }
+function textSizeSheet() {
+  const sample = h('p', { class: 'fs-sample', text: 'The first road appeared on a Tuesday, which Ila would later think was the least magical day of the week.' });
+  const g = chipGroup([['s', 'Small'], ['m', 'Medium'], ['l', 'Large'], ['xl', 'Extra large']], textSizePref(), { onChange: v => {
+    try { localStorage.setItem('ink-fs', v); } catch (e) { /* ignore */ }
+    applyTheme();
+  } });
+  const s = openSheet({ title: 'Text size', sub: 'For writing and reading on this device.', body: h('div', null, g, sample), actions: [btn('Done', () => s.close(), 'dark')] });
 }
 
 // ---------- profile & settings ----------
@@ -2450,7 +6234,7 @@ function openProfile(uid) {
     const w = mine ? (S.profile || {}) : People.profileOf(uid);
     const online = isOnline(uid);
     fill(body, h('div', { class: 'prof' }, avatar(uid, 64, online),
-      h('div', null, h('h3', { text: p.name + (mine ? ' (you)' : '') }),
+      h('div', null, h('h3', { raw: mine ? fmt('{0} (you)', p.name) : p.name }),
         h('div', { class: 'muted small', text: online ? 'Here now' : (w.since ? fmt('On Inkcircle since {0}', new Date(w.since).toLocaleDateString(LOCALE, { month: 'long', year: 'numeric' })) : 'Writer') }))));
     if (mine && P.mode !== 'demo') {
       nameIn = h('input', { class: 'inp', maxlength: '60', value: str(w.name, 60) || P.me.name, placeholder: 'The name other writers see' });
@@ -2491,9 +6275,11 @@ function openSettings() {
   const body = h('div', null,
     h('div', { class: 'prof', style: { marginBottom: '6px' } }, avatar(meId(), 48), h('div', null, h('h3', { text: me.name }), P.me && P.me.email ? h('div', { class: 'muted small', text: P.me.email }) : null)),
     group('Appearance', theme),
+    h('div', { class: 'pick-list', style: { margin: '-4px 0 8px' } }, opt('font', 'Text size', ({ s: 'Small', m: 'Medium', l: 'Large', xl: 'Extra large' })[textSizePref()], () => textSizeSheet())),
     langReady() ? group('Language', langPicker()) : null,
     h('div', { class: 'pick-list', style: { marginTop: '6px' } },
       opt('user', 'Your profile', 'Pen name, bio and what you write', () => openProfile(meId())),
+      opt('bell', 'Notifications', NOTIFY_LABEL[notifyState()], () => (notifyState() === 'on' ? disableNotify() : notifyState() === 'open' && pushReady() ? enableNotify() : notifyOn() ? disableNotify() : enableNotify())),
       installReady() ? opt('download', 'Install Inkcircle', 'Put it on your home screen like an app', () => installApp()) : null,
       blockedList().length ? opt('lock', 'Blocked writers', plural(blockedList().length, 'writer'), () => blockedSheet()) : null,
       opt('download', 'Export my writing', 'Every project you write in, as one Markdown file', () => exportAll()),
@@ -2510,8 +6296,8 @@ function langPicker() {
 
 // ---------- report and block ----------
 const blockedList = () => Object.keys((S.state && S.state.blocked) || {}).filter(k => S.state.blocked[k]);
-function blockWriter(uid) { patchState({ blocked: { [uid]: true } }); emitChange('people'); toast(fmt('You blocked {0}.', People.name(uid))); }
-function unblockWriter(uid) { patchState({ blocked: { [uid]: DEL } }); emitChange('people'); toast(fmt('You unblocked {0}.', People.name(uid))); }
+function blockWriter(uid) { patchState({ blocked: { [uid]: true } }); emitChange('people'); toast(fmt('You blocked {0}.', People.name(uid))); setTimeout(() => syncPush(true), 500); }
+function unblockWriter(uid) { patchState({ blocked: { [uid]: DEL } }); emitChange('people'); toast(fmt('You unblocked {0}.', People.name(uid))); setTimeout(() => syncPush(true), 500); }
 function blockSheet(uid) {
   const s = openSheet({
     title: fmt('Block {0}?', People.name(uid)),
@@ -2616,6 +6402,135 @@ function comingSprints() {
   for (const c of myCircles()) { const sp = sprintOf(c); if (sp && sp.upcoming) out.push({ c, sp }); }
   return out.sort((a, b) => a.sp.at - b.sp.at);
 }
+// ---------- notifications while Inkcircle is open ----------
+// New circle messages and sprints that start. A phone only shows these while Inkcircle is open or in the background;
+// notifications to a closed app need a server, which the free Firebase plan can't run.
+const NOTIFY = { base: new Map(), sprints: new Set(), started: Date.now() };
+const notifySupported = () => 'Notification' in window;
+function notifyPref() { try { return localStorage.getItem('ink-notify') === 'on'; } catch (e) { return false; } }
+const notifyOn = () => notifySupported() && Notification.permission === 'granted' && notifyPref();
+// Push: notifications that arrive even when Inkcircle is closed, sent by the Inkcircle Worker on Cloudflare.
+const pushReady = () => !!(P.pushUrl && P.mode === 'firebase' && P.site && 'serviceWorker' in navigator && 'PushManager' in window);
+function pushPref() { try { return localStorage.getItem('ink-push') === 'on'; } catch (e) { return false; } }
+const pushOn = () => notifyOn() && pushReady() && pushPref();
+function notifyState() {
+  if (!notifySupported()) return 'unsupported';
+  if (isIOS() && !isStandalone()) return 'ios';
+  if (Notification.permission === 'denied') return 'blocked';
+  return pushOn() ? 'on' : notifyOn() ? 'open' : 'off';
+}
+const NOTIFY_LABEL = { on: 'On', open: 'On while Inkcircle is open', off: 'Off', blocked: 'Blocked in this browser', ios: 'Add Inkcircle to your Home Screen first', unsupported: "This browser can't show them" };
+const b64uBytes = s => { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; const bin = atob(s); return Uint8Array.from(bin, ch => ch.charCodeAt(0)); };
+const withTimeout = (p, ms) => Promise.race([p, new Promise((res, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+async function pushCall(path, body) {
+  if (!P.pushUrl) return null;
+  try {
+    const tok = P.auth && P.auth.token ? await P.auth.token() : '';
+    if (!tok) return null;
+    const r = await fetch(P.pushUrl + path, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + tok }, body: JSON.stringify(body || {}) });
+    return r.ok ? await r.json().catch(() => ({})) : null;
+  } catch (e) { return null; }
+}
+// Tell the other members of a circle; and remember a scheduled sprint for its reminders.
+async function pushPing(cid, kind) {
+  if (!P.pushUrl || P.mode !== 'firebase') return;
+  if (!await pushCall('/notify', { circle: cid, kind })) setTimeout(() => pushCall('/notify', { circle: cid, kind }), 4000);
+}
+function pushSchedule(cid) { if (P.pushUrl && P.mode === 'firebase') pushCall('/schedule', { circle: cid }); }
+const pushSig = sub => JSON.stringify([sub.endpoint, LANG, blockedList().sort()]);
+async function pushSubscribe() {
+  const reg = await withTimeout(navigator.serviceWorker.ready, 8000);
+  let sub = await reg.pushManager.getSubscription();
+  if (!sub) {
+    const r = await fetch(P.pushUrl + '/vapid');
+    const { key } = await r.json();
+    sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64uBytes(key) });
+  }
+  const json = sub.toJSON();
+  if (!await pushCall('/subscribe', { sub: json, lang: LANG, blocked: blockedList() })) throw new Error('subscribe failed');
+  try { localStorage.setItem('ink-push-sig', pushSig(json)); } catch (e) { /* ignore */ }
+}
+// Keeps the Worker's copy of this device, language and blocked writers up to date. Writes only when something changed.
+async function syncPush(force) {
+  if (!pushOn()) return;
+  try {
+    const reg = await withTimeout(navigator.serviceWorker.ready, 8000);
+    const sub = await reg.pushManager.getSubscription();
+    if (!sub) { await pushSubscribe(); return; }
+    const json = sub.toJSON();
+    let old = '';
+    try { old = localStorage.getItem('ink-push-sig') || ''; } catch (e) { /* ignore */ }
+    if (!force && old === pushSig(json)) return;
+    if (await pushCall('/subscribe', { sub: json, lang: LANG, blocked: blockedList() })) { try { localStorage.setItem('ink-push-sig', pushSig(json)); } catch (e) { /* ignore */ } }
+  } catch (e) { /* try again next time */ }
+}
+async function enableNotify() {
+  const st = notifyState();
+  if (st === 'unsupported') { toast("This browser can't show notifications."); return false; }
+  if (st === 'ios') { installApp(); return false; }
+  let p = Notification.permission;
+  if (p === 'default') { try { p = await Notification.requestPermission(); } catch (e) { p = 'denied'; } }
+  if (p !== 'granted') { toast(p === 'denied' ? 'Notifications are blocked for this site. Allow them in your browser settings, then try again.' : 'Notifications stay off.'); return false; }
+  try { localStorage.setItem('ink-notify', 'on'); } catch (e) { /* ignore */ }
+  let push = false;
+  if (pushReady()) {
+    try { await pushSubscribe(); push = true; } catch (e) { push = false; }
+    try { localStorage.setItem('ink-push', push ? 'on' : 'off'); } catch (e) { /* ignore */ }
+  }
+  toast(push ? 'Notifications are on, even when Inkcircle is closed.'
+    : pushReady() ? "Notifications are on while Inkcircle is open. They couldn't be set up for when it's closed; try again later from Settings."
+      : 'Notifications are on. You will hear about new messages and sprints while Inkcircle is open.');
+  showNote(T('Notifications are on'), T('This is how new messages will look.'), '#desk', 'ink-test');
+  emitChange('notify');
+  return true;
+}
+async function disableNotify() {
+  if (pushOn()) {
+    try {
+      const reg = await withTimeout(navigator.serviceWorker.ready, 8000);
+      const sub = await reg.pushManager.getSubscription();
+      if (sub) { await pushCall('/unsubscribe', { endpoint: sub.endpoint }); await sub.unsubscribe(); }
+    } catch (e) { /* the Worker forgets devices that stop answering */ }
+  }
+  try { localStorage.setItem('ink-notify', 'off'); localStorage.setItem('ink-push', 'off'); localStorage.removeItem('ink-push-sig'); } catch (e) { /* ignore */ }
+  toast('Notifications are off.');
+  emitChange('notify');
+}
+async function showNote(title, body, hash, tag) {
+  if (!notifyOn()) return;
+  const opts = { body, tag, icon: P.site ? 'icon-192.png' : undefined, data: { hash }, renotify: true };
+  try {
+    const reg = navigator.serviceWorker && await navigator.serviceWorker.getRegistration();
+    if (reg) { await reg.showNotification(title, opts); return; }
+  } catch (e) { /* fall back below */ }
+  try {
+    const n = new Notification(title, opts);
+    n.onclick = () => { try { window.focus(); } catch (e) { /* ignore */ } location.hash = hash; n.close(); };
+  } catch (e) { /* this browser only allows notifications from an installed app */ }
+}
+function watchingCircle(cid, tab) {
+  return !document.hidden && current && current.name === (tab === 'pad' ? 'pad' : 'circle') && current.params && current.params[0] === cid
+    && (tab === 'pad' || !current.view.tab || current.view.tab === 'chat');
+}
+function checkNotify() {
+  if (!signedIn() || !S.ready.has('circles')) return;
+  for (const c of myCircles()) {
+    if (memberState(meId(), c) !== 'member') continue;
+    const l = c.last || {};
+    const at = Number(l.at) || 0;
+    const base = NOTIFY.base.get(c.id);
+    if (base === undefined) NOTIFY.base.set(c.id, Math.max(at, NOTIFY.started));
+    else if (at > base) {
+      NOTIFY.base.set(c.id, at);
+      if (!pushOn() && l.by !== meId() && !isBlocked(l.by) && !watchingCircle(c.id, 'chat')) showNote(str(c.name, 60), People.name(l.by) + ': ' + lastText(l), '#c-' + c.id, 'c-' + c.id);
+    }
+    const sp = sprintOf(c);
+    if (sp && sp.running && sp.at > NOTIFY.started && !NOTIFY.sprints.has(sp.id)) {
+      NOTIFY.sprints.add(sp.id);
+      if (sp.by !== meId() && !watchingCircle(c.id, 'pad')) showNote(fmt('Sprint starting in {0}', str(c.name, 60)), fmt('{0} minutes, starting now. Tap to write.', sp.min), '#pad-' + c.id, 'sp-' + c.id);
+    }
+  }
+}
 function updateChrome() {
   if (!signedIn()) return;
   const n = $('#notice');
@@ -2637,6 +6552,8 @@ function updateChrome() {
   if (tl) fill(tl, live.length ? h('button', { class: 'btn ghost small', type: 'button', onClick: () => openCircle(live[0].c.id, 'sprint') }, h('span', { class: 'live', text: 'Sprint' })) : null);
   const unread = unreadCount();
   for (const id of ['rail-badge', 'tab-badge']) { const b = document.getElementById(id); if (b) { b.textContent = unread ? String(unread) : ''; b.classList.toggle('on', !!unread); } }
+  // the number on the home-screen icon, where the phone supports it
+  try { if (navigator.setAppBadge) { if (unread) navigator.setAppBadge(unread); else navigator.clearAppBadge(); } } catch (e) { /* ignore */ }
   const dyn = $('#rail-dyn');
   if (dyn) {
     const mine = myCircles().slice(0, 7);
@@ -2784,6 +6701,7 @@ Views.landing = {
       h('section', { class: 'pillars' },
         h('h2', { class: 'land-h', text: 'What you can do here' }),
         h('div', { class: 'pillar-grid' }, pillars.map(([t, k, d]) => h('article', { class: 'pillar', style: { '--k': `var(--k-${k})` } }, h('h3', { text: t }), h('p', { text: d }))))),
+      teaserSection(),
       h('section', { class: 'steps', id: 'how' },
         h('h2', { class: 'land-h', text: 'How a circle works' }),
         h('ol', { class: 'step-list' }, steps.map(([t, d], i) => h('li', null, h('span', { class: 'step-n', text: String(i + 1) }), h('div', null, h('h3', { text: t }), h('p', { text: d })))))),
@@ -2804,6 +6722,21 @@ Views.landing = {
     this.timers.push(setInterval(() => { left = left > 1 ? left - 1 : 15 * 60; clk.textContent = clock(left * 1000); }, 1000));
   },
 };
+// The 30-second teaser, if the site has it (teaser.mp4 + teaser.jpg next to index.html).
+function teaserSection() {
+  const video = h('video', { class: 'teaser-video', src: 'teaser.mp4', poster: 'teaser.jpg', controls: true, playsinline: true, preload: 'none', width: '1080', height: '1350', 'aria-label': 'A 30-second tour of Inkcircle' });
+  video.muted = true;
+  const sec = h('section', { class: 'teaser' },
+    h('div', { class: 'teaser-copy' },
+      h('h2', { class: 'land-h', text: 'See it in 30 seconds' }),
+      h('p', { text: 'A circle plots a story on index cards, drafts a chapter, sketches a map and finishes with a sprint, all in one place.' })),
+    h('div', { class: 'teaser-frame' }, video));
+  const probe = new Image();
+  probe.onerror = () => sec.remove();
+  probe.src = 'teaser.jpg';
+  return sec;
+}
+
 // Small language switch for the welcome page.
 function landLang() {
   if (!langReady()) return null;
@@ -2835,7 +6768,8 @@ Views.privacy = {
             h('li', { text: 'Your circle: members of one circle can read it and leave notes.' }),
             h('li', { text: 'Everyone on Inkcircle: any signed-in writer can read it.' })),
           'Sprint pages are private. Other writers only see your word count.',
-          'Circle chats are visible to the members of that circle. Chats in circles that anyone can join are visible to every signed-in writer.'),
+          'Circle chats are visible to the members of that circle. Chats in circles that anyone can join are visible to every signed-in writer.',
+          'In a circle, members can see who has read their messages.'),
         sec('What we keep',
           'Your name, profile photo and email address, from the Google account or email you sign in with. Other writers see your name and photo, never your email address.',
           'What you create: projects, boards, sketches, messages, notes, and your daily word counts.',
@@ -2915,12 +6849,14 @@ function emailSheet(mode = 'signin') {
 }
 
 // ---------- onboarding ----------
+const HEARD = [['whatsapp', 'WhatsApp'], ['instagram', 'Instagram'], ['linkedin', 'LinkedIn'], ['friend', 'A friend'], ['group', 'A writing group'], ['college', 'College or club'], ['other', 'Somewhere else']];
 async function runOnboarding() {
   const invitedCid = (location.hash.match(/^#c-([a-z0-9]+)$/) || [])[1] || null;
   const back = invitedCid ? '#c-' + invitedCid : location.hash;
   const prof = S.profile || {};
   let name = str(prof.name, 60) || P.me.name || '';
   let genres = arr(prof.genres);
+  let heard = null;
   const body = h('div', { class: 'onb' });
   const dots = h('div', { class: 'onb-dots', 'aria-hidden': 'true' }, [0, 1, 2].map(() => h('i')));
   const setStep = i => Array.from(dots.children).forEach((d, j) => d.classList.toggle('on', j <= i));
@@ -2943,13 +6879,16 @@ async function runOnboarding() {
     s.setTitle('Welcome to Inkcircle');
     const nameIn = h('input', { class: 'inp', maxlength: '60', value: name, placeholder: 'Your name or pen name', autofocus: !isTouch() });
     const g = chipGroup(GENRES.filter(x => !['Sprints', 'Feedback swaps', 'All genres'].includes(x)), genres, { multi: true });
+    const hd = chipGroup(HEARD, heard, {});
     fill(body, h('div', { class: 'prof' }, avatar(meId(), 56), h('p', { class: 'muted', style: { margin: '0' }, text: 'Set up your profile so other writers know who they are writing with.' })),
-      field('What should writers call you?', nameIn), group('What do you write?', g, 'Pick a few. You can change this later.'));
+      field('What should writers call you?', nameIn), group('What do you write?', g, 'Pick a few. You can change this later.'),
+      group('How did you find Inkcircle?', hd, 'Optional. Only the person who runs Inkcircle sees this.'));
     s.setActions([btn('Continue', () => {
       name = nameIn.value.trim().slice(0, 60);
       if (!name) { nameIn.focus(); toast('Add the name other writers will see.'); return; }
       genres = g.get();
       updateMyWriter({ name, genres });
+      if (hd.get() && hd.get() !== heard) { heard = hd.get(); dset('signups/' + meId(), { heard, at: Date.now() }, true); }
       step2();
     }, 'primary')]);
   };
@@ -3053,7 +6992,7 @@ function circleCard(c) {
         sp && sp.running ? h('span', { class: 'live', text: fmt('Sprint, {0} left', clock(sp.left)) }) : null,
         sp && sp.upcoming ? h('span', { class: 'soon' }, icon('timer'), h('span', { text: fmt('Sprint {0}', whenLabel(sp.at)) })) : null,
         h('span', { text: plural(members.length, 'member') }),
-        here ? h('span', { text: num(here) + ' here now' }) : null,
+        here ? h('span', { text: fmt('{0} here now', num(here)) }) : null,
         c.open === false ? h('span', { class: 'pill' }, icon('lock'), h('span', { text: 'By approval' })) : null,
         st === 'pending' ? h('span', { class: 'tag', text: 'Request sent' }) : null),
       c.last && c.last.text && st === 'member' && !isBlocked(c.last.by) ? h('div', { class: 'last', raw: People.name(c.last.by) + ': ' + lastText(c.last) }) : null));
@@ -3278,7 +7217,7 @@ Views.desk = {
     const name = P.mode === 'demo' ? '' : firstName(People.name(meId()));
     const wrap = h('div', { class: 'wrap' });
     wrap.appendChild(h('div', { class: 'vh' },
-      h('div', { class: 'greet' }, h('h1', { text: name ? `${greet}, ${name}.` : greet + '.' }), this.todayLine()),
+      h('div', { class: 'greet' }, h('h1', { raw: name ? fmt('{0}, {1}.', T(greet), name) : T(greet) + '.' }), this.todayLine()),
       h('div', { class: 'acts hide-sm' }, btn('New', newMenu, 'primary', 'plus'))));
     const left = h('div');
     left.appendChild(S.ready.has('projects') ? this.hero() : h('article', { class: 'ms' }, skeleton(2)));
@@ -3660,6 +7599,7 @@ const ChapterView = {
       keep(ibtn('note', 'Leave a note on the selected lines', () => this.addNote())),
       this.loveBtn = keep(ibtn('heart', 'Love this part, or the lines you selected', () => this.love(), { style: { display: 'none' } })),
       keep(ibtn('expand', 'Focus mode', () => this.toggleZen())),
+      keep(h('button', { class: 'ibtn aa hide-sm', type: 'button', title: 'Text size', 'aria-label': 'Text size', text: 'Aa', onClick: () => textSizeSheet() })),
       this.wc);
     this.page = h('article', { class: 'page', contenteditable: 'false', spellcheck: 'true', 'data-ph': 'Start writing. Inkcircle saves as you go.', 'aria-label': 'Chapter text', role: 'textbox', 'aria-multiline': 'true' });
     this.page.addEventListener('input', () => this.onInput());
@@ -4121,6 +8061,7 @@ const ChapterView = {
       p ? opt('book', 'Export the whole project', () => exportProject(p)) : null,
       opt('copy', 'Copy the text of this part', () => copyText(htmlToText(this.page.innerHTML))),
       opt('expand', this.root.classList.contains('zen') ? 'Leave focus mode' : 'Focus mode', () => this.toggleZen()),
+      opt('font', 'Text size', () => textSizeSheet()),
       this.mode === 'write' && p && canEditProject(p) ? opt('trash', 'Delete this part', async () => {
         const yes = await confirmSheet({ title: 'Delete this part?', text: fmt('"{0}" will be deleted for everyone.', str(this.ch && this.ch.title, 100)), ok: 'Delete' });
         if (!yes) return;
@@ -4244,7 +8185,7 @@ Views.boards = {
       return h('button', { class: 'row', type: 'button', onClick: () => go('#b-' + b.id) }, h('span', { class: 'ico', style: { color: 'var(--ink-3)' } }, icon('board')),
         h('span', { class: 'grow' }, h('div', { class: 'r-title', raw: str(b.title, 100) || T('Untitled board') }),
           h('div', { class: 'r-meta', text: [p && canSee(p) ? fmt('For {0}', str(p.title, 80)) : null, b.owner === meId() ? T('by you') : fmt('by {0}', People.name(b.owner)), fmt('updated {0}', ago(b.updated || b.created))].filter(Boolean).join(', ') })),
-        h('span', { class: 'right' }, here ? h('span', { class: 'live', text: num(here) + ' here' }) : null, visPill(b)));
+        h('span', { class: 'right' }, here ? h('span', { class: 'live', text: fmt('{0} here', num(here)) }) : null, visPill(b)));
     })));
     fill(this.el, wrap);
   },
@@ -5383,6 +9324,11 @@ function joinLink(c) { return location.origin + location.pathname + '#join-' + c
 function waButton(label, text, cls = '') {
   return h('a', { class: 'btn wa ' + cls, href: waLink(text), target: '_blank', rel: 'noopener' }, icon('send'), h('span', { text: label }));
 }
+// Demo only: the example writers "read" what you send after a few seconds.
+function demoSeen(c, at) {
+  const others = membersOf(c).filter(id => id !== meId() && /^demo-/.test(id)).slice(0, 2);
+  others.forEach((id, i) => setTimeout(() => dset(`circles/${c.id}/reads/${id}`, { at, seen: Date.now() }, true), 3500 + i * 5000));
+}
 async function autoJoin(cid) {
   const c = S.circles.get(cid) || await dget('circles/' + cid);
   if (c && signedIn() && memberState(meId(), c) === 'none') await joinCircle(c);
@@ -5440,6 +9386,7 @@ const REF_KINDS = { project: ['projects', 'write', '#p-', 'Project'], board: ['b
 Views.circle = {
   fill: true, nextTab: null,
   mount(el, [cid]) {
+    Object.assign(this, { reads: new Map(), readsReady: false, readsOff: false, readsSub: null, pendingIds: new Set(), myReadAt: 0, lastSeenWrite: 0 });
     Object.assign(this, { el, cid, tab: this.nextTab || 'chat', msgs: new Map(), msgReady: false, msgSub: null, msgDenied: false, sprintDoc: null, sprintSubId: null, sprintUnsub: null, wasRunning: null, alive: true, missing: false, refs: new Map(), shelfItems: null });
     this.nextTab = null;
     this.unsubs = [watch(P.db.doc('circles/' + cid), snap => {
@@ -5457,6 +9404,7 @@ Views.circle = {
     this.alive = false;
     (this.unsubs || []).forEach(u => u());
     if (this.msgSub) this.msgSub();
+    if (this.readsSub) this.readsSub();
     if (this.sprintUnsub) this.sprintUnsub();
     S.circles.drop('view');
   },
@@ -5469,7 +9417,12 @@ Views.circle = {
     if (!c) return;
     if (this.tab === 'chat') {
       if (!this.panelBuilt || this.chatMode !== this.chatModeOf(c)) this.paintPanel();
-      else if (k.has('people') || k.has('circles')) this.paintChatChrome();
+      else if (k.has('people') || k.has('circles')) {
+        this.paintChatChrome();
+        // names arrive, or someone joins or leaves: the "Seen by" line may change
+        const sig = membersOf(c).join(',');
+        if (k.has('people') || sig !== this.memberSig) { this.memberSig = sig; this.paintChat(); }
+      }
     } else if (!this.panelBuilt || !(k.size === 1 && (k.has('peers') || k.has('state')) && this.tab !== 'sprint' && this.tab !== 'members')) this.paintPanel();
   },
   tick() {
@@ -5478,6 +9431,59 @@ Views.circle = {
     if (this.wasRunning !== null && running !== this.wasRunning) { this.paintHead(); if (this.tab === 'sprint') this.paintPanel(); }
     this.wasRunning = running;
     for (const n of $$('[data-end]', this.el)) n.textContent = clock(Number(n.dataset.end) - Date.now());
+    paintRings(this.el);
+    this.syncSeen();
+  },
+  // Tell the circle how far I have read, at most every few seconds.
+  syncSeen() {
+    const c = this.circle();
+    if (!c || !this.alive || this.tab !== 'chat' || document.hidden || !this.msgReady || !this.readsReady || this.readsOff || memberState(meId(), c) !== 'member') return;
+    let newest = 0;
+    for (const m of this.msgs.values()) if (!this.pendingIds.has(m.id)) newest = Math.max(newest, Number(m.at) || 0);
+    const mine = this.reads.get(meId());
+    const have = Math.max(this.myReadAt || 0, Number(mine && mine.at) || 0);
+    if (!newest || newest <= have || Date.now() - (this.lastSeenWrite || 0) < 3000) return;
+    this.myReadAt = newest;
+    this.lastSeenWrite = Date.now();
+    dset(`circles/${this.cid}/reads/${meId()}`, { at: newest, seen: Date.now() }, true);
+  },
+  seenBy(m, c) {
+    if (this.readsOff || !this.readsReady) return null;
+    const others = membersOf(c).filter(id => id !== meId());
+    const seen = others.filter(id => { const r = this.reads.get(id); return r && Number(r.at) >= Number(m.at); })
+      .sort((a, b) => (Number((this.reads.get(a) || {}).seen) || 0) - (Number((this.reads.get(b) || {}).seen) || 0));
+    return { others, seen, not: others.filter(id => !seen.includes(id)) };
+  },
+  statusEl(m, c) {
+    if (this.pendingIds.has(m.id)) return h('div', { class: 'msg-st' }, icon('timer'), h('span', { text: P.online ? 'Sending…' : "Waiting for a connection. It sends when you're back online." }));
+    const sb = this.seenBy(m, c);
+    let label = 'Sent', seen = false;
+    if (sb && !sb.others.length) label = 'Sent. No one else has joined this circle yet.';
+    else if (sb && sb.seen.length) {
+      seen = true;
+      const n = sb.seen.map(id => People.name(id));
+      if (sb.seen.length === sb.others.length && sb.others.length > 1) label = T('Seen by everyone');
+      else if (n.length === 1) label = fmt('Seen by {0}', n[0]);
+      else if (n.length === 2) label = fmt('Seen by {0} and {1}', n[0], n[1]);
+      else label = fmt('Seen by {0}, {1} and {2} more', n[0], n[1], n.length - 2);
+    }
+    return h('button', { class: 'msg-st' + (seen ? ' seen' : ''), type: 'button', title: 'Who has seen this', onClick: () => this.seenSheet(m) }, icon('check'), h('span', { text: label }));
+  },
+  seenSheet(m) {
+    const c = this.circle();
+    if (!c) return;
+    const sb = this.seenBy(m, c);
+    const row = (id, sub) => h('div', { class: 'row', style: { cursor: 'default' } }, avatar(id, 34), h('span', { class: 'grow' }, h('b', { raw: People.name(id) }), sub ? h('div', { class: 'small muted', text: sub }) : null));
+    const note = h('p', { class: 'hint', style: { marginTop: '14px' }, text: 'Inkcircle does not send notifications yet. Members see new messages the next time they open the circle, so a nudge on WhatsApp helps.' });
+    let body;
+    if (!sb) body = h('div', null, h('p', { class: 'muted', style: { marginTop: '0' }, text: 'Your message was saved, and every member of the circle can read it. Who has seen it will show here once the latest Inkcircle rules are published.' }), note);
+    else if (!sb.others.length) body = h('div', null, h('p', { class: 'muted', style: { marginTop: '0' }, text: 'Your message was saved, but no one else has joined this circle yet. Invite writers and they will see the whole chat.' }),
+      h('div', { style: { marginTop: '12px' } }, btn('Invite writers', () => { s.close(); inviteSheet(c); }, 'dark', 'people')));
+    else body = h('div', null,
+      sb.seen.length ? [h('h4', { class: 'mini-h', style: { marginTop: '0' }, text: 'Seen' }), h('div', { class: 'pick-list' }, sb.seen.map(id => { const r = this.reads.get(id); return row(id, r && r.seen ? fmt('Last opened the chat {0}', ago(Number(r.seen))) : ''); }))] : null,
+      sb.not.length ? [h('h4', { class: 'mini-h', style: sb.seen.length ? null : { marginTop: '0' }, text: 'Not seen yet' }), h('div', { class: 'pick-list' }, sb.not.map(id => row(id, isOnline(id) ? T('Here now') : '')))] : null,
+      note);
+    const s = openSheet({ title: 'Seen by', body, actions: [btn('Close', () => s.close(), 'ghost')] });
   },
   canRead(c) { return !!c && (c.open !== false || memberState(meId(), c) === 'member'); },
   chatModeOf(c) { return this.canRead(c) ? 'open' : 'locked-' + memberState(meId(), c); },
@@ -5487,9 +9493,17 @@ Views.circle = {
     if (this.canRead(c) && !this.msgSub) {
       this.msgDenied = false;
       this.msgSub = watch(P.db.collection(`circles/${this.cid}/messages`).orderBy('at', 'desc').limit(150), snap => {
-        this.msgs = toMap(snap); this.msgReady = true; this.paintChat();
-        if (this.tab === 'chat' && !document.hidden) markRead(this.cid);
-      }, 'messages', () => { this.msgDenied = true; this.msgReady = true; if (this.msgSub) { this.msgSub(); this.msgSub = null; } this.paintChat(); });
+        this.msgs = toMap(snap); this.msgReady = true;
+        this.pendingIds = new Set(snap.docs.filter(d => d.metadata && d.metadata.hasPendingWrites).map(d => d.id));
+        this.paintChat();
+        if (this.tab === 'chat' && !document.hidden) { markRead(this.cid); this.syncSeen(); }
+      }, 'messages', () => { this.msgDenied = true; this.msgReady = true; if (this.msgSub) { this.msgSub(); this.msgSub = null; } this.paintChat(); }, { meta: true });
+    }
+    // Read marks: how far each member has read. Members only; if the rules don't allow it yet, messages just say "Sent".
+    if (memberState(meId(), c) === 'member' && !this.readsSub && !this.readsOff) {
+      this.readsSub = watch(P.db.collection(`circles/${this.cid}/reads`), snap => {
+        this.reads = toMap(snap); this.readsReady = true; this.paintChat(); this.syncSeen();
+      }, 'reads', () => { this.readsOff = true; if (this.readsSub) { this.readsSub(); this.readsSub = null; } this.paintChat(); });
     }
     const sp = memberState(meId(), c) === 'member' ? sprintOf(c) : null;
     const id = sp ? sp.id : null;
@@ -5521,13 +9535,14 @@ Views.circle = {
     if (st === 'member') act.push(btn('Invite', () => inviteSheet(c), 'small', 'people'));
     act.push(ibtn('more', 'Circle options', () => this.menu(c)));
     const tabs = [['chat', 'Chat'], ['sprint', 'Sprint'], ['shelf', 'Shelf'], ['members', 'Members']];
+    this.head.classList.toggle('is-member', st === 'member');
     fill(this.head,
       crumb('Circles', '#circles'),
       h('div', { class: 'cv-top' }, ringMark(c, 56),
         h('div', { class: 'grow' }, h('h1', { raw: str(c.name, 60) }), c.about ? h('p', { raw: str(c.about, 400) }) : null),
         h('div', { class: 'cv-acts' }, act)),
       h('div', { class: 'cv-meta' },
-        avatarStack(members, 6, 28), h('span', { class: 'small muted', text: plural(members.length, 'member') + (here.length ? ', ' + num(here.length) + ' here now' : '') }),
+        avatarStack(members, 6, 28), h('span', { class: 'small muted', text: plural(members.length, 'member') + (here.length ? ', ' + fmt('{0} here now', num(here.length)) : '') }),
         c.open === false ? h('span', { class: 'pill' }, icon('lock'), h('span', { text: 'By approval' })) : null,
         arr(c.tags).slice(0, 5).map(t => h('span', { class: 'tag', text: str(t, 30) }))),
       h('div', { class: 'tabs', role: 'tablist' }, tabs.map(([k, label]) => h('button', { type: 'button', role: 'tab', 'aria-selected': String(this.tab === k), onClick: () => this.setTab(k) },
@@ -5566,6 +9581,15 @@ Views.circle = {
     this.paintChat();
     if (this.msgReady) markRead(this.cid);
   },
+  notifyOffer() {
+    let seen = false;
+    try { seen = localStorage.getItem('ink-notify-asked') === '1'; } catch (e) { /* ignore */ }
+    if (seen || notifyState() !== 'off' || Notification.permission === 'granted') return null;
+    const done = () => { try { localStorage.setItem('ink-notify-asked', '1'); } catch (e) { /* ignore */ } bar.remove(); };
+    const bar = h('div', { class: 'notify-offer' }, icon('bell'), h('span', { class: 'grow', text: 'Get a notification when someone writes here?' }),
+      btn('Turn on', async () => { done(); await enableNotify(); }, 'small dark'), ibtn('close', 'Not now', done));
+    return bar;
+  },
   paintChatChrome() {
     const c = this.circle();
     if (!c || !this.bottom || this.tab !== 'chat') return;
@@ -5578,7 +9602,7 @@ Views.circle = {
       const grow = () => { this.input.style.height = 'auto'; this.input.style.height = Math.min(140, this.input.scrollHeight + 2) + 'px'; };
       this.input.addEventListener('input', grow);
       this.input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !isTouch()) { e.preventDefault(); this.send(); } });
-      fill(this.bottom, h('div', { class: 'composer' }, ibtn('share', 'Share a project, board or sketch', () => this.shareSheet(c)), this.input, ibtn('send', 'Send', () => this.send())));
+      fill(this.bottom, this.notifyOffer(), h('div', { class: 'composer' }, ibtn('share', 'Share a project, board or sketch', () => this.shareSheet(c)), this.input, ibtn('send', 'Send', () => this.send())));
     } else {
       this.input = null;
       fill(this.bottom, h('div', { class: 'join-bar' }, h('span', { class: 'muted small grow', text: st === 'pending' ? 'Your request to join is waiting for the host.' : 'Join this circle to post, share work and sprint together.' }),
@@ -5595,11 +9619,16 @@ Views.circle = {
     else if (this.msgDenied) out.push(h('p', { class: 'muted', style: { textAlign: 'center', marginTop: '28px' }, text: "The chat couldn't be opened. It may be for members only." }));
     else if (!msgs.length) out.push(h('p', { class: 'muted', style: { textAlign: 'center', marginTop: '28px' }, text: 'No messages yet. Say hello and tell the circle what you are writing.' }));
     let day = '', prev = null;
+    let lastMine = null;
+    for (const m of msgs) if (m.by === meId()) lastMine = m.id;
+    const c = this.circle();
     for (const m of msgs) {
       const d = dayLabel(m.at || 0);
       if (d !== day) { out.push(h('div', { class: 'day', text: d })); day = d; prev = null; }
       const cont = prev && prev.by === m.by && (m.at - prev.at) < 300000 && !m.ref && !prev.ref && m.kind !== 'sprint';
-      out.push(this.msgEl(m, cont));
+      const el = this.msgEl(m, cont);
+      if (c && m.by === meId() && (m.id === lastMine || this.pendingIds.has(m.id))) el.appendChild(this.statusEl(m, c));
+      out.push(el);
       prev = m;
     }
     fill(this.list, ...out);
@@ -5657,8 +9686,9 @@ Views.circle = {
     this.forceBottom = true;
     const ok = await dset(`circles/${c.id}/messages/${newId()}`, doc);
     if (!ok) { if (text) this.input.value = text; return; }
+    if (P.mode === 'demo') demoSeen(c, at);
     const last = text ? { text: text.slice(0, 140), by: meId(), at } : { text: extra && extra.ref ? str(extra.ref.title, 80) : '', k: 'share', by: meId(), at };
-    dupdate('circles/' + c.id, { last, updated: at }, true);
+    dupdate('circles/' + c.id, { last, updated: at }, true).then(done => { if (done) pushPing(c.id, 'message'); });
     markRead(c.id);
   },
   msgMenu(m) {
@@ -5669,6 +9699,7 @@ Views.circle = {
     const s = openSheet({
       title: 'Message', body: h('div', { class: 'pick-list' },
         text ? opt('copy', 'Copy text', () => copyText(text)) : null,
+        mine && !this.pendingIds.has(m.id) ? opt('check', 'Seen by', () => this.seenSheet(m)) : null,
         !mine ? opt('info', 'Report this message', () => reportSheet({ type: 'message', about: m.by, circle: this.cid, ref: m.id, text })) : null,
         !mine ? opt('lock', fmt('Block {0}', People.name(m.by)), () => blockSheet(m.by)) : null,
         mine || isHost(c) ? opt('trash', 'Delete message', async () => { if (await ddel(`circles/${this.cid}/messages/${m.id}`)) toast('Message deleted.'); }) : null),
@@ -5720,7 +9751,7 @@ Views.circle = {
       const ranked = Array.from(rows.entries()).sort((a, b) => b[1] - a[1]);
       inner.appendChild(h('section', { class: 'sprint-card' },
         h('span', { class: 'live', text: 'Sprint running' }),
-        h('div', { class: 'clock', style: { marginTop: '10px' }, dataset: { end: String(sp.end) }, text: clock(sp.left) }),
+        h('div', { class: 'clock-row' }, inkRing(sp.at, sp.end, 104), h('div', { class: 'clock', dataset: { end: String(sp.end) }, text: clock(sp.left) })),
         sp.prompt ? h('p', { class: 'sprint-prompt', text: sp.prompt }) : null,
         h('p', { class: 'muted small', text: sp.by === meId() ? fmt('{0}-minute sprint started by you.', sp.min) : fmt('{0}-minute sprint started by {1}.', sp.min, People.name(sp.by)) }),
         h('div', { class: 'acts-row', style: { marginTop: '14px' } },
@@ -5735,11 +9766,12 @@ Views.circle = {
       const canCancel = sp.by === meId() || isHost(c);
       inner.appendChild(h('section', { class: 'sprint-card' },
         h('span', { class: 'soon' }, icon('timer'), h('span', { text: 'Sprint scheduled' })),
-        h('div', { class: 'clock', style: { marginTop: '10px' }, dataset: { end: String(sp.at) }, text: clock(sp.startsIn) }),
+        h('div', { class: 'clock-row' }, inkRing(0, 0, 104, 'waiting'), h('div', { class: 'clock', dataset: { end: String(sp.at) }, text: clock(sp.startsIn) })),
         sp.prompt ? h('p', { class: 'sprint-prompt', text: sp.prompt }) : null,
-        h('p', { class: 'muted small', text: fmt('{0}-minute sprint, {1}.', sp.min, whenLabel(sp.at)) + ' ' + (sp.by === meId() ? T('Scheduled by you.') : fmt('Scheduled by {0}.', People.name(sp.by))) }),
+        h('p', { class: 'muted small', text: fmt('{0}-minute sprint, {1}.', sp.min, whenLabel(sp.at)) + ' ' + (sp.rep ? T('Repeats every week.') + ' ' : '') + (sp.by === meId() ? T('Scheduled by you.') : fmt('Scheduled by {0}.', People.name(sp.by))) }),
         st === 'member' ? h('div', { class: 'acts-row', style: { marginTop: '14px' } },
           btn('Start it now', () => this.startNow(c, sp), 'primary', 'play'),
+          btn('Add to calendar', () => this.calendarSheet(c, sp), '', 'timer'),
           P.mode === 'firebase' ? waButton('Tell the circle', fmt('Writing sprint in "{0}" on Inkcircle, {1} ({2} minutes). Join: {3}', str(c.name, 60), whenLabel(sp.at), sp.min, joinLink(c))) : null,
           canCancel ? btn('Cancel sprint', () => this.cancelSprint(c, sp), 'ghost') : null) : null));
       inner.appendChild(h('p', { class: 'muted small', style: { marginTop: '14px' }, text: st === 'member' ? 'Keep this tab in mind: the timer starts by itself at that time, and "Write now" appears here.' : 'Join the circle to write in this sprint.' }));
@@ -5750,7 +9782,8 @@ Views.circle = {
         const total = ranked.reduce((a, [, w]) => a + w, 0);
         inner.appendChild(h('section', { class: 'sprint-card', style: { marginBottom: '28px' } },
           h('h2', { class: 'sprint-total', text: fmt('Last sprint: {0} together', plural(total, 'word')) }),
-          h('p', { class: 'muted small', text: fmt('Finished {0}.', ago(sp.end)) + (sp.prompt ? ' ' + fmt('Prompt: {0}', sp.prompt) : '') }),
+          h('p', { class: 'muted small', text: fmt('Finished {0}.', ago(sp.end)) + (sp.prompt ? ' ' + fmt('Prompt: {0}', sp.prompt) : '') + (sp.rep ? ' ' + fmt('Next one: {0}.', whenLabel(nextWeekly(sp))) : '') }),
+          st === 'member' ? h('div', { class: 'acts-row', style: { margin: '6px 0 12px' } }, this.shareResultsButtons(c, sp, ranked.length, total)) : null,
           h('div', null, ranked.map(([uid, w]) => h('div', { class: 'board-row' }, h('div', { class: 'grow' }, personBtn(uid, '', 32)), h('span', { class: 'w num', text: num(w) }), h('span', { class: 'faint small', text: 'words' }),
             P.live && uid !== meId() ? ibtn('heart', fmt('Cheer {0}', People.name(uid)), () => sendCheer(c.id, uid)) : null)))));
       }
@@ -5760,8 +9793,31 @@ Views.circle = {
     }
     fill(this.panel, inner);
   },
+  resultsText(c, sp, n, total) {
+    return (n === 1 ? fmt('Sprint in "{0}" on Inkcircle: 1 writer wrote {1} in {2} minutes.', str(c.name, 60), plural(total, 'word'), sp.min)
+      : fmt('Sprint in "{0}" on Inkcircle: {1} writers wrote {2} together in {3} minutes.', str(c.name, 60), n, plural(total, 'word'), sp.min))
+      + (sp.rep ? ' ' + fmt('Next one: {0}.', whenLabel(nextWeekly(sp))) : '') + (P.mode === 'firebase' ? ' ' + fmt('Join: {0}', joinLink(c)) : '');
+  },
+  shareResultsButtons(c, sp, n, total) {
+    const text = this.resultsText(c, sp, n, total);
+    return [P.mode === 'firebase' ? waButton('Share results', text) : null, btn('Copy results', () => copyText(text, 'Results copied. Paste them anywhere.'), 'ghost', 'copy')];
+  },
+  calendarSheet(c, sp) {
+    const title = fmt('Writing sprint: {0}', str(c.name, 60));
+    const link = P.mode === 'firebase' ? joinLink(c) : '';
+    const details = (sp.prompt ? fmt('Prompt: {0}', sp.prompt) + '\n' : '') + T('Open Inkcircle a minute early and press Write now.') + (link ? '\n' + link : '');
+    const end = sp.at + sp.min * 60000;
+    const s = openSheet({
+      title: 'Add to calendar', body: h('div', null,
+        h('p', { class: 'muted', style: { marginTop: '0' }, text: sp.rep ? 'Inkcircle cannot remind you yet, so let your calendar do it. The event repeats every week.' : 'Inkcircle cannot remind you yet, so let your calendar do it.' }),
+        h('div', { class: 'pick-list' },
+          h('a', { class: 'row', href: googleCalLink(title, sp.at, end, details, !!sp.rep), target: '_blank', rel: 'noopener', onClick: () => s.close() }, icon('timer'), h('span', { class: 'grow' }, h('b', { text: 'Google Calendar' }), h('div', { class: 'small muted', text: 'Opens in a new tab' }))),
+          h('button', { class: 'row', type: 'button', onClick: () => { s.close(); offerDownload('inkcircle-sprint.ics', icsFile(title, sp.at, end, details, link, !!sp.rep, sp.id + '-' + c.id)); } }, icon('download'), h('span', { class: 'grow' }, h('b', { text: 'Apple, Outlook or another calendar' }), h('div', { class: 'small muted', text: 'Downloads a calendar file with a reminder 15 minutes before' }))))),
+      actions: [btn('Close', () => s.close(), 'ghost')],
+    });
+  },
   startForm(c) {
-    let min = 15, mode = 'now';
+    let min = 15, mode = 'now', weekly = false;
     const durs = chipGroup([['10', '10 min'], ['15', '15 min'], ['25', '25 min'], ['45', '45 min']], '15', { onChange: v => { min = Number(v); } });
     const prompt = h('input', { class: 'inp', maxlength: '200', placeholder: 'Optional: a prompt for everyone' });
     const museBtn = museReady() ? btn('Ask Muse for a prompt', async () => {
@@ -5783,13 +9839,14 @@ Views.circle = {
     const quick = h('div', { class: 'chips', style: { marginBottom: '8px' } },
       [['In 30 minutes', () => Date.now() + 30 * 60000], ['Tonight, 9 PM', () => tonight], ['Tomorrow, 7 AM', () => at(7, 0, 1)]].map(([label, fn]) =>
         h('button', { type: 'button', class: 'chip', text: label, onClick: () => { whenIn.value = local(fn()); } })));
-    const later = h('div', { style: { display: 'none', marginTop: '10px' } }, quick, whenIn);
+    const repeat = h('label', { class: 'check-row' }, h('input', { type: 'checkbox', onChange: e => { weekly = e.target.checked; } }), h('span', { text: 'Repeat every week at this time' }));
+    const later = h('div', { style: { display: 'none', marginTop: '10px' } }, quick, whenIn, repeat);
     const goBtn = btn('Start the sprint', () => {
       if (mode === 'now') { this.startSprint(c, min, prompt.value.trim(), 0); return; }
       const ts = new Date(whenIn.value).getTime();
       if (!Number.isFinite(ts) || ts < Date.now() + 60000) { toast('Pick a time at least a minute from now.'); whenIn.focus(); return; }
       if (ts > Date.now() + 14 * 86400000) { toast('Pick a time within the next two weeks.'); whenIn.focus(); return; }
-      this.startSprint(c, min, prompt.value.trim(), ts);
+      this.startSprint(c, min, prompt.value.trim(), ts, weekly);
     }, 'primary', 'play');
     const when = chipGroup([['now', 'Now'], ['later', 'Later']], 'now', { onChange: v => {
       mode = v;
@@ -5805,7 +9862,7 @@ Views.circle = {
         field('Prompt', prompt), museBtn,
         h('div', { style: { marginTop: '16px' } }, goBtn)));
   },
-  async startSprint(c, min, prompt, when) {
+  async startSprint(c, min, prompt, when, weekly) {
     const cur = sprintOf(S.circles.get(c.id));
     if (cur && cur.running) { toast('A sprint is already running here.'); return; }
     if (cur && cur.upcoming) { toast('A sprint is already scheduled here. Cancel it first.'); return; }
@@ -5813,21 +9870,24 @@ Views.circle = {
     const p = prompt.slice(0, 200);
     if (!await dset(`circles/${c.id}/sprints/${id}`, { at, min, by: meId(), prompt: p, results: {} })) return;
     const text = (when ? 'Scheduled a ' + min + '-minute sprint for ' + whenLabel(at) + '.' : 'Started a ' + min + '-minute sprint. Join from the Sprint tab.') + (p ? '\nPrompt: ' + p : '');
-    if (!await dupdate('circles/' + c.id, { sprint: { id, at, min, by: meId(), prompt: p }, last: { text: text.slice(0, 140), by: meId(), at: now, k: 'sprint', min, when: at }, updated: now })) return;
+    const spDoc = { id, at, min, by: meId(), prompt: p };
+    if (when && weekly) Object.assign(spDoc, { rep: 7, base: at });
+    if (!await dupdate('circles/' + c.id, { sprint: spDoc, last: { text: text.slice(0, 140), by: meId(), at: now, k: 'sprint', min, when: at }, updated: now })) return;
     dset(`circles/${c.id}/messages/${newId()}`, { text, by: meId(), at: now, kind: 'sprint', min, when: at, prompt: p }, true);
     markRead(c.id);
-    if (when) toast(fmt('Sprint scheduled for {0}.', whenLabel(at)));
-    else go('#pad-' + c.id);
+    if (when) { pushSchedule(c.id); toast(fmt('Sprint scheduled for {0}.', whenLabel(at))); }
+    else { pushPing(c.id, 'sprint'); go('#pad-' + c.id); }
   },
   async startNow(c, sp) {
     const now = Date.now();
     if (!await dupdate('circles/' + c.id, { 'sprint.at': now, updated: now })) return;
+    pushPing(c.id, 'sprint');
     go('#pad-' + c.id);
   },
   async cancelSprint(c, sp) {
-    const yes = await confirmSheet({ title: 'Cancel this sprint?', text: 'The circle will no longer see it on the Sprint tab.', ok: 'Cancel sprint' });
+    const yes = await confirmSheet({ title: 'Cancel this sprint?', text: sp && sp.rep ? 'The circle will no longer see it on the Sprint tab, and it stops repeating every week.' : 'The circle will no longer see it on the Sprint tab.', ok: 'Cancel sprint' });
     if (!yes) return;
-    if (await dupdate('circles/' + c.id, { sprint: DEL, updated: Date.now() })) { ddel(`circles/${c.id}/sprints/${sp.id}`, true); toast('Sprint cancelled.'); }
+    if (await dupdate('circles/' + c.id, { sprint: DEL, updated: Date.now() })) { ddel(`circles/${c.id}/sprints/${sp.id}`, true); pushSchedule(c.id); toast('Sprint cancelled.'); }
   },
 
   // ----- shelf & members -----
@@ -5860,7 +9920,7 @@ Views.circle = {
     const any = got.project.length || got.board.length || got.sketch.length;
     if (!any) inner.appendChild(emptyState(hidden ? 'The work on this shelf is for circle members.' : 'Nothing on the shelf yet. When members share projects, boards or sketches with this circle, they collect here.', 'write'));
     if (got.project.length) inner.appendChild(h('section', null, h('div', { class: 'sec-h' }, h('h2', { text: 'Projects' })), h('div', { class: 'rows' }, got.project.map(projectRow))));
-    if (got.board.length) inner.appendChild(h('section', { class: 'sec' }, h('div', { class: 'sec-h' }, h('h2', { text: 'Boards' })), h('div', { class: 'rows' }, got.board.map(b => h('button', { class: 'row', type: 'button', onClick: () => go('#b-' + b.id) }, h('span', { class: 'ico', style: { color: 'var(--ink-3)' } }, icon('board')), h('span', { class: 'grow' }, h('div', { class: 'r-title', raw: str(b.title, 100) }), h('div', { class: 'r-meta', text: fmt('by {0}', People.name(b.owner)) + ', ' + fmt('updated {0}', ago(b.updated || b.created)) })))))));
+    if (got.board.length) inner.appendChild(h('section', { class: 'sec' }, h('div', { class: 'sec-h' }, h('h2', { text: 'Boards' })), h('div', { class: 'rows' }, got.board.map(b => h('button', { class: 'row', type: 'button', onClick: () => go('#b-' + b.id) }, h('span', { class: 'ico', style: { color: 'var(--ink-3)' } }, icon('board')), h('span', { class: 'grow' }, h('div', { class: 'r-title', raw: str(b.title, 100) }), h('div', { class: 'r-meta', text: (b.owner === meId() ? T('by you') : fmt('by {0}', People.name(b.owner))) + ', ' + fmt('updated {0}', ago(b.updated || b.created)) })))))));
     if (got.sketch.length) inner.appendChild(h('section', { class: 'sec' }, h('div', { class: 'sec-h' }, h('h2', { text: 'Sketches' })), h('div', { class: 'sk-grid' }, got.sketch.map(sk => sketchTile(sk)))));
     fill(this.panel, inner);
   },
@@ -5991,13 +10051,13 @@ Views.pad = {
   },
   async build(c, sp) {
     this.clk = h('span', { class: 'clk num', dataset: { end: String(sp.end) }, text: clock(sp.left) });
-    this.wc = h('span', { class: 'wc num', text: '0 words' });
+    this.wc = h('span', { class: 'wc num', text: plural(0, 'word') });
     this.peersEl = h('div', { class: 'pad-peers', 'aria-label': 'Who is writing' });
     this.ta = h('textarea', { 'aria-label': 'Sprint page', placeholder: 'Write without stopping. Nobody sees your words, only the count.', spellcheck: 'true' });
     this.ta.addEventListener('input', () => this.onInput());
     this.doneBtn = btn("I'm done", () => this.finish(), 'small dark');
     fill(this.el, h('div', { class: 'pad' },
-      h('div', { class: 'pad-top' }, ibtn('back', 'Back to the circle', () => openCircle(this.cid, 'sprint')), this.clk, this.wc, h('span', { class: 'grow' }), this.doneBtn),
+      h('div', { class: 'pad-top' }, ibtn('back', 'Back to the circle', () => openCircle(this.cid, 'sprint')), this.ring = inkRing(sp.at, sp.end, 34, 'small'), this.clk, this.wc, h('span', { class: 'grow' }), this.doneBtn),
       this.peersEl,
       sp.prompt ? h('div', { class: 'prompt', text: sp.prompt }) : null,
       this.ta));
@@ -6030,6 +10090,7 @@ Views.pad = {
     if (!this.built || !this.sp) return;
     const left = this.sp.end - Date.now();
     this.clk.textContent = clock(left);
+    if (this.ring) paintRing(this.ring);
     if (left <= 0 && !this.finished) this.finish(true);
   },
   recordWords() {
@@ -6179,6 +10240,7 @@ function onAuth(user) {
   if (wasLoading) P.mode = 'firebase';
   if (user) {
     startSession();
+    setTimeout(() => syncPush(false), 4000);
     const invite = takeInvite();
     if (invite) {
       autoJoin(invite);
@@ -6205,19 +10267,25 @@ async function boot() {
   document.body.classList.add('public');
   onChange(kinds => {
     updateChrome();
+    if (kinds.has('circles') || kinds.has('people')) checkNotify();
     if (current && current.view.update) { try { current.view.update(kinds); } catch (e) { console.error(e); } }
   });
   window.addEventListener('hashchange', route);
   window.addEventListener('online', () => { P.online = true; emitChange('net'); });
   window.addEventListener('offline', () => { P.online = false; emitChange('net'); });
   setInterval(() => { if (current && current.view.tick) { try { current.view.tick(); } catch (e) { console.error(e); } } }, 1000);
-  setInterval(() => { if (signedIn()) updateChrome(); }, 20000);
+  setInterval(() => { if (signedIn()) { updateChrome(); rollSprints(); } }, 20000);
+  setInterval(() => { if (signedIn()) checkNotify(); }, 5000);
+  // a tap on a notification opens the right page
+  try { navigator.serviceWorker.addEventListener('message', e => { if (e.data && e.data.type === 'go' && typeof e.data.hash === 'string' && /^#[\w-]*$/.test(e.data.hash)) location.hash = e.data.hash; }); } catch (e) { /* no service worker */ }
 
   const cfg = window.INKCIRCLE_CONFIG;
   P.hasFirebase = validConfig(cfg);
   P.site = !!document.querySelector('link[rel="manifest"]');
   P.contact = cfg && typeof cfg.contact === 'string' ? cfg.contact.trim().slice(0, 120) : '';
-  if (P.site && 'serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+  P.pushUrl = cfg && typeof cfg.push === 'string' && /^https:\/\/[\w.-]+(:\d+)?\/?$/.test(cfg.push.trim()) ? cfg.push.trim().replace(/\/$/, '') : '';
+  if (window.__INK_TEST__ && cfg && typeof cfg.push === 'string') P.pushUrl = cfg.push.replace(/\/$/, '');
+  if (P.site && 'serviceWorker' in navigator && (location.protocol === 'https:' || window.__INK_TEST__)) navigator.serviceWorker.register('sw.js').catch(() => {});
   P.preview = !!(window.claude && typeof window.claude.use === 'function');
   let wantDemo = false;
   try { wantDemo = localStorage.getItem('ink-demo') === '1'; } catch (e) { /* ignore */ }
@@ -6241,7 +10309,7 @@ async function boot() {
     if (!seen && !wantDemo && !location.hash) history.replaceState(null, '', '#welcome');
     route();
   }
-  if (window.__INK_TEST__) window.__ink = { S, P, go, Views, People, dget, dset, dupdate, current: () => current };
+  if (window.__INK_TEST__) window.__ink = { S, P, go, Views, People, dget, dset, dupdate, rollSprints, current: () => current };
 }
 boot();
 

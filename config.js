@@ -3,6 +3,8 @@
 // If you picked another location, copy the URL shown at the top of the Realtime Database page
 // and put it on the databaseURL line instead.
 window.INKCIRCLE_CONFIG = {
+  // Your notification Worker on Cloudflare.
+  push: "https://inkcircle-push.mandrupkarshardul4.workers.dev",
   firebase: {
     apiKey: "AIzaSyDrg24QtI8aty8BGGFeI_eB75nMRYZqIWA",
     authDomain: "inkcircle-273b3.firebaseapp.com",
